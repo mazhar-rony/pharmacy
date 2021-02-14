@@ -50,6 +50,7 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
+    // Overridden method from ResetsPasswords Trait to change Password Length Validation
     public function reset(Request $request)
     {
         $request->validate($this->rules(), $this->validationErrorMessages());
@@ -72,6 +73,7 @@ class ResetPasswordController extends Controller
                     : $this->sendResetFailedResponse($request, $response);
     }
 
+    // Overridden method from ResetsPasswords Trait to change Password Length Validation
     protected function rules()
     {
         return [
