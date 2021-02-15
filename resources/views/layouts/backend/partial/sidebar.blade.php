@@ -53,6 +53,12 @@
                         <span>Product Category</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/supplier*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.supplier.index') }}">
+                        <i class="material-icons">contacts</i>
+                        <span>Product Supplier</span>
+                    </a>
+                </li>
                 {{-- <li class="{{ Request::is('admin/tag*') ? 'active' : '' }}">
                     <a href="{{ route('admin.tag.index') }}">
                         <i class="material-icons">label</i>

@@ -22,7 +22,8 @@
                         @csrf
                         <div class="form-group form-float">
                             <div class="form-line {{ $errors->has('name') ? 'focused error' : '' }}">
-                                <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" name="name">
+                                <input type="text" id="name" class="form-control @error('name') is-invalid @enderror" 
+                                    name="name" value="{{ !empty(old('name')) ? old('name') : '' }}">
                                 <label class="form-label">Category Name</label>
                                
                             </div>

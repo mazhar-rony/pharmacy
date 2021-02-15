@@ -16,6 +16,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     Route::resource('category', 'CategoryController');
+    Route::resource('supplier', 'SupplierController');
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {
