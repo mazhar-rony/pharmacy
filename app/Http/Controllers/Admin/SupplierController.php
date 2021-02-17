@@ -16,7 +16,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::orderBy('organization')->get();
+        $suppliers = Supplier::latest()->get();
 
         return view('admin.supplier.index', compact('suppliers'));
     }
@@ -56,7 +56,7 @@ class SupplierController extends Controller
 
         $supplier->save();
 
-        Toastr::success('Supplier Successfully Saved !' ,'Success');
+        Toastr::success('Supplier Successfully Created !' ,'Success');
 
         return redirect()->route('admin.supplier.index');
 

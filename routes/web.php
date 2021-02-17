@@ -17,6 +17,9 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
 
     Route::resource('category', 'CategoryController');
     Route::resource('supplier', 'SupplierController');
+    Route::resource('product', 'ProductController');
+
+    Route::put('product/quantity/{product}', 'ProductController@updatePrice')->name('product.price');
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {

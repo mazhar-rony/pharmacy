@@ -56,8 +56,7 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $supplier->name }}</td>
                                         <td>{{ $supplier->organization }}</td>
-                                        {{-- <td>{{ $category->posts->count() }}</td> --}}
-                                        <td>do it later</td>
+                                        <td>{{ $supplier->products->count() }}</td>
                                         <td>{{ $supplier->phone }}</td>
                                         <td>{{ $supplier->address }}</td>
                                         <td class="text-center" style="white-space:nowrap;">

@@ -55,8 +55,14 @@
                 </li>
                 <li class="{{ Request::is('admin/supplier*') ? 'active' : '' }}">
                     <a href="{{ route('admin.supplier.index') }}">
-                        <i class="material-icons">contacts</i>
+                        <i class="material-icons">group</i>
                         <span>Product Supplier</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/product*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.product.index') }}">
+                        <i class="material-icons">production_quantity_limits</i>
+                        <span>Products</span>
                     </a>
                 </li>
                 {{-- <li class="{{ Request::is('admin/tag*') ? 'active' : '' }}">

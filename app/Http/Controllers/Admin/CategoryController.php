@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::latest()->get();
 
         return view('admin.category.index', compact('categories'));
     }
@@ -50,7 +50,7 @@ class CategoryController extends Controller
         
         $category->save();
 
-        Toastr::success('Category Successfully Saved !' ,'Success');
+        Toastr::success('Category Successfully Created !' ,'Success');
 
         return redirect()->route('admin.category.index');
     }

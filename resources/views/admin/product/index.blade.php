@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Category')
+@section('title', 'Product')
 
 @push('css')
     <link href="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -9,9 +9,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-        <a class="btn btn-success waves-effect" href="{{ route('admin.category.create') }}">
+        <a class="btn btn-success waves-effect" href="{{ route('admin.product.create') }}">
             <i class="material-icons">add</i>
-            <span>Add New Category</span>
+            <span>Add New Product</span>
         </a>
     </div>
    
@@ -21,8 +21,8 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        ALL CATEGORIES
-                        <span class="badge bg-red">{{ $categories->count() }}</span
+                        ALL PRODUCTS
+                        <span class="badge bg-red">{{ $products->count() }}</span
                     </h2>
                 </div>
                 <div class="body">
@@ -31,41 +31,50 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Category Name</th>
-                                    <th>Total Products</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Supplier</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Category Name</th>
-                                    <th>Total Products</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Supplier</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach ($categories as $key=>$category)
+                                @foreach ($products as $key=>$product)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $category->name }}</td>
-                                        <td>{{ $category->products->count() }}</td>
-                                        <td>{{ $category->created_at->addHours(6)->format('d-m-Y h:i:s A') }}</td>
-                                        <td>{{ $category->updated_at->addHours(6)->format('d-m-Y h:i:s A') }}</td>
+                                        <td>{{ $product->name }}</td>                   
+                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ $product->supplier->organization }}</td>
+                                        <td>{{ $product->quantity }}</td>
+                                        <td>{{ number_format(round($product->price, 2), 2) }}</td>
+                                        <td class="align-center">
+                                            <img src="{{ Storage::disk('public')->url('product/'.$product->image) }}" 
+                                                alt="{{ $product->name }}" height="37" width="44">
+                                        </td>
                                         <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-info waves-effect">
+                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-info waves-effect">
                                                 <i class="material-icons">edit</i>
                                             </a>
                                             <button class="btn btn-danger waves-effect" type="button"
-                                                onclick="deleteCategory({{ $category->id }})">
+                                                onclick="deleteProduct({{ $product->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <form id="delete-form-{{ $category->id }}" method="POST"
-                                                action="{{ route('admin.category.destroy', $category->id) }}"
+                                            <form id="delete-form-{{ $product->id }}" method="POST"
+                                                action="{{ route('admin.product.destroy', $product->id) }}"
                                                 style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -102,7 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script type="text/javascript">
-        function deleteCategory(id) {
+        function deleteProduct(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',
