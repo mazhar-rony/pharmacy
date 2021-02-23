@@ -7,6 +7,7 @@ use App\Category;
 use App\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Intervention\Image\Facades\Image;
@@ -22,8 +23,10 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
-        
-        return view('admin.product.index', compact('products'));                 
+
+        $total_amount = DB::table('products')->select(DB::raw('sum(quantity * round(price, 2)) AS total_amount'))->first();
+   
+        return view('admin.product.index', compact('products', 'total_amount'));                 
     }
 
     /**
@@ -48,7 +51,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:products',
             'category' => 'required',
             'supplier' => 'required',
             'quantity' => 'required|numeric',
@@ -132,7 +135,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:products,id',
             'category' => 'required',
             'supplier' => 'required',
             'quantity' => 'required|numeric',

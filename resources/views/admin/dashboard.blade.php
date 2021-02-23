@@ -319,7 +319,7 @@
 @endsection
 
 @push('js')
-<!-- Jquery CountTo Plugin Js -->
+    <!-- Jquery CountTo Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/jquery-countto/jquery.countTo.js') }}"></script>
 
     <!-- Morris Plugin Js -->

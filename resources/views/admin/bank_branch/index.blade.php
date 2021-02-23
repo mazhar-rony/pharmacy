@@ -1,22 +1,17 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Product')
+@section('title', 'Bank')
 
 @push('css')
     <link href="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
-<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pull-right" style="margin-bottom: 20px;">
-    <button class="btn bg-teal btn-lg btn-block waves-effect" type="button" style="height: 50px; font-size: 14px; cursor: default; pointer-events: none;">Total Amount 
-        <span class="badge" style="font-size: 18px;">{{ number_format($total_amount->total_amount, 2) }}</span>
-    </button>
-</div>
 <div class="container-fluid">
     <div class="block-header">
-        <a class="btn btn-success waves-effect" href="{{ route('admin.product.create') }}">
+        <a class="btn btn-success waves-effect" href="{{ route('admin.branch.create') }}">
             <i class="material-icons">add</i>
-            <span>Add New Product</span>
+            <span>Add New Branch</span>
         </a>
     </div>
    
@@ -26,8 +21,8 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        ALL PRODUCTS
-                        <span class="badge bg-red">{{ $products->count() }}</span
+                        ALL BANK&apos;S BRANCHES
+                        <span class="badge bg-red">{{ $branches->count() }}</span
                     </h2>
                 </div>
                 <div class="body">
@@ -36,53 +31,47 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Supplier</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Total Price</th>
-                                    <th>Image</th>
+                                    <th>Bank Name</th>
+                                    <th>Branch</th>
+                                    <th>Contact No</th>
+                                    <th>City</th>
+                                    <th>Location</th>
+                                    <th>Address</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Supplier</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Total Price</th>
-                                    <th>Image</th>
+                                    <th>Bank Name</th>
+                                    <th>Branch</th>
+                                    <th>Contact No</th>
+                                    <th>City</th>
+                                    <th>Location</th>
+                                    <th>Address</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach ($products as $key=>$product)
+                                @foreach ($branches as $key=>$branch)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $product->name }}</td>                   
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ $product->supplier->organization }}</td>
-                                        <td><span class="badge {{ $product->quantity < 20 ? 'bg-pink' : 'bg-green' }}">{{ $product->quantity }}</span></td>
-                                        <td>{{ number_format(round($product->price, 2), 2) }}</td>
-                                        <td>{{ number_format(round($product->price, 2) * $product->quantity, 2) }}</td>
-                                        <td class="align-center">
-                                            <img src="{{ Storage::disk('public')->url('product/'.$product->image) }}" 
-                                                alt="{{ $product->name }}" height="37" width="44">
-                                        </td>
+                                        <td>{{ $branch->bank->name }}</td>
+                                        <td>{{ $branch->name }}</td>
+                                        <td>{{ $branch->phone != NULL ? $branch->phone : 'N/A' }}</td>
+                                        <td>{{ $branch->city != NULL ? $branch->city : 'N/A' }}</td>
+                                        <td>{{ $branch->location != NULL ? $branch->location : 'N/A' }}</td>
+                                        <td>{{ $branch->address != NULL ? $branch->address : 'N/A' }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-info waves-effect">
+                                            <a href="{{ route('admin.branch.edit', $branch->id) }}" class="btn btn-info waves-effect">
                                                 <i class="material-icons">edit</i>
                                             </a>
                                             <button class="btn btn-danger waves-effect" type="button"
-                                                onclick="deleteProduct({{ $product->id }})">
+                                                onclick="deleteBranch({{ $branch->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <form id="delete-form-{{ $product->id }}" method="POST"
-                                                action="{{ route('admin.product.destroy', $product->id) }}"
+                                            <form id="delete-form-{{ $branch->id }}" method="POST"
+                                                action="{{ route('admin.branch.destroy', $branch->id) }}"
                                                 style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -119,7 +108,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script type="text/javascript">
-        function deleteProduct(id) {
+        function deleteBranch(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',

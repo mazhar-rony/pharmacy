@@ -47,6 +47,9 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+
+                <li class="header">INVENTORY</li>
+
                 <li class="{{ Request::is('admin/category*') ? 'active' : '' }}">
                     <a href="{{ route('admin.category.index') }}">
                         <i class="material-icons">apps</i>
@@ -62,7 +65,7 @@
                 <li class="{{ Request::is('admin/product*') ? 'active' : '' }}">
                     <a href="{{ route('admin.product.index') }}">
                         <i class="material-icons">production_quantity_limits</i>
-                        <span>Products</span>
+                        <span>Stock</span>
                     </a>
                 </li>
                 {{-- <li class="{{ Request::is('admin/tag*') ? 'active' : '' }}">
@@ -113,6 +116,20 @@
                         <span>Subscriber</span>
                     </a>
                 </li> --}}
+                <li class="header">BANKING</li>
+
+                <li class="{{ Request::is('admin/bank*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.bank.index') }}">
+                        <i class="material-icons">home</i>
+                        <span>Bank List</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/branch*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.branch.index') }}">
+                        <i class="material-icons">room</i>
+                        <span>Bank Branches</span>
+                    </a>
+                </li>
 
                 <li class="header">SYSTEM</li>
 
