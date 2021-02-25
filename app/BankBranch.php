@@ -10,4 +10,9 @@ class BankBranch extends Model
     {
         return $this->belongsTo('App\Bank');
     }
+
+    public function accounts()
+    {
+        return $this->hasMany('App\BankAccount');
+    }
 }

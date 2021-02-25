@@ -21,6 +21,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('bank', 'BankController');
     Route::resource('branch', 'BankBranchController');
 
+    //dependency dropdown
+    Route::get('account/branches', 'BankAccountController@getBranches')->name('account.getBranches');
+
+    Route::resource('account', 'BankAccountController');
+
     Route::put('product/quantity/{product}', 'ProductController@updatePrice')->name('product.price');
 });
 

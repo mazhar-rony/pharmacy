@@ -130,6 +130,12 @@
                         <span>Bank Branches</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/account*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.account.index') }}">
+                        <i class="material-icons">map</i>
+                        <span>Bank Accounts</span>
+                    </a>
+                </li>
 
                 <li class="header">SYSTEM</li>
 
