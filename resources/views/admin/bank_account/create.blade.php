@@ -3,6 +3,8 @@
 @section('title', 'Bank')
 
 @push('css')
+<!-- Bootstrap Select Css -->
+    <link href="{{ asset('assets/backend/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
 
 <style>
     .loader {
@@ -76,8 +78,8 @@
                             <div class="form-line {{ $errors->has('branch') ? 'focused error' : '' }}">
                                 <label for="branch">Select Branch</label>
                                 <img class="loader" id="loader" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
-                                <select name="branch" id="branch" data-live-search="true" 
-                                    class="form-control show-tick @error('branch') is-invalid @enderror">
+                                <select name="branch" id="branch" data-live-search="true"
+                                    class="form-control selectpicker show-tick @error('branch') is-invalid @enderror">
                                         <option value="" selected disabled>Nothing Selected</option>
                                 </select>
                                 
@@ -131,6 +133,8 @@
 @endsection
 
 @push('js')
+<!-- Select Plugin Js -->
+    <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 
 <script>
     $(function(){
@@ -140,13 +144,6 @@
 
         loader.hide();
         branch.attr('disabled','disabled');
-
-        branch.change(function(){
-            var id = $(this).val();
-            if(!id){
-                branch.attr('disabled','disabled');
-            }
-        })
 
         bank.change(function(){
             var id = $(this).val();
@@ -163,7 +160,15 @@
                         branch.removeAttr('disabled');
                         branch.html(option);
                         loader.hide();
+                        $(".selectpicker").selectpicker("refresh");
                     })
+            }
+        })
+
+        branch.change(function(){
+            var id = $(this).val();
+            if(!id){
+                branch.attr('disabled','disabled');
             }
         })
     });

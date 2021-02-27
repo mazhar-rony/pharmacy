@@ -3,6 +3,8 @@
 @section('title', 'Bank')
 
 @push('css')
+<!-- Bootstrap Select Css -->
+    <link href="{{ asset('assets/backend/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
 
 <style>
     .loader {
@@ -79,7 +81,7 @@
                                 <label for="branch">Select Branch</label>
                                 <img class="loader" id="loader" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
                                 <select name="branch" id="branch" data-live-search="true" 
-                                    class="form-control show-tick @error('branch') is-invalid @enderror">
+                                    class="form-control selectpicker show-tick @error('branch') is-invalid @enderror">
                                     @foreach ($branches as $branch)
                                         <option {{ $account->branch->id == $branch->id ? 'selected' : '' }}
                                             value="{{ $branch->id }}">{{ $branch->name }}
@@ -136,6 +138,8 @@
 @endsection
 
 @push('js')
+<!-- Select Plugin Js -->
+    <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 
 <script>
     $(function(){
@@ -145,7 +149,7 @@
 
         loader.hide();
         //branch.attr('disabled','disabled');
-
+        
         bank.change(function(){
             var id = $(this).val();
             if(id){
@@ -161,6 +165,7 @@
                         branch.removeAttr('disabled');
                         branch.html(option);
                         loader.hide();
+                        $(".selectpicker").selectpicker("refresh");
                     })
             }
         })
