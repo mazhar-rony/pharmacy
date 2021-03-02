@@ -142,7 +142,7 @@
     <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 
 <script>
-    $(function(){
+    //$(function(){
         var loader = $('#loader'),
             bank = $('select[name="bank"]'),
             branch = $('select[name="branch"]');
@@ -176,7 +176,7 @@
                 branch.attr('disabled','disabled');
             }
         })
-    });
+    //});
 </script>
 
 @endpush

@@ -22,6 +22,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('branch', 'BankBranchController');
 
     //dependency dropdown
+    Route::get('invoice/products', 'InvoiceController@getProducts')->name('invoice.getProducts');
+
+    Route::resource('invoice', 'InvoiceController');
+
+    //dependency dropdown
     Route::get('account/branches', 'BankAccountController@getBranches')->name('account.getBranches');
 
     Route::resource('account', 'BankAccountController');

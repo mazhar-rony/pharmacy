@@ -101,7 +101,7 @@
 
     <!-- Jquery Core Js -->
     <script src="{{ asset('assets/backend/plugins/jquery/jquery.min.js') }}"></script>
-
+    
     <!-- Bootstrap Core Js -->
     <script src="{{ asset('assets/backend/plugins/bootstrap/js/bootstrap.js') }}"></script>
 
@@ -119,6 +119,7 @@
 
     <!-- Custom Js -->
     <script src="{{ asset('assets/backend/js/admin.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/pages/forms/basic-form-elements.js') }}"></script>
 
     <!-- Demo Js -->
     <script src="{{ asset('assets/backend/js/demo.js') }}"></script>

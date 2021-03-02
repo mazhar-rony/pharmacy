@@ -24,7 +24,7 @@
                             <i class="material-icons">input</i>Sign Out
                         </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="profile-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                         
@@ -134,6 +134,15 @@
                     <a href="{{ route('admin.account.index') }}">
                         <i class="material-icons">map</i>
                         <span>Bank Accounts</span>
+                    </a>
+                </li>
+
+                <li class="header">POS</li>
+
+                <li class="{{ Request::is('admin/invoice*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.invoice.index') }}">
+                        <i class="material-icons">important_devices</i>
+                        <span>Invoice</span>
                     </a>
                 </li>
 

@@ -120,9 +120,10 @@
                                 </span>
                             @enderror
                         </div>
-                    
+                        <p>Click on this paragraph.</p>
                         <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.account.index') }}">BACK</a>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
+                        <button type="button" id="hide" onclick="hideImage()" class="btn btn-warning m-t-15 waves-effect">HIDE</button>
                     </form>
                 </div>
             </div>
@@ -135,8 +136,45 @@
 @push('js')
 <!-- Select Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
+    
+    <script>
+        var loader = $('#loader'),
+            bank = $('select[name="bank"]'),
+            branch = $('select[name="branch"]');
 
-<script>
+        loader.hide();
+        branch.attr('disabled','disabled');
+
+        bank.change(function(){
+            var id = $(this).val();
+            if(id){
+                loader.show();
+                branch.attr('disabled','disabled');
+
+                $.get('{{url('/admin/account/branches?bank=')}}'+id)
+                    .success(function(data){
+                        var option = '<option value="" selected disabled>Nothing Selected</option>';
+                        data.forEach(function(row){
+                            option += '<option value="'+row.id+'">'+row.name+'</option>'
+                        })
+                        branch.removeAttr('disabled');
+                        branch.html(option);
+                        loader.hide();
+                        $(".selectpicker").selectpicker("refresh");
+                    })
+            }
+        })
+
+        branch.change(function(){
+            var id = $(this).val();
+            if(!id){
+                branch.attr('disabled','disabled');
+            }
+        })
+    </script>
+    
+
+/*<script>
     $(function(){
         var loader = $('#loader'),
             bank = $('select[name="bank"]'),
@@ -172,6 +210,7 @@
             }
         })
     });
-</script>
+    
+</script>*/
 
 @endpush
