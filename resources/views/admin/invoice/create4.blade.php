@@ -184,7 +184,7 @@
                 @{{category_name}}
             </td>
             <td>
-                <input type="hidden" name="product[]" value="@{{product}}">
+                <input type="hidden" name="product[]" class="form-control form-control-sm text-right product" value="@{{product}}">
                 @{{product_name}}
             </td>
             <td>
@@ -231,23 +231,30 @@
                         progressBar:true,
                     });
                 }
-
-                else if(!isNaN(stock) && stock > 0){
-                    var source = $("#document-template").html();
-                    var template = Handlebars.compile(source);
-                    var data = {
-                        invoice_date:invoice_date,
-                        invoice:invoice,
-                        category:category,
-                        category_name:category_name,
-                        product:product,
-                        product_name:product_name,
-                        stock:stock
-                        };
-                    var html = template(data);
-                    $("#addRow").append(html);
+                else if(!isNaN(stock) && stock > 0){                    
+                    if(checkDuplicate(product)){
+                        alert("back to function");
+                        toastr.warning('Item already added, Quantity Increased !', 'Warning',{
+                            closeButton:true,
+                            progressBar:true,
+                        });
                     }
-
+                    else{
+                        var source = $("#document-template").html();
+                        var template = Handlebars.compile(source);
+                        var data = {
+                            invoice_date:invoice_date,
+                            invoice:invoice,
+                            category:category,
+                            category_name:category_name,
+                            product:product,
+                            product_name:product_name,
+                            stock:stock
+                            };
+                        var html = template(data);
+                        $("#addRow").append(html);
+                    }                                       
+                }
                 else{
                     toastr.error('Out of Stock', 'Error',{
                         closeButton:true,
@@ -255,6 +262,99 @@
                     });
                 }
             });
+
+            function checkDuplicate(prod){
+                var result = false;
+                $(".product").each(function(){
+                    var value = $(this).val();
+                    alert(prod);
+                    alert(value);
+                    if(value == prod){                        
+                        var quantity = $(this).closest("tr").find("input.quantity").val();
+                        quantity = parseInt(quantity) + parseInt(1);
+                        $(this).closest("tr").find("input.quantity").val(quantity);
+
+                        alert("done");
+                        result = true;                        
+                    }                    
+                });
+                alert(result);
+                return result;                
+            }
+
+            /*function check(prod){
+                var result = false;
+                $(".product").toArray().some(function(){
+                    var value = $(".product").val();
+                    alert(value);
+                    alert(prod);
+                    if(value == prod){
+                        
+                        
+                       
+                        var quantity = $(".product").closest("tr").find("input.quantity").val();
+                        quantity = parseInt(quantity) + parseInt(1);
+                        $(".product").closest("tr").find("input.quantity").val(quantity);
+                       alert("done");
+                       result = true;
+                    }
+                   
+                });
+                alert(result);
+                return result;
+            }*/
+
+            /*function check(prod){
+                $(".product").toArray().every(function(){
+                    //var value = $(this.target).val();alert(value);
+                    var value = $(".product").val();alert(value);
+                    if(value == prod){
+                        //console.log(prod);
+                        toastr.error('duplicate', 'Error',{
+                            closeButton:true,
+                            progressBar:true,
+                        });
+                        console.log(value);
+                        var quantity = $(this).closest("tr").find("input.quantity").val();
+                        quantity = parseInt(quantity) + parseInt(1);
+                        $(this).closest("tr").find("input.quantity").val(quantity);
+                        //console.log(quantity);alert(quantity);
+                        return false;
+                    }
+                    //$(this).closest("tr").find("input.quantity").val(quantity);
+                    //alert(quantity);
+                    //return true;
+                    //else{
+                        //alert("OK");
+                    //}
+                });
+                
+            }*/
+
+            /*function check(prod){
+                $(".product").each(function(){
+                    var value = $(this).val();alert(value);
+                    if(value == prod){
+                        //console.log(prod);
+                        toastr.error('duplicate', 'Error',{
+                            closeButton:true,
+                            progressBar:true,
+                        });
+                        //console.log(value);
+                        var quantity = $(this).closest("tr").find("input.quantity").val();
+                        quantity = parseInt(quantity) + parseInt(1);
+                        $(this).closest("tr").find("input.quantity").val(quantity);
+                        //console.log(quantity);alert(quantity);
+                    }
+                    //$(this).closest("tr").find("input.quantity").val(quantity);
+                    //alert(quantity);
+                    //return true;
+                    //else{
+                       // alert("OK");
+                    //}
+                });
+                
+            }*/
 
             $(document).on("click", ".removeitem", function(event){
                 $(this).closest("#delete_add_more_item").remove();
@@ -282,6 +382,7 @@
                     });
                 }*/
             });
+
 
             function totalAmountPrice(){
                 var sum = 0;

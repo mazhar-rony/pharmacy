@@ -339,4 +339,5 @@
     <!-- Sparkline Chart Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/jquery-sparkline/jquery.sparkline.js') }}"></script>
     <script src="{{ asset('assets/backend/js/pages/index.js') }}"></script>
+    
 @endpush

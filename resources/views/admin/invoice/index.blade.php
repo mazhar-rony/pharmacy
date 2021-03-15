@@ -69,14 +69,14 @@
                                         <td>{{ $invoice->invoice_no }}</td> 
                                         <td>Take Away Customer</td>
                                         <td>{{ $invoice->date }}</td>   
-                                        <td>{{ $invoice->amount }}</td>
-                                        <td>{{ $invoice->discount }}</td>
+                                        <td>{{ number_format(round($invoice->amount, 2), 2) }}</td>
+                                        <td>{{ number_format(round($invoice->discount, 2), 2) }}</td>
                                         <td>{{ number_format(round($invoice->total_amount, 2), 2) }}</td>
                                         {{--  <td>{{ $invoice->paid }}</td> 
                                         <td>{{ $invoice->due }}</td>  --}}
-                                        <td>{{ $invoice->profit }}</td>
+                                        <td>{{ number_format(round($invoice->profit, 2), 2) }}</td>
                                         <td><span class="badge {{ $invoice->status == TRUE ? 'bg-pink' : 'bg-green' }}">{{ $invoice->status == TRUE ? 'Pending' : 'Paid' }}</span></td>
-                                        <td>{{ $invoice->created_by }}</td> 
+                                        <td>{{ $invoice->user->name }}</td> 
                                         <td class="text-center" style="white-space:nowrap;">
                                             <a href="{{ route('admin.invoice.edit', $invoice->id) }}" class="btn btn-info waves-effect">
                                                 <i class="material-icons">edit</i>

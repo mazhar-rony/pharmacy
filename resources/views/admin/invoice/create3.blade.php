@@ -184,7 +184,7 @@
                 @{{category_name}}
             </td>
             <td>
-                <input type="hidden" name="product[]" value="@{{product}}">
+                <input type="hidden" name="product[]" class="form-control form-control-sm text-right product" value="@{{product}}">
                 @{{product_name}}
             </td>
             <td>
@@ -231,8 +231,9 @@
                         progressBar:true,
                     });
                 }
-
                 else if(!isNaN(stock) && stock > 0){
+                    //var a = check(product); alert(a);
+                    //if(check(product)){alert('ok')}else{
                     var source = $("#document-template").html();
                     var template = Handlebars.compile(source);
                     var data = {
@@ -246,8 +247,8 @@
                         };
                     var html = template(data);
                     $("#addRow").append(html);
-                    }
-
+                    //}
+                }
                 else{
                     toastr.error('Out of Stock', 'Error',{
                         closeButton:true,
@@ -282,6 +283,28 @@
                     });
                 }*/
             });
+
+            function check(prod){
+                $(".product").each(function(){
+                    var value = $(this).val();//console.log(value);
+                    if(value == prod){
+                        //console.log(prod);
+                        toastr.error('duplicate', 'Error',{
+                            closeButton:true,
+                            progressBar:true,
+                        });
+                        //console.log(value);
+                        var quantity = $(this).closest("tr").find("input.quantity").val();
+                        quantity = parseInt(quantity) + parseInt(1);
+                        //$(this).closest("tr").find("input.quantity").val(quantity);
+                        //console.log(quantity);alert(quantity);
+                    }
+                    $(this).closest("tr").find("input.quantity").val(quantity);
+                    alert(quantity);
+                    //return true;
+                });
+                
+            }
 
             function totalAmountPrice(){
                 var sum = 0;

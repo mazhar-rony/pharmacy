@@ -117,12 +117,16 @@
     <!-- Validation Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/jquery-validation/jquery.validate.js') }}"></script>
 
-    <!-- Custom Js -->
+    {{--  <!-- Custom Js -->
     <script src="{{ asset('assets/backend/js/admin.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/pages/forms/basic-form-elements.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/pages/forms/basic-form-elements.js') }}"></script>  --}}
 
     <!-- Demo Js -->
     <script src="{{ asset('assets/backend/js/demo.js') }}"></script>
+
+    <!-- Handlebars Js -->
+    {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>  --}}
+    <script src="{{ asset('assets/backend/js/handlebars.min.js') }}"></script>
 
     <!-- Toastr Js -->
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
@@ -141,5 +145,9 @@
     
     @stack('js')
 
+    <!-- Custom Js -->
+    <script src="{{ asset('assets/backend/js/admin.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/pages/forms/basic-form-elements.js') }}"></script>
+    
 </body>
 </html>

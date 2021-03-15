@@ -23,6 +23,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
 
     //dependency dropdown
     Route::get('invoice/products', 'InvoiceController@getProducts')->name('invoice.getProducts');
+    Route::get('invoice/quantity', 'InvoiceController@getQuantity')->name('invoice.getQuantity');
 
     Route::resource('invoice', 'InvoiceController');
 

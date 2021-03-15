@@ -54,7 +54,7 @@ class ProductController extends Controller
             'name' => 'required|unique:products',
             'category' => 'required',
             'supplier' => 'required',
-            'quantity' => 'required|numeric',
+            'quantity' => 'required|numeric|min:0',
             'price' => 'required|numeric',
             'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
@@ -138,7 +138,7 @@ class ProductController extends Controller
             'name' => 'required|unique:products,id',
             'category' => 'required',
             'supplier' => 'required',
-            'quantity' => 'required|numeric',
+            'quantity' => 'required|numeric|min:0',
             'price' => 'required|numeric',
             'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);

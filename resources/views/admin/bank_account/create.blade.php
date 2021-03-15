@@ -120,10 +120,10 @@
                                 </span>
                             @enderror
                         </div>
-                        <p>Click on this paragraph.</p>
+                        
                         <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.account.index') }}">BACK</a>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
-                        <button type="button" id="hide" onclick="hideImage()" class="btn btn-warning m-t-15 waves-effect">HIDE</button>
+                        
                     </form>
                 </div>
             </div>

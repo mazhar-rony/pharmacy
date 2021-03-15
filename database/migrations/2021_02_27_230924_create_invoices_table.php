@@ -15,7 +15,8 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('invoice_no');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('invoice_no');
             $table->date('date');
             $table->decimal('amount', 9, 4);
             $table->decimal('discount', 9, 4)->default(0);
@@ -25,7 +26,6 @@ class CreateInvoicesTable extends Migration
             $table->decimal('profit', 9, 4);
             $table->text('description')->nullable();
             $table->boolean('status')->default(0)->comment('0=Paid,1=Pending');
-            $table->integer('created_by');
             $table->timestamps();
         });
     }

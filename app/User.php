@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\BankAccount');
     }
+
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice');
+    }
 }
