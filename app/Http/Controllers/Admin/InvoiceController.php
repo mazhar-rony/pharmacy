@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Bank;
 use App\Invoice;
 use App\Product;
 use App\Category;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -30,6 +32,8 @@ class InvoiceController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name')->get();
+        $banks = Bank::orderBy('name')->get();
+        $customers = Customer::orderBy('name')->get();
         $invoice_no = Invoice::whereDate('created_at', new \DateTime('today',))->max('invoice_no');
         
         if($invoice_no != NULL)
@@ -43,7 +47,7 @@ class InvoiceController extends Controller
         }
         
 
-        return view('admin.invoice.create4', compact('categories', 'invoice_no'));
+        return view('admin.invoice.create', compact('categories', 'banks', 'customers', 'invoice_no'));
     }
 
     public function getProducts(Request $request)
@@ -66,6 +70,18 @@ class InvoiceController extends Controller
             $quantity = Product::where('id', $request->product)->first();
 
             return response()->json($quantity);
+        }
+    }
+
+    public function getBankAccounts(Request $request)
+    {
+        $bank = $request->bank;
+        
+        if($request->has('bank'))
+        {
+            $accounts =  Bank::find($bank)->accounts()->get();
+            
+            return response()->json($accounts);
         }
     }
 

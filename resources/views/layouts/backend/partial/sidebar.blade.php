@@ -139,6 +139,13 @@
 
                 <li class="header">POS</li>
 
+                <li class="{{ Request::is('admin/customer*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.customer.index') }}">
+                        <i class="material-icons">person</i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+
                 <li class="{{ Request::is('admin/invoice*') ? 'active' : '' }}">
                     <a href="{{ route('admin.invoice.index') }}">
                         <i class="material-icons">important_devices</i>

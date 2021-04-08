@@ -22,6 +22,10 @@
             right: -5px;
             bottom: 10px;
         }
+        input::-webkit-outer-spin-button, 
+        input::-webkit-inner-spin-button { 
+            margin-left: 5px; 
+        } 
     </style>
 @endpush
 
@@ -82,7 +86,7 @@
                                     <img class="loader" id="loader" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
                                     <select name="product" id="product" data-live-search="true" 
                                         class="form-control selectpicker show-tick @error('product') is-invalid @enderror" required>
-                                            <option value="">Nothing Selected</option>
+                                            <option value="" disabled selected>Nothing Selected</option>
                                     </select>
                                 </div>
                                 @error('product')
@@ -102,7 +106,9 @@
                                     font-size: 14px;" readonly>
                             </div>
                         </div>
-                        
+
+                        <input type="hidden" id="cost" name="cost" value="">
+
                         <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                             <label for="">Add +</label>                            
                             {{--  <button type="button" class="form-control btn btn-success waves-effect addmoreevent" style="margin-top: 25px;">  --}}
@@ -133,7 +139,16 @@
                                     
                                 </tbody>
                                     <tr>
-                                        <td colspan="4"></td>
+                                        <td colspan="4" class="text-right" style="font-weight: bold;">Discount</td>
+                                        <td>
+                                            <input type="number" id="discount" name="discount" value="0"
+                                                class="form-control form-control-sm text-right discount"
+                                                min="0" step=".01">
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-right" style="font-weight: bold;">Total Amount</td>
                                         <td>
                                             <input type="text" id="total_amount" name="total_amount" value="0"
                                                 class="form-control form-control-sm text-right total_amount" 
@@ -145,6 +160,79 @@
                                     
                                 </tbody>
                             </table>
+                        </div>
+                        <div>
+                            <textarea name="description" id="description" class="form-control"
+                                placeholder="Write description here..."></textarea>
+                        </div>
+                        <br>
+                        <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                
+                            <div class="form-group form-float">
+                                <div class="form-line {{ $errors->has('customer') ? 'focused error' : '' }}">
+                                    <select name="customer" id="customer" data-live-search="true" 
+                                        class="form-control show-tick @error('customer') is-invalid @enderror" required>
+                                            <option value="" disabled selected>Select Customer</option>
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}">{{ $customer->name }} ( contact: {{ $customer->phone }} )</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('customer')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong style="color: red">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group form-float">
+                                    <label for="">Payment Type:</label>
+                                
+                                    <input name="payment_type" type="radio" id="cash" value="cash" class="with-gap radio-col-pink" checked />
+                                    <label for="cash">CASH</label>
+                                    <input name="payment_type" type="radio" id="cheque" value="cheque" class="with-gap radio-col-pink" />
+                                    <label for="cheque">CHEQUE</label>
+                                </div>
+                            </div>
+                            <div class="bank_info" style="display:none">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">                                
+                                    <div class="form-group form-float">
+                                        <div class="form-line {{ $errors->has('bank') ? 'focused error' : '' }}">
+                                            <select name="bank" id="bank" data-live-search="true" 
+                                                class="form-control show-tick @error('bank') is-invalid @enderror">
+                                                    <option value="" disabled selected>Select Bank</option>
+                                                @foreach ($banks as $bank)
+                                                    <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @error('bank')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong style="color: red">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">                                
+                                    <div class="form-group form-float">
+                                        <div class="form-line {{ $errors->has('account') ? 'focused error' : '' }}">
+                                            <img class="loader" id="loader_account" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
+                                            <select name="account" id="account" data-live-search="true" 
+                                                class="form-control selectpicker show-tick @error('account') is-invalid @enderror">
+                                                    <option value="" disabled selected>Select Account No</option>
+                                            </select>
+                                        </div>
+                                        @error('account')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong style="color: red">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.invoice.index') }}">BACK</a>
                         <button type="submit" id="submitButton" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
@@ -179,12 +267,13 @@
             <input type="hidden" name="invoice" value="@{{invoice}}">
             <input type="hidden" name="invoice_date" value="@{{invoice_date}}">
             <input type="hidden" name="stock[]" class="form-control form-control-sm text-center stock" value="@{{stock}}">
+            <input type="hidden" id="cost" name="cost[]" value="@{{cost}}">
             <td>
                 <input type="hidden" name="category[]" value="@{{category}}">
                 @{{category_name}}
             </td>
             <td>
-                <input type="hidden" name="product[]" value="@{{product}}">
+                <input type="hidden" name="product[]" class="form-control form-control-sm text-right product" value="@{{product}}">
                 @{{product_name}}
             </td>
             <td>
@@ -218,6 +307,7 @@
                 var product = $('#product').val();
                 var product_name = $('#product').find('option:selected').text();
                 var stock = $('#stock').val();
+                var cost = $('#cost').val();
                 
                 if(category == ''){
                     toastr.error('Category is required.', 'Error',{
@@ -231,23 +321,31 @@
                         progressBar:true,
                     });
                 }
-
-                else if(!isNaN(stock) && stock > 0){
-                    var source = $("#document-template").html();
-                    var template = Handlebars.compile(source);
-                    var data = {
-                        invoice_date:invoice_date,
-                        invoice:invoice,
-                        category:category,
-                        category_name:category_name,
-                        product:product,
-                        product_name:product_name,
-                        stock:stock
-                        };
-                    var html = template(data);
-                    $("#addRow").append(html);
+                else if(!isNaN(stock) && stock > 0){                    
+                    if(checkDuplicate(product)){
+                        //alert("back to function");
+                        toastr.warning('Item already added, Quantity Increased !', 'Warning',{
+                            closeButton:true,
+                            progressBar:true,
+                        });
                     }
-
+                    else{
+                        var source = $("#document-template").html();
+                        var template = Handlebars.compile(source);
+                        var data = {
+                            invoice_date:invoice_date,
+                            invoice:invoice,
+                            category:category,
+                            category_name:category_name,
+                            product:product,
+                            product_name:product_name,
+                            stock:stock,
+                            cost:cost
+                            };
+                        var html = template(data);
+                        $("#addRow").append(html);
+                    }                                       
+                }
                 else{
                     toastr.error('Out of Stock', 'Error',{
                         closeButton:true,
@@ -256,6 +354,28 @@
                 }
             });
 
+            function checkDuplicate(prod){
+                var result = false;
+                $(".product").each(function(){
+                    var value = $(this).val();
+                    //alert(prod);
+                    //alert(value);                    
+                    if(value == prod){                 
+                        var quantity = $(this).closest("tr").find("input.quantity").val();
+                        
+                        quantity = parseInt(quantity) + parseInt(1);
+                        //trigger make changes Total Price
+                        $(this).closest("tr").find("input.quantity").val(quantity).trigger("keyup");
+                        
+                        //alert("done");
+                        result = true;                        
+                    }                    
+                });
+                //alert(result);
+                return result;                
+            }
+
+            
             $(document).on("click", ".removeitem", function(event){
                 $(this).closest("#delete_add_more_item").remove();
                 totalAmountPrice();
@@ -271,17 +391,27 @@
 
                 //if(qty <= stock_limit){
                     //console.log(qty);
+
                 var total_price = unit_price * qty;
                 $(this).closest("tr").find("input.total_price").val(total_price.toFixed(2));
-                totalAmountPrice();
+                //totalAmountPrice();
+                $('#discount').trigger('keyup');
+
                 //}
                 /*else{
-                    toastr.error('Quantity is more than Stock Limit!', 'Error',{
+                    toastr.error('Quantity is more than Stock Limit !', 'Error',{
                         closeButton:true,
                         progressBar:true,
                     });
                 }*/
+
+
             });
+
+            $(document).on('keyup click', '#discount', function(){
+                totalAmountPrice();
+            });
+
 
             function totalAmountPrice(){
                 var sum = 0;
@@ -291,7 +421,28 @@
                         sum += parseFloat(value);
                     }
                 });
+                var discount = parseFloat($('#discount').val());
+                if(!isNaN(discount) && discount.length != 0){
+                    sum -= parseFloat(discount);
+                }
                 $("#total_amount").val(sum.toFixed(2));
+            }
+        });
+    </script>
+
+<!-- Show Bank Info for Cheque Payment -->
+
+    <script>
+        $(document).on('change', 'input[name=payment_type]', function(){
+            var payment_type = $(this).val();
+            if(payment_type == 'cheque'){
+                $('.bank_info').show();
+                $('#bank').attr({"required": true});
+                $('#account').attr({"required": true});
+            }else{
+                $('.bank_info').hide();
+                $('#bank').attr({"required": false});
+                $('#account').attr({"required": false});
             }
         });
     </script>
@@ -344,7 +495,7 @@
                             });
                             product.removeAttr('disabled');
                             $('#product').html(option);
-                            product.html(option);
+                            //product.html(option);
                             loader.hide();
                             $('#stock').val('');
                             $(".selectpicker").selectpicker("refresh");
@@ -367,7 +518,7 @@
         //});
     </script>
 
-<!-- Dependency Dropdown for Stock -->
+<!-- Dependency Dropdown for Stock & Cost -->
     <script>
         $(document).on('change', '#product', function(){
             var product = $(this).val();
@@ -377,13 +528,62 @@
                     data: {product:product},                   
                     success: function(data){
                         $('#stock').val(data.quantity);
-                        
+                        $('#cost').val(data.price);
                     },
                     error: function(xhr, status, error) {
                        
                     },
                 });
         });
+    </script>
+
+<!-- Dependency Dropdown for Account No -->
+    <script>    
+        //$(function() {
+        var loader_account = $('#loader_account'),
+        bank = $('select[name="bank"]'),
+        account = $('select[name="account"]');
+
+        loader_account.hide();
+        account.attr('disabled','disabled');
+
+            $(document).on('change', '#bank', function(){
+                var bank = $(this).val();
+                if(bank){
+                    loader_account.show();
+                    account.attr('disabled','disabled');
+
+                    $.ajax({
+                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        type: "GET",
+                        data: {bank:bank},                   
+                        success: function(data){
+                            var option = '<option value="">Select Acount No</option>';
+                            $.each(data, function(key,value){
+                                option += '<option value="'+value.id+'">'+value.account_number+'</option>';
+                            });
+                            account.removeAttr('disabled');
+                            $('#account').html(option);
+                            //account.html(option);
+                            loader_account.hide();
+                            $(".selectpicker").selectpicker("refresh");
+                        },
+                        error: function(xhr, status, error) {
+                            // check status && error
+                            //console.log(error);
+                        },
+                    });
+                }
+            });
+
+            account.change(function(){
+                var id = $(this).val();
+                if(!id){
+                    account.attr('disabled','disabled');
+                }
+            })
+                    
+        //});
     </script>
    
 @endpush

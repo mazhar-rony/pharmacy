@@ -12,6 +12,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+/*Route::group(['middleware' => ['auth']], function() {
+    Route::resource('customer', 'CustomerController');
+});*/
+
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
@@ -20,10 +24,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('product', 'ProductController');
     Route::resource('bank', 'BankController');
     Route::resource('branch', 'BankBranchController');
+    Route::resource('customer', 'CustomerController');
 
     //dependency dropdown
     Route::get('invoice/products', 'InvoiceController@getProducts')->name('invoice.getProducts');
     Route::get('invoice/quantity', 'InvoiceController@getQuantity')->name('invoice.getQuantity');
+    Route::get('invoice/account', 'InvoiceController@getBankAccounts')->name('invoice.getBankAccounts');
 
     Route::resource('invoice', 'InvoiceController');
 
