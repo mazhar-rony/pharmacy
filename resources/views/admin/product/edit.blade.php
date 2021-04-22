@@ -134,7 +134,7 @@
                                                     <input type="number" id="price" name="price" min="0" step=".01"
                                                         class="form-control @error('price') is-invalid @enderror" 
                                                         placeholder="Product price" 
-                                                        value="{{ !empty(old('price')) ? old('price') : number_format(round($product->price, 2), 2) }}">
+                                                        value="{{ !empty(old('price')) ? old('price') : round($product->price, 2) }}">
                                                 </div>
                                                 @error('price')
                                                     <span class="invalid-feedback" role="alert">
@@ -207,7 +207,7 @@
                                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" id="average_price" name="average_price" value="{{  number_format(round($product->price, 2), 2) }}" class="form-control" disabled>
+                                                    <input type="text" id="average_price" name="average_price" value="{{  round($product->price, 2) }}" class="form-control" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -230,7 +230,7 @@
                                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" id="old_price" name="old_price" value="{{  number_format(round($product->price, 2), 2) }}" class="form-control" disabled>
+                                                    <input type="text" id="old_price" name="old_price" value="{{  round($product->price, 2) }}" class="form-control" disabled>
                                                 </div>
                                             </div>
                                         </div>

@@ -20,4 +20,9 @@ class BankAccount extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function account_transactions()
+    {
+        return $this->hasMany('App\BankAccountTransaction');
+    }
 }

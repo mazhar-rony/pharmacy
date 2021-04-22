@@ -37,6 +37,10 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::get('account/branches', 'BankAccountController@getBranches')->name('account.getBranches');
 
     Route::resource('account', 'BankAccountController');
+    Route::get('account/{account}/transaction', 'BankAccountController@transaction')->name('account.transaction');
+    Route::put('account/deposite/{account}', 'BankAccountController@deposite')->name('account.deposite');
+    Route::put('account/withdraw/{account}', 'BankAccountController@withdraw')->name('account.withdraw');
+    Route::put('account/interest/{account}', 'BankAccountController@interest')->name('account.interest');
 
     Route::put('product/quantity/{product}', 'ProductController@updatePrice')->name('product.price');
 });

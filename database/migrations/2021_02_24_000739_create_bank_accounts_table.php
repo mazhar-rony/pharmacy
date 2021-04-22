@@ -21,7 +21,7 @@ class CreateBankAccountsTable extends Migration
             $table->string('account_type');
             $table->string('account_name');
             $table->string('account_number');
-            $table->decimal('balance', 9, 4);
+            $table->decimal('balance', 13, 4);
 
             $table->foreign('bank_id')
                 ->references('id')

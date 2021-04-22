@@ -63,6 +63,9 @@
                                         <td>{{ $account->account_type }}</td>
                                         <td>{{ number_format($account->balance, 2) }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
+                                            <a href="{{ route('admin.account.transaction', $account->id) }}" class="btn btn-success waves-effect">
+                                                <span>Transaction </span><i class="material-icons">account_balance_wallet</i>
+                                            </a>
                                             <a href="{{ route('admin.account.edit', $account->id) }}" class="btn btn-info waves-effect">
                                                 <i class="material-icons">edit</i>
                                             </a>
@@ -75,7 +78,6 @@
                                                 style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
-
                                             </form>
                                         </td>
                                     </tr>

@@ -66,7 +66,7 @@
                                     <label for="category">Select Category</label>
                                     <select name="category" id="category" data-live-search="true" 
                                         class="form-control show-tick @error('category') is-invalid @enderror" required>
-                                            <option value="">Nothing Selected</option>
+                                            <option value="" disabled selected>Nothing Selected</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
@@ -167,24 +167,24 @@
                         </div>
                         <br>
                         <div class="row clearfix">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                
-                            <div class="form-group form-float">
-                                <div class="form-line {{ $errors->has('customer') ? 'focused error' : '' }}">
-                                    <select name="customer" id="customer" data-live-search="true" 
-                                        class="form-control show-tick @error('customer') is-invalid @enderror" required>
-                                            <option value="" disabled selected>Select Customer</option>
-                                        @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->name }} ( contact: {{ $customer->phone }} )</option>
-                                        @endforeach
-                                    </select>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                
+                                <div class="form-group form-float">
+                                    <div class="form-line {{ $errors->has('customer') ? 'focused error' : '' }}">
+                                        <select name="customer" id="customer" data-live-search="true" 
+                                            class="form-control show-tick @error('customer') is-invalid @enderror" required>
+                                                <option value="" disabled selected>Select Customer</option>
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}">{{ $customer->name }} ( contact: {{ $customer->phone }} )</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('customer')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong style="color: red">{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                @error('customer')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong style="color: red">{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
-                        </div>
                         </div>
                         <div class="row clearfix">
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -309,7 +309,7 @@
                 var stock = $('#stock').val();
                 var cost = $('#cost').val();
                 
-                if(category == ''){
+                if(category == '' || category == null){
                     toastr.error('Category is required.', 'Error',{
                         closeButton:true,
                         progressBar:true,

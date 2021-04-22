@@ -115,7 +115,7 @@
                         <div class="form-group form-float">
                             <div class="form-line {{ $errors->has('balance') ? 'focused error' : '' }}">
                                 <input type="number" id="balance" class="form-control @error('balance') is-invalid @enderror" 
-                                    name="balance" min="0" step=".01" value="{{ !empty(old('balance')) ? old('balance') : round($account->balance, 2) }}">
+                                    name="balance" min="0" step=".01" value="{{ !empty(old('balance')) ? old('balance') : round($account->balance, 2) }}" readonly>
                                 <label class="form-label">Account Balance</label>
                                
                             </div>
@@ -127,7 +127,7 @@
                         </div>
                     
                         <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.account.index') }}">BACK</a>
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">UPDATE</button>
                     </form>
                 </div>
             </div>

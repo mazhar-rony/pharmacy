@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->string('slug');
             $table->integer('quantity');
-            $table->decimal('price', 9, 4);
+            $table->decimal('price', 13, 4);
             $table->string('image')->default('default.png');
 
             $table->foreign('category_id')

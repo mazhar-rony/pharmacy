@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pull-right" style="margin-bottom: 20px;">
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pull-right" style="margin-bottom: 20px;">
     <button class="btn bg-teal btn-lg btn-block waves-effect" type="button" style="height: 50px; font-size: 14px; cursor: default; pointer-events: none;">Total Amount 
         <span class="badge" style="font-size: 18px;">{{ number_format($total_amount->total_amount, 2) }}</span>
     </button>
