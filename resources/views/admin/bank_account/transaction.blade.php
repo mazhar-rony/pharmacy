@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Product')
+@section('title', 'Bank')
 
 @push('css')
 <!-- Bootstrap Material Datetime Picker Css -->

@@ -43,6 +43,15 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::put('account/interest/{account}', 'BankAccountController@interest')->name('account.interest');
 
     Route::put('product/quantity/{product}', 'ProductController@updatePrice')->name('product.price');
+    
+    Route::get('creditor/{creditor}/payment', 'CreditorController@payment')->name('creditor.payment');
+    Route::put('creditor/payment/{creditor}', 'CreditorController@payToCreditor')->name('creditor.payToCreditor');
+    Route::resource('creditor', 'CreditorController');
+
+    Route::get('debtor/{debtor}/payment', 'DebtorController@payment')->name('debtor.payment');
+    Route::put('debtor/payment/{debtor}', 'DebtorController@paidByDebtor')->name('debtor.paidByDebtor');
+    Route::resource('debtor', 'DebtorController');
+    
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {

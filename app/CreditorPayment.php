@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class CreditorPayment extends Model
 {
     public function creditor()
     {
-        return $this->hasOne('App\Creditor');
+        return $this->belongsTo('App\Creditor');
     }
 }

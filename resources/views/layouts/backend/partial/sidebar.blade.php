@@ -153,6 +153,22 @@
                     </a>
                 </li>
 
+                <li class="header">PAYMENT</li>
+
+                <li class="{{ Request::is('admin/creditor*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.creditor.index') }}">
+                        <i class="material-icons">attach_money</i>
+                        <span>Creditors</span>
+                    </a>
+                </li>
+
+                <li class="{{ Request::is('admin/debtor*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.debtor.index') }}">
+                        <i class="material-icons">local_parking</i>
+                        <span>Pendings</span>
+                    </a>
+                </li>
+
                 <li class="header">SYSTEM</li>
 
                 {{-- <li class="{{ Request::is('admin/settings') ? 'active' : '' }}">
