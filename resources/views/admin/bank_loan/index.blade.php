@@ -11,7 +11,7 @@
     <div class="block-header">
         <a class="btn btn-success waves-effect" href="{{ route('admin.account.create') }}">
             <i class="material-icons">add</i>
-            <span>Add New Account</span>
+            <span>Add New Loan Account</span>
         </a>
     </div>
    
@@ -21,8 +21,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        {{--  ALL BANK&apos;S ACCOUNTS  --}}
-                        ALL BANK ACCOUNTS
+                        ALL BANK LOANS
                         <span class="badge bg-red">{{ $accounts->count() }}</span
                     </h2>
                 </div>
@@ -32,24 +31,28 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>A/C Name</th>
                                     <th>A/C No</th>
                                     <th>Bank</th>
-                                    <th>Branch</th>
-                                    <th>A/C Type</th>
-                                    <th>Balance</th>                                    
+                                    <th>Loan Date</th>
+                                    <th>Loan Amount</th>
+                                    <th>EMI Amount</th>
+                                    <th>Total EMI</th>
+                                    <th>EMI Done</th> 
+                                    <th>Total Paid</th>                                   
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>A/C Name</th>
                                     <th>A/C No</th>
                                     <th>Bank</th>
-                                    <th>Branch</th>
-                                    <th>A/C Type</th>
-                                    <th>Balance</th>                                    
+                                    <th>Loan Date</th>
+                                    <th>Loan Amount</th>
+                                    <th>EMI Amount</th>
+                                    <th>Total EMI</th>
+                                    <th>EMI Done</th> 
+                                    <th>Total Paid</th>                                   
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -57,17 +60,19 @@
                                 @foreach ($accounts as $key=>$account)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $account->account_name }}</td>
                                         <td>{{ $account->account_number }}</td>
                                         <td>{{ $account->bank->name }}</td>
-                                        <td>{{ $account->branch->name }}</td>
-                                        <td>{{ $account->account_type }}</td>
-                                        <td>{{ number_format($account->balance, 2) }}</td>
+                                        <td>{{ $account->bank->loan_date }}</td>
+                                        <td>{{ number_format($account->bank->loan_amount, 2) }}</td>
+                                        <td>{{ number_format($account->bank->emi_amount, 2) }}</td>
+                                        <td>{{ $account->bank->total_emi }}</td>
+                                        <td>{{ $account->bank->emi_given }}</td>
+                                        <td>{{ number_format($account->bank->total_paid, 2) }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.account.transaction', $account->id) }}" class="btn btn-success waves-effect">
+                                            <a href="{{ route('admin.loan.transaction', $account->id) }}" class="btn btn-success waves-effect">
                                                 <span>Transaction </span><i class="material-icons">account_balance_wallet</i>
                                             </a>
-                                            <a href="{{ route('admin.account.edit', $account->id) }}" class="btn btn-info waves-effect">
+                                            <a href="{{ route('admin.loan.edit', $account->id) }}" class="btn btn-info waves-effect">
                                                 <i class="material-icons">edit</i>
                                             </a>
                                             <button class="btn btn-danger waves-effect" type="button"

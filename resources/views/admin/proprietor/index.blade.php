@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Bank')
+@section('title', 'Proprietor')
 
 @push('css')
     <link href="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -9,9 +9,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-        <a class="btn btn-success waves-effect" href="{{ route('admin.account.create') }}">
+        <a class="btn btn-success waves-effect" href="{{ route('admin.proprietor.create') }}">
             <i class="material-icons">add</i>
-            <span>Add New Account</span>
+            <span>Add New Proprietor</span>
         </a>
     </div>
    
@@ -21,9 +21,8 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        {{--  ALL BANK&apos;S ACCOUNTS  --}}
-                        ALL BANK ACCOUNTS
-                        <span class="badge bg-red">{{ $accounts->count() }}</span
+                        ALL PROPRIETORS
+                        <span class="badge bg-red">{{ $proprietors->count() }}</span
                     </h2>
                 </div>
                 <div class="body">
@@ -32,53 +31,45 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>A/C Name</th>
-                                    <th>A/C No</th>
-                                    <th>Bank</th>
-                                    <th>Branch</th>
-                                    <th>A/C Type</th>
-                                    <th>Balance</th>                                    
+                                    <th>Proprietor Name</th>
+                                    <th>Designation</th>
+                                    <th>Phone</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>A/C Name</th>
-                                    <th>A/C No</th>
-                                    <th>Bank</th>
-                                    <th>Branch</th>
-                                    <th>A/C Type</th>
-                                    <th>Balance</th>                                    
+                                    <th>Proprietor Name</th>
+                                    <th>Designation</th>
+                                    <th>Phone</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach ($accounts as $key=>$account)
+                                @foreach ($proprietors as $key=>$proprietor)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $account->account_name }}</td>
-                                        <td>{{ $account->account_number }}</td>
-                                        <td>{{ $account->bank->name }}</td>
-                                        <td>{{ $account->branch->name }}</td>
-                                        <td>{{ $account->account_type }}</td>
-                                        <td>{{ number_format($account->balance, 2) }}</td>
+                                        <td>{{ $proprietor->name }}</td>
+                                        <td>{{ $proprietor->designation }}</td>
+                                        <td>{{ $proprietor->phone }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.account.transaction', $account->id) }}" class="btn btn-success waves-effect">
+                                            <a href="{{ route('admin.proprietor.transaction', $proprietor->id) }}" class="btn btn-success waves-effect">
                                                 <span>Transaction </span><i class="material-icons">account_balance_wallet</i>
                                             </a>
-                                            <a href="{{ route('admin.account.edit', $account->id) }}" class="btn btn-info waves-effect">
+                                            <a href="{{ route('admin.proprietor.edit', $proprietor->id) }}" class="btn btn-info waves-effect">
                                                 <i class="material-icons">edit</i>
                                             </a>
                                             <button class="btn btn-danger waves-effect" type="button"
-                                                onclick="deleteAccount({{ $account->id }})">
+                                                onclick="deleteProprietor({{ $proprietor->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <form id="delete-form-{{ $account->id }}" method="POST"
-                                                action="{{ route('admin.account.destroy', $account->id) }}"
+                                            <form id="delete-form-{{ $proprietor->id }}" method="POST"
+                                                action="{{ route('admin.proprietor.destroy', $proprietor->id) }}"
                                                 style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
+
                                             </form>
                                         </td>
                                     </tr>
@@ -111,7 +102,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script type="text/javascript">
-        function deleteAccount(id) {
+        function deleteProprietor(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',

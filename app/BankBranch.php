@@ -15,4 +15,9 @@ class BankBranch extends Model
     {
         return $this->hasMany('App\BankAccount');
     }
+
+    public function loans()
+    {
+        return $this->hasMany('App\BankLoan');
+    }
 }

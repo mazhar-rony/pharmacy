@@ -58,7 +58,7 @@
                 </li>
                 <li class="{{ Request::is('admin/supplier*') ? 'active' : '' }}">
                     <a href="{{ route('admin.supplier.index') }}">
-                        <i class="material-icons">group</i>
+                        <i class="material-icons">people_alt</i>
                         <span>Product Supplier</span>
                     </a>
                 </li>
@@ -136,6 +136,12 @@
                         <span>Bank Accounts</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/loan*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.loan.index') }}">
+                        <i class="material-icons">try</i>
+                        <span>Loan Accounts</span>
+                    </a>
+                </li>
 
                 <li class="header">POS</li>
 
@@ -166,6 +172,24 @@
                     <a href="{{ route('admin.debtor.index') }}">
                         <i class="material-icons">local_parking</i>
                         <span>Pendings</span>
+                    </a>
+                </li>
+
+                <li class="header">EXPENSES</li>
+
+                <li class="{{ Request::is('admin/expense*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.expense.create') }}">
+                        <i class="material-icons">local_atm</i>
+                        <span>Office Expense</span>
+                    </a>
+                </li>
+
+                <li class="header">PROPRIETOR</li>
+
+                <li class="{{ Request::is('admin/proprietor*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.proprietor.index') }}">
+                        <i class="material-icons">people</i>
+                        <span>Proprietors</span>
                     </a>
                 </li>
 
