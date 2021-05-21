@@ -3,8 +3,24 @@
 @section('title', 'Bank')
 
 @push('css')
+<!-- Bootstrap Select Css -->
+<link href="{{ asset('assets/backend/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
+
 <!-- Bootstrap Material Datetime Picker Css -->
 <link href="{{ asset('assets/backend/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet" />
+
+    <style>
+        .loader {
+            position: absolute;
+            height: 80px;;
+            right: -80px;
+            bottom: -30px;
+        }
+        input::-webkit-outer-spin-button, 
+        input::-webkit-inner-spin-button { 
+            margin-left: 5px; 
+        } 
+    </style>
 @endpush
 
 @section('content')
@@ -21,26 +37,21 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
-                                <a href="#deposite_tab" data-toggle="tab" aria-expanded="false">
-                                    <i class="material-icons">get_app</i> DEPOSITE
+                                <a href="#emi_tab" data-toggle="tab" aria-expanded="false">
+                                    <i class="material-icons">get_app</i> PAY EMI
                                 </a>
                             </li>
                             <li role="presentation" class="">
-                                <a href="#withdraw_tab" data-toggle="tab" aria-expanded="true">
-                                    <i class="material-icons">upload</i> WITHDRAW
-                                </a>
-                            </li>
-                            <li role="presentation" class="">
-                                <a href="#interest_tab" data-toggle="tab" aria-expanded="false">
-                                    <i class="material-icons">info</i> INTEREST
+                                <a href="#closing_tab" data-toggle="tab" aria-expanded="true">
+                                    <i class="material-icons">highlight_off</i> CLOSE LOAN
                                 </a>
                             </li>
                         </ul>
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade active in" id="deposite_tab">
-                                <form action="{{route('admin.account.deposite', $account->id)}}" method="POST" 
+                            <div role="tabpanel" class="tab-pane fade active in" id="emi_tab">
+                                <form id="payEmiForm" action="{{route('admin.loan.emi', $account->id)}}" method="POST" 
                                     class="form-horizontal">
                                     @csrf
                                     @method('PUT')
@@ -49,232 +60,218 @@
                                     @endphp
                                     <div class="row clearfix" style="margin-top: 30px;">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="new_balance_deposite">New A/C Balance</label>
+                                            <label for="emi_no">EMI No</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" id="new_balance_deposite" name="new_balance_deposite" value="{{ round($account->balance, 2) }}" class="form-control" disabled>
+                                                    <input type="text" id="emi_no" name="emi_no" value="{{ $account->emi_given + 1 }}" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="balance_deposite">A/C Balance</label>
+                                            <label for="emi">EMI</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" id="balance_deposite" name="balance_deposite" value="{{  round($account->balance, 2) }}" class="form-control" disabled>
+                                                    <input type="text" id="emi" name="emi" value="{{  round($account->emi_amount, 2) }}" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="deposite">Deposite</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
                                             <div class="form-group">
-                                                <div class="form-line {{ $errors->has('deposite') ? 'focused error' : '' }}">
-                                                    <input type="number" id="deposite" onkeyup="newBalanceDeposite()" onchange="newBalanceDeposite()" class="form-control @error('deposite') is-invalid @enderror" 
-                                                        name="deposite" min="0" step=".01" value="{{ !empty(old('deposite')) ? old('deposite') : '' }}" required>                                                    
-                                                </div>
-                                                    @error('deposite')
+                                                <input name="payment_type" type="radio" id="cash" value="cash" class="with-gap radio-col-pink radio" checked />
+                                                    <label for="cash">CASH</label>
+                                                <input name="payment_type" type="radio" id="cheque" value="cheque" class="with-gap radio-col-pink radio" />
+                                                    <label for="cheque">CHEQUE</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bank_info" style="display:none">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
+                                                <label for="bank">Bank</label>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <div class="form-line {{ $errors->has('bank') ? 'focused error' : '' }}">
+                                                        <select name="bank" id="bank" data-live-search="true" 
+                                                            class="form-control show-tick @error('bank') is-invalid @enderror">
+                                                                <option value="" disabled selected>Select Bank</option>
+                                                            @foreach ($banks as $bank)
+                                                                <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    @error('bank')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong style="color: red">{{ $message }}</strong>
                                                         </span>
                                                     @enderror
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>  
-                                    <div class="row clearfix">
-                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
-                                            <div class="form-group">
-                                                <input name="deposited_from" type="radio" id="from_cash" value="cash" onchange="newBalanceDeposite()" class="with-gap radio-col-pink radio" checked />
-                                                    <label for="from_cash">FROM CASH</label>
-                                                <input name="deposited_from" type="radio" id="from_personal" value="personal" onchange="newBalanceDeposite()" class="with-gap radio-col-pink radio" />
-                                                    <label for="from_personal">PERSONAL</label>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
+                                                <label for="account">Account No</label>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <div class="form-line {{ $errors->has('account') ? 'focused error' : '' }}">
+                                                        <img class="loader" id="loader_account" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
+                                                        <select name="account" id="account" data-live-search="true" 
+                                                            class="form-control selectpicker show-tick @error('account') is-invalid @enderror">
+                                                                <option value="" disabled selected>Select Account No</option>
+                                                        </select>
+                                                    </div>
+                                                    @error('account')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong style="color: red">{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="deposite_date">Date</label>
+                                            <label for="emi_date">Date</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="deposite_date" name="deposite_date" class="datepicker form-control" placeholder="Please choose a date..." required>
+                                                <div class="form-line {{ $errors->has('emi_date') ? 'focused error' : '' }}">
+                                                    <input type="text" id="emi_date" name="emi_date" class="datepicker form-control" value="{{ !empty(old('emi_date')) ? old('emi_date') : '' }}" placeholder="Please choose a date..." required>
                                                 </div>
+                                                @error('emi_date')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong style="color: red">{{ $message }}</strong>
+                                                    </span>
+                                                @enderror 
                                             </div>
-                                        </div>
-                                    </div>                                
+                                        </div>                                                                            
+                                    </div>     
+                                                                
                                     <div class="row clearfix">
                                         <div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-4 col-xs-offset-4">
-                                            <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.account.index') }}">BACK</a>
-                                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
+                                            <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.loan.index') }}">BACK</a>
+                                            <button type="submit" class="btn btn-primary m-t-15 waves-effect" onclick="payEMI()">SUBMIT</button>
+                                            {{--  <button id="btnSubmit" class="btn btn-primary m-t-15 waves-effect" type="button" onclick="payEMI()">SUBMIT</button>  --}}
                                         </div>
                                     </div>
                                 </form>
                             </div>
 
 
-                            <div role="tabpanel" class="tab-pane fade" id="withdraw_tab">
-                                <form action="{{route('admin.account.withdraw', $account->id)}}" method="POST" 
+                            <div role="tabpanel" class="tab-pane fade" id="closing_tab">
+                                <form id="cloaseLoanForm" action="{{route('admin.loan.close', $account->id)}}" method="POST" 
                                     class="form-horizontal">
                                     @csrf
                                     @method('PUT')
+                                    @php
+                                        $cash = $cash;
+                                    @endphp
                                     <div class="row clearfix" style="margin-top: 30px;">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="new_balance_withdraw">New A/C Balance</label>
+                                            <label for="closing_amount">Closing Amount</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <input type="text" id="new_balance_withdraw" name="new_balance_withdraw" value="{{ round($account->balance, 2) }}" class="form-control" disabled>
+                                                    <input type="number" id="closing_amount" onkeyup="dueRemain()" onchange="dueRemain()" class="form-control @error('closing_amount') is-invalid @enderror" 
+                                                        name="closing_amount" min="0" step=".01" value="{{ !empty(old('closing_amount')) ? old('closing_amount') : '' }}" required>
                                                 </div>
+                                                @error('closing_amount')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong style="color: red">{{ $message }}</strong>
+                                                    </span>
+                                                @enderror 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="balance_withdraw">A/C Balance</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="balance_withdraw" name="balance_withdraw" value="{{  round($account->balance, 2) }}" class="form-control" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="withdraw">Withdraw</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line {{ $errors->has('withdraw') ? 'focused error' : '' }}">
-                                                    <input type="number" id="withdraw" onkeyup="newBalanceWithdraw()" onchange="newBalanceWithdraw()" class="form-control @error('withdraw') is-invalid @enderror" 
-                                                        name="withdraw" min="0" step=".01" max="{{ $account->balance }}" value="{{ !empty(old('withdraw')) ? old('withdraw') : '' }}" required>                                                    
-                                                </div>
-                                                    @error('withdraw')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong style="color: red">{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                            </div>
-                                        </div>
-                                    </div>  
                                     <div class="row clearfix">
                                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
                                             <div class="form-group">
-                                                <input name="deposited_to" type="radio" id="to_cash" value="cash" class="with-gap radio-col-pink" checked />
-                                                    <label for="to_cash">TO CASH</label>
-                                                <input name="deposited_to" type="radio" id="to_personal" value="personal" class="with-gap radio-col-pink" />
-                                                    <label for="to_personal">PERSONAL</label>
+                                                <input name="closing_payment_type" type="radio" id="closing_cash" value="cash" class="with-gap radio-col-pink radio" checked />
+                                                    <label for="closing_cash">CASH</label>
+                                                <input name="closing_payment_type" type="radio" id="closing_cheque" value="cheque" class="with-gap radio-col-pink radio" />
+                                                    <label for="closing_cheque">CHEQUE</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="withdraw_date">Date</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="withdraw_date" name="withdraw_date" class="datepicker form-control" placeholder="Please choose a date..." required>
-                                                </div>
+                                    <div class="closing_bank_info" style="display:none">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
+                                                <label for="closing_bank">Bank</label>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="description">Description</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <textarea rows="2" class="form-control" id="description" name="description"
-                                                        placeholder="Reason for withdrawal..."></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>                                 
-                                    <div class="row clearfix">
-                                        <div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-4 col-xs-offset-4">
-                                            <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.account.index') }}">BACK</a>
-                                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div role="tabpanel" class="tab-pane fade" id="interest_tab">
-                                <form action="{{route('admin.account.interest', $account->id)}}" method="POST" 
-                                    class="form-horizontal">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="row clearfix" style="margin-top: 30px;">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="new_balance_interest">New A/C Balance</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="new_balance_interest" name="new_balance_interest" value="{{ round($account->balance, 2) }}" class="form-control" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="balance_interest">A/C Balance</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="balance_interest" name="balance_interest" value="{{  round($account->balance, 2) }}" class="form-control" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="interest">Interest</label>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line {{ $errors->has('interest') ? 'focused error' : '' }}">
-                                                    <input type="number" id="interest" onkeyup="newBalanceInterest()" onchange="newBalanceInterest()" class="form-control @error('interest') is-invalid @enderror" 
-                                                        name="interest" min="0" step=".01" value="{{ !empty(old('interest')) ? old('interest') : '' }}" required>                                                    
-                                                </div>
-                                                    @error('interest')
+                                            <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <div class="form-line {{ $errors->has('closing_bank') ? 'focused error' : '' }}">
+                                                        <select name="closing_bank" id="closing_bank" data-live-search="true" 
+                                                            class="form-control show-tick @error('closing_bank') is-invalid @enderror">
+                                                                <option value="" disabled selected>Select Bank</option>
+                                                            @foreach ($banks as $bank)
+                                                                <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    @error('closing_bank')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong style="color: red">{{ $message }}</strong>
                                                         </span>
                                                     @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
+                                                <label for="closing_account">Account No</label>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <div class="form-line {{ $errors->has('closing_account') ? 'focused error' : '' }}">
+                                                        <img class="loader" id="loader_closing_account" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
+                                                        <select name="closing_account" id="closing_account" data-live-search="true" 
+                                                            class="form-control selectpicker show-tick @error('closing_account') is-invalid @enderror">
+                                                                <option value="" disabled selected>Select Account No</option>
+                                                        </select>
+                                                    </div>
+                                                    @error('closing_account')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong style="color: red">{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="interest_date">Date</label>
+                                            <label for="closing_emi_date">Date</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="interest_date" name="interest_date" class="datepicker form-control" placeholder="Please choose a date..." required>
+                                                <div class="form-line {{ $errors->has('closing_emi_date') ? 'focused error' : '' }}">
+                                                    <input type="text" id="closing_emi_date" name="closing_emi_date" class="datepicker form-control" value="{{ !empty(old('closing_emi_date')) ? old('closing_emi_date') : '' }}" placeholder="Please choose a date..." required>
                                                 </div>
+                                                @error('closing_emi_date')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong style="color: red">{{ $message }}</strong>
+                                                    </span>
+                                                @enderror 
                                             </div>
-                                        </div>
-                                    </div>                                 
+                                        </div>                                                                            
+                                    </div>     
+                                                                
                                     <div class="row clearfix">
                                         <div class="col-lg-offset-5 col-md-offset-5 col-sm-offset-4 col-xs-offset-4">
-                                            <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.account.index') }}">BACK</a>
-                                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
+                                            <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.loan.index') }}">BACK</a>
+                                            <button type="submit" class="btn btn-primary m-t-15 waves-effect" onclick="closeLoan()">SUBMIT</button>
+                                            {{--  <button id="btnSubmit" class="btn btn-primary m-t-15 waves-effect" type="button" onclick="payEMI()">SUBMIT</button>  --}}
                                         </div>
                                     </div>
                                 </form>
@@ -288,7 +285,8 @@
 @endsection
 
 @push('js')
-
+<!-- Select Plugin Js -->
+    <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 
 <!-- Autosize Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/autosize/autosize.js') }}"></script>
@@ -304,25 +302,77 @@
 
 <script type="text/javascript">
 
-    <!-- Revice Balance after Deposite -->
-    function newBalanceDeposite(){
-        var deposite = parseFloat(document.getElementById('deposite').value);
-        var balance = parseFloat(document.getElementById('balance_deposite').value);
-        var newBalance = parseFloat(document.getElementById('new_balance_deposite').value);     
-        
-        /*if (document.getElementById('from_cash').checked) {
-           radio = document.getElementById('from_cash').value;
-        }else{
-            radio = document.getElementById('from_personal').value;
-        }*/
-        var radio = $("input[type='radio'][name='deposited_from']:checked").val();
+    <!-- Show Bank Info for Cheque Payment for EMI -->
 
-        //php variable $cash declared in top of deposite tab
+        $(document).on('change', 'input[name=payment_type]', function(){
+            var payment_type = $(this).val();
+            if(payment_type == 'cheque'){
+                $('.bank_info').show();
+                $('#bank').attr({"required": true});
+                $('#account').attr({"required": true});
+            }else{
+                $('.bank_info').hide();
+                $('#bank').attr({"required": false});
+                $('#account').attr({"required": false});
+            }
+        });
+
+    <!-- Dependency Dropdown for Account No of EMI -->
+
+        var loader_account = $('#loader_account'),
+        bank = $('select[name="bank"]'),
+        account = $('select[name="account"]');
+
+        loader_account.hide();
+        account.attr('disabled','disabled');
+
+            $(document).on('change', '#bank', function(){
+                var bank = $(this).val();
+                if(bank){
+                    loader_account.show();
+                    account.attr('disabled','disabled');
+
+                    $.ajax({
+                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        type: "GET",
+                        data: {bank:bank},                   
+                        success: function(data){
+                            var option = '<option value="">Select Acount No</option>';
+                            $.each(data, function(key,value){
+                                option += '<option value="'+value.id+'">'+value.account_number+'</option>';
+                            });
+                            account.removeAttr('disabled');
+                            $('#account').html(option);
+                            //account.html(option);
+                            loader_account.hide();
+                            $(".selectpicker").selectpicker("refresh");
+                        },
+                        error: function(xhr, status, error) {
+                            // check status && error
+                            //console.log(error);
+                        },
+                    });
+                }
+            });
+
+            account.change(function(){
+                var id = $(this).val();
+                if(!id){
+                    account.attr('disabled','disabled');
+                }
+            })
+
+    <!-- Pay EMI of Loan -->
+
+    function payEMI(){
+        event.preventDefault();
+
         var cash = '<?php echo $cash;?>';
+        var emi = parseFloat(document.getElementById('emi').value);
+        var radio = $("input[type='radio'][name='payment_type']:checked").val();
 
         if(radio == 'cash'){
-            $('#deposite').attr({"max": cash});
-            if(deposite > cash){
+            if(emi > cash){
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -330,56 +380,101 @@
                     footer: 'You have only '+ parseFloat(cash).toFixed(2) + ' Tk in your Cash.'
                   })
             }
+            else{
+                document.getElementById('payEmiForm').submit();
+            }
         }
         else{
-            $("#deposite").removeAttr("max");
-        }        
+            document.getElementById('payEmiForm').submit();
+        }
 
-        if(deposite){
-            document.getElementById('new_balance_deposite').value = parseFloat(deposite + balance).toFixed(2);
-        }
-        else{
-            document.getElementById('new_balance_deposite').value = balance;
-        }
     };
 
-    <!-- Revice Balance after Withdraw -->
-    function newBalanceWithdraw(){
-        var withdraw = parseFloat(document.getElementById('withdraw').value);
-        var balance = parseFloat(document.getElementById('balance_withdraw').value);
-        var newBalance = parseFloat(document.getElementById('new_balance_withdraw').value);
+    <!-- Show Bank Info for Cheque Payment of Close Loan -->
 
-        if(withdraw){
-            document.getElementById('new_balance_withdraw').value = parseFloat(balance - withdraw).toFixed(2);
-            if(document.getElementById('new_balance_withdraw').value < 0){
+        $(document).on('change', 'input[name=closing_payment_type]', function(){
+            var closing_payment_type = $(this).val();
+            if(closing_payment_type == 'cheque'){
+                $('.closing_bank_info').show();
+                $('#closing_bank').attr({"required": true});
+                $('#closing_account').attr({"required": true});
+            }else{
+                $('.closing_bank_info').hide();
+                $('#closing_bank').attr({"required": false});
+                $('#closing_account').attr({"required": false});
+            }
+        });
+
+        <!-- Dependency Dropdown for Account No of Close Loan -->
+
+        var loader_account = $('#loader_closing_account'),
+        closing_bank = $('select[name="closing_bank"]'),
+        closing_account = $('select[name="closing_account"]');
+
+        loader_account.hide();
+        closing_account.attr('disabled','disabled');
+
+            $(document).on('change', '#closing_bank', function(){
+                var closing_bank = $(this).val();
+                if(closing_bank){
+                    loader_account.show();
+                    account.attr('disabled','disabled');
+
+                    $.ajax({
+                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        type: "GET",
+                        data: {bank:closing_bank},                   
+                        success: function(data){
+                            var option = '<option value="">Select Acount No</option>';
+                            $.each(data, function(key,value){
+                                option += '<option value="'+value.id+'">'+value.account_number+'</option>';
+                            });
+                            closing_account.removeAttr('disabled');
+                            $('#closing_account').html(option);
+                            //account.html(option);
+                            loader_account.hide();
+                            $(".selectpicker").selectpicker("refresh");
+                        },
+                        error: function(xhr, status, error) {
+                            // check status && error
+                            //console.log(error);
+                        },
+                    });
+                }
+            });
+
+            account.change(function(){
+                var id = $(this).val();
+                if(!id){
+                    closing_account.attr('disabled','disabled');
+                }
+            })
+
+    <!-- Close Loan -->
+    function closeLoan(){
+        event.preventDefault();
+
+        var cash = '<?php echo $cash;?>';
+        var closing_amount = parseFloat(document.getElementById('closing_amount').value);
+        var radio = $("input[type='radio'][name='closing_payment_type']:checked").val();
+
+        if(radio == 'cash'){
+            if(closing_amount > cash){
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Insufficient Balance to Withdraw !',
-                    footer: 'You have only '+ balance + ' Tk in your bank account.'
+                    text: 'Insufficient Balance in Cash !',
+                    footer: 'You have only '+ parseFloat(cash).toFixed(2) + ' Tk in your Cash.'
                   })
             }
             else{
-                document.getElementById('new_balance_withdraw').value = parseFloat(balance - withdraw).toFixed(2);
+                document.getElementById('cloaseLoanForm').submit();
             }
         }
         else{
-            document.getElementById('new_balance_withdraw').value = balance;
+            document.getElementById('cloaseLoanForm').submit();
         }
-    };
-    
-    <!-- Revice Balance after Interest -->
-    function newBalanceInterest(){
-        var interest = parseFloat(document.getElementById('interest').value);
-        var balance = parseFloat(document.getElementById('balance_interest').value);
-        var newBalance = parseFloat(document.getElementById('new_balance_interest').value);
 
-        if(interest){
-            document.getElementById('new_balance_interest').value = parseFloat(interest + balance).toFixed(2);
-        }
-        else{
-            document.getElementById('new_balance_interest').value = balance;
-        }
     };
 </script>
 

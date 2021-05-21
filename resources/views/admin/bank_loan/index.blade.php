@@ -9,7 +9,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-        <a class="btn btn-success waves-effect" href="{{ route('admin.account.create') }}">
+        <a class="btn btn-success waves-effect" href="{{ route('admin.loan.create') }}">
             <i class="material-icons">add</i>
             <span>Add New Loan Account</span>
         </a>
@@ -60,14 +60,14 @@
                                 @foreach ($accounts as $key=>$account)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $account->account_number }}</td>
-                                        <td>{{ $account->bank->name }}</td>
-                                        <td>{{ $account->bank->loan_date }}</td>
-                                        <td>{{ number_format($account->bank->loan_amount, 2) }}</td>
-                                        <td>{{ number_format($account->bank->emi_amount, 2) }}</td>
-                                        <td>{{ $account->bank->total_emi }}</td>
-                                        <td>{{ $account->bank->emi_given }}</td>
-                                        <td>{{ number_format($account->bank->total_paid, 2) }}</td>
+                                        <td style="white-space:nowrap;">{{ $account->account_number }}</td>
+                                        <td style="white-space:nowrap;">{{ $account->bank->name }}</td>
+                                        <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($account->loan_date)->format('d-m-Y') }}</td>
+                                        <td>{{ number_format($account->loan_amount, 2) }}</td>
+                                        <td>{{ number_format($account->emi_amount, 2) }}</td>
+                                        <td>{{ $account->total_emi }}</td>
+                                        <td>{{ $account->emi_given }}</td>
+                                        <td>{{ number_format($account->total_paid, 2) }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             <a href="{{ route('admin.loan.transaction', $account->id) }}" class="btn btn-success waves-effect">
                                                 <span>Transaction </span><i class="material-icons">account_balance_wallet</i>
@@ -80,7 +80,7 @@
                                                 <i class="material-icons">delete</i>
                                             </button>
                                             <form id="delete-form-{{ $account->id }}" method="POST"
-                                                action="{{ route('admin.account.destroy', $account->id) }}"
+                                                action="{{ route('admin.loan.destroy', $account->id) }}"
                                                 style="display: none;">
                                                     @csrf
                                                     @method('DELETE')

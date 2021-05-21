@@ -5,15 +5,17 @@
 @push('css')
 <!-- Bootstrap Select Css -->
     <link href="{{ asset('assets/backend/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
+<!-- Bootstrap Material Datetime Picker Css -->
+    <link href="{{ asset('assets/backend/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet" />
 
-<style>
-    .loader {
-        position: absolute;
-        height: 80px;;
-        right: 18px;
-        bottom: 2px;
-    }
-</style>
+    <style>
+        .loader {
+            position: absolute;
+            height: 80px;;
+            right: 18px;
+            bottom: 2px;
+        }
+    </style>
     
 @endpush
 
@@ -25,16 +27,16 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        ADD NEW ACCOUNT
+                        ADD NEW LOAN ACCOUNT
                     </h2>
                 </div>
                 <div class="body">
-                    <form action="{{ route('admin.account.store') }}" method="POST">
+                    <form action="{{ route('admin.loan.store') }}" method="POST">
                         @csrf
                         <div class="form-group form-float">
                             <div class="form-line {{ $errors->has('account_name') ? 'focused error' : '' }}">
                                 <input type="text" id="account_name" class="form-control @error('account_name') is-invalid @enderror" 
-                                    name="account_name" value="{{ !empty(old('account_name')) ? old('account_name') : '' }}">
+                                    name="account_name" value="{{ !empty(old('account_name')) ? old('account_name') : '' }}" required>
                                 <label class="form-label">Account Name</label>
                                
                             </div>
@@ -47,7 +49,7 @@
                         <div class="form-group form-float">
                             <div class="form-line {{ $errors->has('account_number') ? 'focused error' : '' }}">
                                 <input type="text" id="account_number" class="form-control @error('account_number') is-invalid @enderror" 
-                                    name="account_number" value="{{ !empty(old('account_number')) ? old('account_number') : '' }}">
+                                    name="account_number" value="{{ !empty(old('account_number')) ? old('account_number') : '' }}" required>
                                 <label class="form-label">Account Number</label>
                                
                             </div>
@@ -61,7 +63,7 @@
                             <div class="form-line {{ $errors->has('bank') ? 'focused error' : '' }}">
                                 <label for="bank">Select Bank</label>
                                 <select name="bank" id="bank" data-live-search="true" 
-                                    class="form-control show-tick @error('bank') is-invalid @enderror">
+                                    class="form-control show-tick @error('bank') is-invalid @enderror" required>
                                         <option value="" selected disabled>Nothing Selected</option>
                                     @foreach ($banks as $bank)
                                         <option value="{{ $bank->id }}">{{ $bank->name }}</option>
@@ -79,7 +81,7 @@
                                 <label for="branch">Select Branch</label>
                                 <img class="loader" id="loader" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
                                 <select name="branch" id="branch" data-live-search="true"
-                                    class="form-control selectpicker show-tick @error('branch') is-invalid @enderror">
+                                    class="form-control selectpicker show-tick @error('branch') is-invalid @enderror" required>
                                         <option value="" selected disabled>Nothing Selected</option>
                                 </select>
                                 
@@ -94,7 +96,7 @@
                             <div class="form-line {{ $errors->has('type') ? 'focused error' : '' }}">
                                 <label for="type">Account Type</label>
                                 <select name="type" id="type" data-live-search="true" 
-                                    class="form-control show-tick @error('type') is-invalid @enderror">
+                                    class="form-control show-tick @error('type') is-invalid @enderror" required>
                                         <option value="" selected disabled>Nothing Selected</option>
                                     
                                         <option value="0">Current</option>
@@ -108,20 +110,51 @@
                             @enderror
                         </div>
                         <div class="form-group form-float">
-                            <div class="form-line {{ $errors->has('balance') ? 'focused error' : '' }}">
-                                <input type="number" id="balance" class="form-control @error('balance') is-invalid @enderror" 
-                                    name="balance" min="0" step=".01" value="{{ !empty(old('balance')) ? old('balance') : '' }}">
-                                <label class="form-label">Account Balance</label>
+                            <div class="form-line {{ $errors->has('loan_amount') ? 'focused error' : '' }}">
+                                <input type="number" id="loan_amount" class="form-control @error('loan_amount') is-invalid @enderror" 
+                                    name="loan_amount" min="0" step=".01" value="{{ !empty(old('loan_amount')) ? old('loan_amount') : '' }}" required>
+                                <label class="form-label">Loan Amount</label>
                                
                             </div>
-                            @error('balance')
+                            @error('loan_amount')
                                 <span class="invalid-feedback" role="alert">
                                     <strong style="color: red">{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
+                        <div class="form-group form-float">
+                            <div class="form-line {{ $errors->has('emi_amount') ? 'focused error' : '' }}">
+                                <input type="number" id="emi_amount" class="form-control @error('emi_amount') is-invalid @enderror" 
+                                    name="emi_amount" min="0" step=".01" value="{{ !empty(old('emi_amount')) ? old('emi_amount') : '' }}" required>
+                                <label class="form-label">EMI Amount</label>
+                               
+                            </div>
+                            @error('emi_amount')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong style="color: red">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line {{ $errors->has('total_emi_no') ? 'focused error' : '' }}">
+                                <input type="number" id="total_emi_no" class="form-control @error('total_emi_no') is-invalid @enderror" 
+                                    name="total_emi_no" min="0" step="1" value="{{ !empty(old('total_emi_no')) ? old('total_emi_no') : '' }}" required>
+                                <label class="form-label">Total No of EMI</label>
+                               
+                            </div>
+                            @error('total_emi_no')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong style="color: red">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" id="loan_date" name="loan_date" class="datepicker form-control" placeholder="Please choose loan date..." required>
+                            </div>
+                        </div>  
                         
-                        <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.account.index') }}">BACK</a>
+                        <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.loan.index') }}">BACK</a>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                         
                     </form>
@@ -136,6 +169,14 @@
 @push('js')
 <!-- Select Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
+<!-- Autosize Plugin Js -->
+    <script src="{{ asset('assets/backend/plugins/autosize/autosize.js') }}"></script>
+
+<!-- Moment Plugin Js -->
+    <script src="{{ asset('assets/backend/plugins/momentjs/moment.js') }}"></script>
+
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="{{ asset('assets/backend/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>   
     
     <script>
         var loader = $('#loader'),
@@ -172,45 +213,5 @@
             }
         })
     </script>
-    
-
-/*<script>
-    $(function(){
-        var loader = $('#loader'),
-            bank = $('select[name="bank"]'),
-            branch = $('select[name="branch"]');
-
-        loader.hide();
-        branch.attr('disabled','disabled');
-
-        bank.change(function(){
-            var id = $(this).val();
-            if(id){
-                loader.show();
-                branch.attr('disabled','disabled');
-
-                $.get('{{url('/admin/account/branches?bank=')}}'+id)
-                    .success(function(data){
-                        var option = '<option value="" selected disabled>Nothing Selected</option>';
-                        data.forEach(function(row){
-                            option += '<option value="'+row.id+'">'+row.name+'</option>'
-                        })
-                        branch.removeAttr('disabled');
-                        branch.html(option);
-                        loader.hide();
-                        $(".selectpicker").selectpicker("refresh");
-                    })
-            }
-        })
-
-        branch.change(function(){
-            var id = $(this).val();
-            if(!id){
-                branch.attr('disabled','disabled');
-            }
-        })
-    });
-    
-</script>*/
 
 @endpush

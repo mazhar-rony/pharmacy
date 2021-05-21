@@ -44,8 +44,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::put('account/interest/{account}', 'BankAccountController@interest')->name('account.interest');
 
     Route::get('loan/{account}/transaction', 'BankLoanController@transaction')->name('loan.transaction');
-    Route::put('loan/emi/{account}', 'BankLoanController@emi')->name('loan.emi');
-    Route::put('loan/close/{account}', 'BankLoanController@close')->name('loan.cloase');
+    Route::put('loan/emi/{account}', 'BankLoanController@payEMI')->name('loan.emi');
+    Route::put('loan/close/{account}', 'BankLoanController@closeLoan')->name('loan.close');
     Route::resource('loan', 'BankLoanController');
     
     Route::get('creditor/{creditor}/payment', 'CreditorController@payment')->name('creditor.payment');

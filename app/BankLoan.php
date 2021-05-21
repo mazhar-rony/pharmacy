@@ -20,4 +20,9 @@ class BankLoan extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function loan_transactions()
+    {
+        return $this->hasMany('App\BankLoanTransaction');
+    }
 }

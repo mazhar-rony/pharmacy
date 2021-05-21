@@ -25,8 +25,9 @@ class CreateBankLoansTable extends Migration
             $table->decimal('loan_amount', 13, 4);
             $table->decimal('emi_amount', 13, 4);
             $table->integer('total_emi');
-            $table->integer('emi_given');
-            $table->decimal('total_paid', 13, 4);
+            $table->integer('emi_given')->default(0);
+            $table->decimal('total_paid', 13, 4)->default(0);
+            $table->boolean('is_paid')->default(0)->comment('0=Pending,1=Paid');
 
             $table->foreign('bank_id')
                 ->references('id')
