@@ -28,11 +28,14 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('customer', 'CustomerController');
 
     //dependency dropdown
+    Route::get('invoice/invoice', 'InvoiceController@getInvoice')->name('invoice.getInvoice');
     Route::get('invoice/products', 'InvoiceController@getProducts')->name('invoice.getProducts');
     Route::get('invoice/quantity', 'InvoiceController@getQuantity')->name('invoice.getQuantity');
     Route::get('invoice/account', 'InvoiceController@getBankAccounts')->name('invoice.getBankAccounts');
 
     Route::resource('invoice', 'InvoiceController');
+
+    Route::resource('return', 'ReturnProductController');
 
     //dependency dropdown
     Route::get('account/branches', 'BankAccountController@getBranches')->name('account.getBranches');

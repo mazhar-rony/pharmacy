@@ -40,12 +40,16 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required'
+            'name' => 'required',
+            'organization' => 'required|unique:customers',
+            'phone' => 'required',
+            'address' => 'required'
         ]);
 
         $customer = new Customer();
 
         $customer->name = $request->name;
+        $customer->organization = $request->organization;
         $customer->phone = $request->phone;
         $customer->address = $request->address;
 
@@ -90,12 +94,16 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'name' => 'required'
+            'name' => 'required',
+            'organization' => 'required|unique:customers,id',
+            'phone' => 'required',
+            'address' => 'required'
         ]);
 
         $customer = Customer::find($id);
 
         $customer->name = $request->name;
+        $customer->organization = $request->organization;
         $customer->phone = $request->phone;
         $customer->address = $request->address;
         

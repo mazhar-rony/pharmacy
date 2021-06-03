@@ -25,4 +25,24 @@ class BankAccount extends Model
     {
         return $this->hasMany('App\BankAccountTransaction');
     }
+
+    public function invoice()
+    {
+        return $this->hasOne('App\Invoice');
+    }
+
+    public function debtor_payments()
+    {
+        return $this->hasMany('App\DebtorPayment');
+    }
+
+    public function creditor_payments()
+    {
+        return $this->hasMany('App\CreditorPayment');
+    }
+
+    public function bank_loan_transactions()
+    {
+        return $this->hasMany('App\BankLoanTransaction');
+    }
 }

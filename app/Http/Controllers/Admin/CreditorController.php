@@ -27,7 +27,9 @@ class CreditorController extends Controller
     {
         $creditors = Creditor::latest()->where('is_paid', 0)->get();
 
-        return view('admin.creditor.index', compact('creditors'));
+        $total_due = DB::table('creditors')->select(DB::raw('sum(round(due, 2)) AS total_due'))->first();
+
+        return view('admin.creditor.index', compact('creditors', 'total_due'));
     }
 
     /**
@@ -183,6 +185,7 @@ class CreditorController extends Controller
                 $payment->creditor_id = $creditor->id;
                 $payment->payment_date = Carbon::parse($request->payment_date)->format('Y-m-d');
                 $payment->payment_type = $request->payment_type;
+                $payment->bank_account_id = $request->account;
                 $payment->paid = $request->pay;
                 //$payment->save();
                 

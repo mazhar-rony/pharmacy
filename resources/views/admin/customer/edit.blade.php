@@ -35,6 +35,19 @@
                             @enderror
                         </div>
                         <div class="form-group form-float">
+                            <div class="form-line {{ $errors->has('organization') ? 'focused error' : '' }}">
+                                <input type="text" id="organization" class="form-control @error('organization') is-invalid @enderror" 
+                                    name="organization" value="{{ !empty(old('organization')) ? old('organization') : $customer->organization }}">
+                                <label class="form-label">Organization</label>
+                               
+                            </div>
+                            @error('organization')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong style="color: red">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group form-float">
                             <div class="form-line {{ $errors->has('phone') ? 'focused error' : '' }}">
                                 <input type="text" id="phone" class="form-control @error('phone') is-invalid @enderror" 
                                     name="phone" value="{{ !empty(old('phone')) ? old('phone') : $customer->phone }}">

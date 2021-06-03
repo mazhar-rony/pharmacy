@@ -15,4 +15,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Supplier');
     }
+
+    public function invoice_details()
+    {
+        return $this->hasMany('App\InvoiceDetails');
+    }
 }

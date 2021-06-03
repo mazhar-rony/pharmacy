@@ -10,4 +10,14 @@ class Customer extends Model
     {
         return $this->hasOne('App\Creditor');
     }
+
+    public function debtor()
+    {
+        return $this->hasOne('App\Debtor');
+    }
+
+    public function invoice()
+    {
+        return $this->hasOne('App\Invoice');
+    }
 }

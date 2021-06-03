@@ -41,7 +41,7 @@
                                     @method('PUT')
                                     <div class="row clearfix" style="margin-top: 30px;">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="deposite">Deposite</label>
+                                            <label for="deposite">Deposite to Cash</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
@@ -89,7 +89,7 @@
                                     @endphp
                                     <div class="row clearfix" style="margin-top: 30px;">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                            <label for="withdraw">Withdraw</label>
+                                            <label for="withdraw">Withdraw from Cash</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">

@@ -229,6 +229,7 @@ class BankLoanController extends Controller
                 $loanTransaction->bank_loan_id = $loanAccount->id;
                 $loanTransaction->emi_date = Carbon::parse($request->emi_date)->format('Y-m-d');
                 $loanTransaction->payment_type = $request->payment_type;
+                $loanTransaction->bank_account_id = $request->account;
                 $loanTransaction->emi_no = $request->emi_no;
                 $loanTransaction->emi_amount = $request->emi;
                 
@@ -309,6 +310,7 @@ class BankLoanController extends Controller
                 $loanTransaction->bank_loan_id = $loanAccount->id;
                 $loanTransaction->emi_date = Carbon::parse($request->closing_emi_date)->format('Y-m-d');
                 $loanTransaction->payment_type = $request->closing_payment_type;
+                $loanTransaction->bank_account_id = $request->closing_account;
                 $loanTransaction->emi_no = $loanAccount->emi_given;
                 $loanTransaction->emi_amount = $request->closing_amount;
                 

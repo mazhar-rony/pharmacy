@@ -126,6 +126,26 @@
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                            <label for="low_quantity_alert">Low Quantity Alert</label>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                            <div class="form-group">
+                                                <div class="form-line {{ $errors->has('low_quantity_alert') ? 'focused error' : '' }}">
+                                                    <input type="number" id="low_quantity_alert" name="low_quantity_alert" min="0" 
+                                                        class="form-control @error('low_quantity_alert') is-invalid @enderror" 
+                                                        placeholder="Product low_quantity_alert"
+                                                        value="{{ !empty(old('low_quantity_alert')) ? old('low_quantity_alert') : $product->low_quantity_alert }}">
+                                                </div>
+                                                @error('low_quantity_alert')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong style="color: red">{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                                             <label for="price">Unit Price</label>
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">

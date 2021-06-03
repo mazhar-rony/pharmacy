@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Bank;
 use App\Cash;
 use App\Debtor;
+use App\Invoice;
 use App\Customer;
 use Carbon\Carbon;
 use App\BankAccount;
@@ -26,7 +27,9 @@ class DebtorController extends Controller
     {
         $debtors = Debtor::latest()->where('is_paid', 0)->get();
 
-        return view('admin.debtor.index', compact('debtors'));
+        $total_due = DB::table('debtors')->select(DB::raw('sum(round(due, 2)) AS total_due'))->first();
+
+        return view('admin.debtor.index', compact('debtors', 'total_due'));
     }
 
     /**
@@ -167,6 +170,21 @@ class DebtorController extends Controller
                 $debtor->paid += $request->pay;
                 $debtor->consession += $request->consession;
                 $debtor->due -= $request->pay + $request->consession;
+
+                if(isset($debtor->invoice_id))
+                {
+                    $invoice = Invoice::find($debtor->invoice_id);
+
+                    $invoice->paid += $request->pay;
+                    $invoice->due -= $request->pay + $request->consession;
+                    $invoice->profit -= $request->consession;
+                    if($invoice->due == 0)
+                    {
+                        $invoice->is_paid = 1;
+                    }
+
+                    $invoice->save();
+                }
                 if($debtor->due == 0)
                 {
                     $debtor->is_paid = 1;
@@ -176,6 +194,7 @@ class DebtorController extends Controller
                 $payment->debtor_id = $debtor->id;
                 $payment->payment_date = Carbon::parse($request->payment_date)->format('Y-m-d');
                 $payment->payment_type = $request->payment_type;
+                $payment->bank_account_id = $request->account;
                 $payment->paid = $request->pay;
                 //$payment->save();
                 
@@ -183,7 +202,15 @@ class DebtorController extends Controller
                 {
                     $cash->date = $payment->payment_date;
                     $cash->income = $payment->paid;
-                    $cash->description = 'Taken Due Payment From ' . $debtor->customer->name;
+                    if(isset($debtor->invoice_id))
+                    {
+                        $cash->description = 'Taken Due Payment of '. $debtor->description . ' From ' . $debtor->customer->name;
+                    }
+                    else
+                    {
+                        $cash->description = 'Taken Due Payment From ' . $debtor->customer->name;
+                    }
+                    
                     $cash->save();
                 }
                 else
@@ -195,7 +222,15 @@ class DebtorController extends Controller
                     $accTransaction->transaction_date = $payment->payment_date;
                     $accTransaction->deposite = $payment->paid;
                     $accTransaction->balance = $account->balance;
-                    $accTransaction->description = 'Taken Due Payment From ' . $debtor->customer->name;               
+                    if(isset($debtor->invoice_id))
+                    {
+                        $accTransaction->description = 'Taken Due Payment of '. $debtor->description . ' From ' . $debtor->customer->name;
+                    }
+                    else
+                    {
+                        $accTransaction->description = 'Taken Due Payment From ' . $debtor->customer->name;
+                    }
+                                   
                     $accTransaction->save();
                 }
                 $debtor->save();

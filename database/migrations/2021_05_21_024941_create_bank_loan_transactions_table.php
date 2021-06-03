@@ -18,6 +18,7 @@ class CreateBankLoanTransactionsTable extends Migration
             $table->unsignedBigInteger('bank_loan_id');
             $table->date('emi_date');
             $table->string('payment_type');
+            $table->unsignedBigInteger('bank_account_id')->nullable();
             $table->integer('emi_no');
             $table->decimal('emi_amount', 13, 4);
             $table->timestamps();

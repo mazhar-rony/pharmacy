@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDebtorPaymentsTable extends Migration
+class CreateReturnProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateDebtorPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('debtor_payments', function (Blueprint $table) {
+        Schema::create('return_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('debtor_id');
-            $table->date('payment_date');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('invoice_no');
+            $table->date('date');
             $table->string('payment_type');
             $table->unsignedBigInteger('bank_account_id')->nullable();
-            $table->decimal('paid', 13, 4);
+            $table->decimal('amount', 9, 4);
+            $table->decimal('paid', 9, 4);
+            $table->text('description')->nullable();
             $table->timestamps();
-
-            $table->foreign('debtor_id')
-                ->references('id')
-                ->on('debtors')
-                ->onDelete('cascade');
         });
     }
 
@@ -36,6 +35,6 @@ class CreateDebtorPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('debtor_payments');
+        Schema::dropIfExists('return_products');
     }
 }

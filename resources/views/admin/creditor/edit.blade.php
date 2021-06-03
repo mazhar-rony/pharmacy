@@ -32,7 +32,7 @@
                                     class="form-control show-tick @error('customer') is-invalid @enderror" required>
                                     @foreach ($customers as $customer)
                                         <option {{ $creditor->customer_id == $customer->id ? 'selected' : '' }}
-                                            value="{{ $customer->id }}">{{ $customer->name }} (Address: {{ $customer->address }} , Contact: {{ $customer->phone }})
+                                            value="{{ $customer->id }}">{{ $customer->name }} ( company: {{ $customer->organization }} | contact: {{ $customer->phone }} )
                                         </option>
                                     @endforeach
                                 </select>

@@ -16,6 +16,7 @@ class CreateDebtorsTable extends Migration
         Schema::create('debtors', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('invoice_id')->nullable();
             $table->string('description')->nullable();
             $table->date('debit_date');
             $table->decimal('debit_amount', 13, 4);
@@ -24,6 +25,11 @@ class CreateDebtorsTable extends Migration
             $table->decimal('due', 13, 4);
             $table->boolean('is_paid')->default(0)->comment('0=Pending,1=Paid');
             $table->timestamps();
+
+            $table->foreign('invoice_id')
+                ->references('id')
+                ->on('invoices')
+                ->onDelete('cascade');
         });
     }
 

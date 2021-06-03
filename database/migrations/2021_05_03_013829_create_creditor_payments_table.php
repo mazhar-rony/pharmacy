@@ -18,6 +18,7 @@ class CreateCreditorPaymentsTable extends Migration
             $table->unsignedBigInteger('creditor_id');
             $table->date('payment_date');
             $table->string('payment_type');
+            $table->unsignedBigInteger('bank_account_id')->nullable();
             $table->decimal('paid', 13, 4);
             $table->timestamps();
 

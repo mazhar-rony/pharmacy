@@ -31,7 +31,7 @@
                                     class="form-control show-tick @error('customer') is-invalid @enderror" required>
                                         <option value="" selected disabled>Nothing Selected</option>
                                     @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->name }} (Address: {{ $customer->address }} , Contact: {{ $customer->phone }})</option>
+                                        <option value="{{ $customer->id }}">{{ $customer->name }} ( company: {{ $customer->organization }} | contact: {{ $customer->phone }} )</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -66,7 +66,7 @@
                                         <td>{{ $product->name }}</td>                   
                                         <td>{{ $product->category->name }}</td>
                                         <td>{{ $product->supplier->organization }}</td>
-                                        <td><span class="badge {{ $product->quantity < 20 ? 'bg-pink' : 'bg-green' }}">{{ $product->quantity }}</span></td>
+                                        <td><span class="badge {{ $product->quantity <= $product->low_quantity_alert ? 'bg-pink' : 'bg-green' }}">{{ $product->quantity }}</span></td>
                                         <td>{{ number_format(round($product->price, 2), 2) }}</td>
                                         <td>{{ number_format(round($product->price, 2) * $product->quantity, 2) }}</td>
                                         <td class="align-center">

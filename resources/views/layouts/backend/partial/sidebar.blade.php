@@ -159,6 +159,13 @@
                     </a>
                 </li>
 
+                <li class="{{ Request::is('admin/return*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.return.index') }}">
+                        <i class="material-icons">replay</i>
+                        <span>Return Products</span>
+                    </a>
+                </li>
+
                 <li class="header">PAYMENT</li>
 
                 <li class="{{ Request::is('admin/creditor*') ? 'active' : '' }}">

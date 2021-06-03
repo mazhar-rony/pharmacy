@@ -23,7 +23,8 @@ class BankAccountController extends Controller
      */
     public function index()
     {
-        $accounts = BankAccount::latest()->where('user_id', Auth::id())->get();
+        //$accounts = BankAccount::latest()->where('user_id', Auth::id())->get();
+        $accounts = BankAccount::latest()->get();
 
         return view('admin.bank_account.index', compact('accounts'));
     }

@@ -18,6 +18,7 @@ class CreateInvoiceDetailsTable extends Migration
             $table->unsignedBigInteger('invoice_id');
             $table->integer('product_id');
             $table->integer('quantity');
+            $table->decimal('cost', 9, 4);
             $table->decimal('selling_price', 9, 4);
 
             $table->foreign('invoice_id')

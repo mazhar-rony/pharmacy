@@ -7,6 +7,11 @@
 @endpush
 
 @section('content')
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pull-right" style="margin-bottom: 20px;">
+    <button class="btn bg-teal btn-lg btn-block waves-effect" type="button" style="height: 50px; font-size: 14px; cursor: default; pointer-events: none;">Total Due 
+        <span class="badge" style="font-size: 18px;">{{ number_format(($total_due->total_due), 2) }}</span>
+    </button>
+</div>
 <div class="container-fluid">
     <div class="block-header">
         <a class="btn btn-success waves-effect" href="{{ route('admin.creditor.create') }}">

@@ -37,7 +37,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name')->get();
-        $suppliers = Supplier::orderBy('name')->get();
+        $suppliers = Supplier::orderBy('organization')->get();
 
         return view('admin.product.create', compact('categories', 'suppliers'));
     }
@@ -55,6 +55,7 @@ class ProductController extends Controller
             'category' => 'required',
             'supplier' => 'required',
             'quantity' => 'required|numeric|min:0',
+            'low_quantity_alert' => 'required|numeric|min:0',
             'price' => 'required|numeric',
             'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
@@ -88,6 +89,7 @@ class ProductController extends Controller
         $product->category_id = Category::find($request->category)->id;
         $product->supplier_id = Supplier::find($request->supplier)->id;
         $product->quantity = $request->quantity;
+        $product->low_quantity_alert = $request->low_quantity_alert;
         $product->price = $request->price;
         $product->image = $imageName;
         
@@ -139,6 +141,7 @@ class ProductController extends Controller
             'category' => 'required',
             'supplier' => 'required',
             'quantity' => 'required|numeric|min:0',
+            'low_quantity_alert' => 'required|numeric|min:0',
             'price' => 'required|numeric',
             'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
@@ -178,6 +181,7 @@ class ProductController extends Controller
         $product->category_id = Category::find($request->category)->id;
         $product->supplier_id = Supplier::find($request->supplier)->id;
         $product->quantity = $request->quantity;
+        $product->low_quantity_alert = $request->low_quantity_alert;
         $product->price = $request->price;
         $product->image = $imageName;
         

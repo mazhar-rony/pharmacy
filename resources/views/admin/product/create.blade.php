@@ -48,6 +48,19 @@
                             @enderror
                         </div>
                         <div class="form-group form-float">
+                            <div class="form-line {{ $errors->has('low_quantity_alert') ? 'focused error' : '' }}">
+                                <input type="number" id="low_quantity_alert" class="form-control @error('low_quantity_alert') is-invalid @enderror" 
+                                    name="low_quantity_alert" min="0" value="{{ !empty(old('low_quantity_alert')) ? old('low_quantity_alert') : '' }}">
+                                <label class="form-label">Low Quantity Alert</label>
+                                
+                            </div>
+                            @error('low_quantity_alert')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong style="color: red">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group form-float">
                             <div class="form-line {{ $errors->has('price') ? 'focused error' : '' }}">
                                 <input type="number" id="price" class="form-control @error('price') is-invalid @enderror" 
                                     name="price" min="0" step=".01" value="{{ !empty(old('price')) ? old('price') : '' }}">

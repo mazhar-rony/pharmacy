@@ -10,4 +10,9 @@ class CreditorPayment extends Model
     {
         return $this->belongsTo('App\Creditor');
     }
+
+    public function bank_account()
+    {
+        return $this->belongsTo('App\BankAccount');
+    }
 }

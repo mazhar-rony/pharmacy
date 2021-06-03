@@ -7,6 +7,11 @@
 @endpush
 
 @section('content')
+<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pull-right" style="margin-bottom: 20px;">
+    <button class="btn bg-teal btn-lg btn-block waves-effect" type="button" style="height: 50px; font-size: 14px; cursor: default; pointer-events: none;">Total Due 
+        <span class="badge" style="font-size: 18px;">{{ number_format(($total_due->total_due), 2) }}</span>
+    </button>
+</div>
 <div class="container-fluid">
     <div class="block-header">
         <a class="btn btn-success waves-effect" href="{{ route('admin.debtor.create') }}">
@@ -63,10 +68,10 @@
                                             <a href="{{ route('admin.debtor.payment', $debtor->id) }}" class="btn btn-success waves-effect">
                                                 <span>Payment </span><i class="material-icons">account_balance_wallet</i>
                                             </a>
-                                            <a href="{{ route('admin.debtor.edit', $debtor->id) }}" class="btn btn-info waves-effect">
+                                            <a href="{{ route('admin.debtor.edit', $debtor->id) }}" class="btn btn-info waves-effect" {{ isset($debtor->invoice_id) ? 'disabled' : '' }}>
                                                 <i class="material-icons">edit</i>
                                             </a>
-                                            <button class="btn btn-danger waves-effect" type="button"
+                                            <button class="btn btn-danger waves-effect" type="button" {{ isset($debtor->invoice_id) ? 'disabled' : '' }}
                                                 onclick="deleteDebtor({{ $debtor->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>

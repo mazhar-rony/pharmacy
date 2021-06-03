@@ -10,4 +10,9 @@ class DebtorPayment extends Model
     {
         return $this->belongsTo('App\Debtor');
     }
+
+    public function bank_account()
+    {
+        return $this->belongsTo('App\BankAccount');
+    }
 }

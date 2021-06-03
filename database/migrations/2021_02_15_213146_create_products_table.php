@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->string('slug');
             $table->integer('quantity');
+            $table->integer('low_quantity_alert');
             $table->decimal('price', 13, 4);
             $table->string('image')->default('default.png');
 
