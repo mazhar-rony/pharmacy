@@ -31,6 +31,11 @@ class BankAccount extends Model
         return $this->hasOne('App\Invoice');
     }
 
+    public function purchase()
+    {
+        return $this->hasOne('App\Purchase');
+    }
+
     public function debtor_payments()
     {
         return $this->hasMany('App\DebtorPayment');

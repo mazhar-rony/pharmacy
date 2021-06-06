@@ -202,13 +202,14 @@ class DebtorController extends Controller
                 {
                     $cash->date = $payment->payment_date;
                     $cash->income = $payment->paid;
+
                     if(isset($debtor->invoice_id))
                     {
-                        $cash->description = 'Taken Due Payment of '. $debtor->description . ' From ' . $debtor->customer->name;
+                        $cash->description = 'Taken Due Payment of Invoice No '. $debtor->description . ' From ' . $debtor->customer->name . ' of ' . $debtor->customer->organization;
                     }
                     else
                     {
-                        $cash->description = 'Taken Due Payment From ' . $debtor->customer->name;
+                        $cash->description = 'Taken Due Payment From ' . $debtor->customer->name . ' of ' . $debtor->customer->organization;
                     }
                     
                     $cash->save();
@@ -222,13 +223,14 @@ class DebtorController extends Controller
                     $accTransaction->transaction_date = $payment->payment_date;
                     $accTransaction->deposite = $payment->paid;
                     $accTransaction->balance = $account->balance;
+                    
                     if(isset($debtor->invoice_id))
                     {
-                        $accTransaction->description = 'Taken Due Payment of '. $debtor->description . ' From ' . $debtor->customer->name;
+                        $accTransaction->description = 'Taken Due Payment of Invoice No '. $debtor->description . ' From ' . $debtor->customer->name . ' of ' . $debtor->customer->organization;
                     }
                     else
                     {
-                        $accTransaction->description = 'Taken Due Payment From ' . $debtor->customer->name;
+                        $accTransaction->description = 'Taken Due Payment From ' . $debtor->customer->name . ' of ' . $debtor->customer->organization;
                     }
                                    
                     $accTransaction->save();

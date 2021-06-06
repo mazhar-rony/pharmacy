@@ -10,4 +10,14 @@ class Supplier extends Model
     {
         return $this->hasMany('App\Product');
     }
+
+    public function creditor()
+    {
+        return $this->hasOne('App\Creditor');
+    }
+
+    public function purchase()
+    {
+        return $this->hasOne('App\Purchase');
+    }
 }

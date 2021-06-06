@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Invoice')
+@section('title', 'Purchase')
 
 @push('css')
     <link href="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -9,9 +9,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-        <a class="btn btn-success waves-effect" href="{{ route('admin.invoice.create') }}">
+        <a class="btn btn-success waves-effect" href="{{ route('admin.purchase.create') }}">
             <i class="material-icons">add</i>
-            <span>Create New Invoice</span>
+            <span>Create New Purchase</span>
         </a>
     </div>
    
@@ -21,8 +21,8 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        ALL INVOICES
-                        <span class="badge bg-red">{{ $invoices->count() }}</span
+                        ALL PURCHASES
+                        <span class="badge bg-red">{{ $purchases->count() }}</span
                     </h2>
                 </div>
                 <div class="body">
@@ -31,16 +31,13 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Invoice No</th>
-                                    <th>Customer</th>
+                                    <th>Purchase No</th>
+                                    <th>Supplier</th>
                                     <th>Organization</th>
                                     <th>Date</th>
                                     <th>Amount</th>
                                     <th>Discount</th>
                                     <th>Total Amount</th>
-                                    {{--  <th>Paid</th>
-                                    <th>Due</th>  --}}
-                                    <th>Profit</th>
                                     <th>Status</th>
                                     {{--  <th>Created_by</th>  --}}
                                     <th>Action</th>
@@ -49,50 +46,44 @@
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Invoice No</th>
-                                    <th>Customer</th>
+                                    <th>Purchase No</th>
+                                    <th>Supplier</th>
                                     <th>Organization</th>
                                     <th>Date</th>
                                     <th>Amount</th>
                                     <th>Discount</th>
                                     <th>Total Amount</th>
-                                    {{--  <th>Paid</th>
-                                    <th>Due</th>  --}}
-                                    <th>Profit</th>
                                     <th>Status</th>
                                     {{--  <th>Created_by</th>  --}}
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach ($invoices as $key=>$invoice)
+                                @foreach ($purchases as $key=>$purchase)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $invoice->invoice_no }}</td> 
-                                        <td>{{ $invoice->customer->name }}</td>
-                                        <td>{{ $invoice->customer->organization }}</td>
-                                        <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($invoice->date)->format('d-m-Y') }}</td>   
-                                        <td>{{ number_format(round($invoice->amount, 2), 2) }}</td>
-                                        <td>{{ number_format(round($invoice->discount, 2), 2) }}</td>
-                                        <td>{{ number_format(round($invoice->total_amount, 2), 2) }}</td>
-                                        {{--  <td>{{ $invoice->paid }}</td> 
-                                        <td>{{ $invoice->due }}</td>  --}}
-                                        <td>{{ number_format(round($invoice->profit, 2), 2) }}</td>
-                                        <td><span class="badge {{ $invoice->is_paid == TRUE ? 'bg-green' : 'bg-pink' }}">{{ $invoice->is_paid == TRUE ? 'Paid' : 'Due' }}</span></td>
-                                        {{--  <td>{{ $invoice->user->name }}</td>   --}}
+                                        <td>{{ $purchase->purchase_no }}</td> 
+                                        <td>{{ $purchase->supplier->name }}</td>
+                                        <td>{{ $purchase->supplier->organization }}</td>
+                                        <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($purchase->date)->format('d-m-Y') }}</td>   
+                                        <td>{{ number_format(round($purchase->amount, 2), 2) }}</td>
+                                        <td>{{ number_format(round($purchase->discount, 2), 2) }}</td>
+                                        <td>{{ number_format(round($purchase->total_amount, 2), 2) }}</td>                                        
+                                        <td><span class="badge {{ $purchase->is_paid == TRUE ? 'bg-green' : 'bg-pink' }}">{{ $purchase->is_paid == TRUE ? 'Paid' : 'Due' }}</span></td>
+                                        {{--  <td>{{ $purchase->user->name }}</td>   --}}
                                         <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.invoice.show', $invoice->id) }}" class="btn btn-success waves-effect" target="_blank" data-toggle="tooltip" data-placement="top" title="Show">
+                                            <a href="{{ route('admin.purchase.show', $purchase->id) }}" class="btn btn-success waves-effect" target="_blank" data-toggle="tooltip" data-placement="top" title="Show">
                                                 <i class="material-icons">visibility</i>
                                             </a>
-                                            <a href="{{ route('admin.invoice.edit', $invoice->id) }}" class="btn btn-info waves-effect" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <a href="{{ route('admin.purchase.edit', $purchase->id) }}" class="btn btn-info waves-effect" data-toggle="tooltip" data-placement="top" title="Edit">
                                                 <i class="material-icons">edit</i>
                                             </a>
                                             <button class="btn btn-danger waves-effect" type="button" data-toggle="tooltip" data-placement="top" title="Delete"
-                                                onclick="deleteInvoice({{ $invoice->id }})">
+                                                onclick="deletePurchase({{ $purchase->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <form id="delete-form-{{ $invoice->id }}" method="POST"
-                                                action="{{ route('admin.invoice.destroy', $invoice->id) }}"
+                                            <form id="delete-form-{{ $purchase->id }}" method="POST"
+                                                action="{{ route('admin.purchase.destroy', $purchase->id) }}"
                                                 style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
@@ -137,7 +128,7 @@
 
 <!-- Delete Invoice -->
     <script type="text/javascript">
-        function deleteInvoice(id) {
+        function deletePurchase(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',

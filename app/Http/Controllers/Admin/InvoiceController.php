@@ -9,6 +9,7 @@ use App\Invoice;
 use App\Product;
 use App\Category;
 use App\Customer;
+use App\Purchase;
 use Carbon\Carbon;
 use App\BankAccount;
 use App\InvoiceDetail;
@@ -58,6 +59,25 @@ class InvoiceController extends Controller
         
 
         return view('admin.invoice.createnew', compact('categories', 'banks', 'customers', 'invoice_no'));
+    }
+
+    public function getPurchaseNo(Request $request)
+    {
+        $purchase_no = Purchase::whereDate('date', new \DateTime($request->purchase_date,))->max('purchase_no');
+
+        if($purchase_no != NULL)
+        {
+            $purchase_no += 1;
+        }
+        else
+        {   
+            $purchase_date = Carbon::parse($request->purchase_date)->format('Y-m-d');
+            $purchase_date = Carbon::parse($purchase_date);
+            //return gettype($invoice_date);
+            $purchase_no = (int)(substr($purchase_date, 0, 4).substr($purchase_date, 5, 2).substr($purchase_date, 8, 2)."01");
+        }
+
+        return response()->json($purchase_no);
     }
 
     public function getInvoice(Request $request)
@@ -122,6 +142,21 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'invoice' => 'required',
+            'invoice_date' => 'required|date',            
+            'quantity.*' => 'required|integer',
+            'unit_price.*' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'total_amount' => 'required|numeric',
+            'total_paid' => 'required|numeric',
+            'total_due' => 'required|numeric',
+            'customer' => 'required|integer',
+            'payment_type' => 'required', 
+            'bank' => 'required_if:payment_type,==,cheque|integer',
+            //'account' => 'required_if:payment_type,==,cheque|integer'
+        ]);
+
         $this->saveInvoice($request);
         
         Toastr::success('Invoice Successfully Created !' ,'Success');
@@ -170,6 +205,21 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {   
+        $this->validate($request,[
+            'invoice' => 'required',
+            'invoice_date' => 'required|date',            
+            'quantity.*' => 'required|integer',
+            'unit_price.*' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'total_amount' => 'required|numeric',
+            'total_paid' => 'required|numeric',
+            'total_due' => 'required|numeric',
+            'customer' => 'required|integer',
+            'payment_type' => 'required', 
+            'bank' => 'required_if:payment_type,==,cheque|integer',
+            //'account' => 'required_if:payment_type,==,cheque|integer'
+        ]);
+        
         $this->deleteInvoice($id);
         $this->saveInvoice($request);
 
@@ -194,20 +244,7 @@ class InvoiceController extends Controller
     }
 
     public function saveInvoice(Request $request)
-    {
-        $this->validate($request,[
-            'invoice' => 'required',
-            'invoice_date' => 'required|date',
-            'discount' => 'required|numeric',
-            'total_amount' => 'required|numeric',
-            'total_paid' => 'required|numeric',
-            'total_due' => 'required|numeric',
-            'customer' => 'required|integer',
-            'payment_type' => 'required', 
-            'bank' => 'required_if:payment_type,==,cheque|integer',
-            //'account' => 'required_if:payment_type,==,cheque|integer'
-        ]);
-        
+    {        
         $cash = new Cash();
         $bankAccount = BankAccount::find($request->account);
         $accTransaction = new BankAccountTransaction();

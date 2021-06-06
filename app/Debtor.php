@@ -15,4 +15,9 @@ class Debtor extends Model
     {
         return $this->hasMany('App\DebtorPayment');
     }
+
+    public function invoice()
+    {
+        return $this->hasOne('App\Invoice');
+    }
 }

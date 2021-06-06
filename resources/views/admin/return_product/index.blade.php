@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Invoice')
+@section('title', 'Return')
 
 @push('css')
     <link href="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -11,7 +11,7 @@
     <div class="block-header">
         <a class="btn btn-success waves-effect" href="{{ route('admin.return.create') }}">
             <i class="material-icons">add</i>
-            <span>Create New Invoice</span>
+            <span>Create New Return Product</span>
         </a>
     </div>
    
@@ -34,14 +34,8 @@
                                     <th>Invoice No</th>
                                     <th>Customer</th>
                                     <th>Date</th>
+                                    <th>Payment Type</th>
                                     <th>Amount</th>
-                                    <th>Discount</th>
-                                    <th>Total Amount</th>
-                                    {{--  <th>Paid</th>
-                                    <th>Due</th>  --}}
-                                    <th>Profit</th>
-                                    <th>Status</th>
-                                    {{--  <th>Created_by</th>  --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -51,14 +45,8 @@
                                     <th>Invoice No</th>
                                     <th>Customer</th>
                                     <th>Date</th>
+                                    <th>Payment Type</th>
                                     <th>Amount</th>
-                                    <th>Discount</th>
-                                    <th>Total Amount</th>
-                                    {{--  <th>Paid</th>
-                                    <th>Due</th>  --}}
-                                    <th>Profit</th>
-                                    <th>Status</th>
-                                    {{--  <th>Created_by</th>  --}}
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -66,26 +54,21 @@
                                 @foreach ($returnProducts as $key=>$returnProduct)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $returnProduct->invoice_no }}</td> 
+                                        <td>{{ $returnProduct->invoice_id ? $returnProduct->invoice->invoice_no : 'N/A' }}</td> 
                                         <td>{{ $returnProduct->customer->name }}</td>
-                                        <td style="white-space:nowrap;">{{ $returnProduct->date }}</td>   
+                                        <td style="white-space:nowrap;">{{ $returnProduct->date }}</td>  
+                                        <td>{{ $returnProduct->payment_type }}</td> 
                                         <td>{{ number_format(round($returnProduct->amount, 2), 2) }}</td>
-                                        <td>{{ number_format(round($returnProduct->discount, 2), 2) }}</td>
-                                        <td>{{ number_format(round($returnProduct->total_amount, 2), 2) }}</td>
-                                        {{--  <td>{{ $invoice->paid }}</td> 
-                                        <td>{{ $invoice->due }}</td>  --}}
-                                        <td>{{ number_format(round($returnProduct->profit, 2), 2) }}</td>
-                                        <td><span class="badge {{ $returnProduct->is_paid == TRUE ? 'bg-green' : 'bg-pink' }}">{{ $invoice->is_paid == TRUE ? 'Paid' : 'Due' }}</span></td>
-                                        {{--  <td>{{ $invoice->user->name }}</td>   --}}
+                                        {{--  <td>{{ $returnProduct->user->name }}</td>   --}}
                                         <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.invoice.show', $returnProduct->id) }}" class="btn btn-success waves-effect" target="_blank" data-toggle="tooltip" data-placement="top" title="Show">
+                                            <a href="{{ route('admin.return.show', $returnProduct->id) }}" class="btn btn-success waves-effect" target="_blank" data-toggle="tooltip" data-placement="top" title="Show">
                                                 <i class="material-icons">visibility</i>
                                             </a>
-                                            <a href="{{ route('admin.invoice.edit', $returnProduct->id) }}" class="btn btn-info waves-effect" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <a href="{{ route('admin.return.edit', $returnProduct->id) }}" class="btn btn-info waves-effect" data-toggle="tooltip" data-placement="top" title="Edit">
                                                 <i class="material-icons">edit</i>
                                             </a>
                                             <button class="btn btn-danger waves-effect" type="button" data-toggle="tooltip" data-placement="top" title="Delete"
-                                                onclick="deleteInvoice({{ $returnProduct->id }})">
+                                                onclick="deleteReturnProduct({{ $returnProduct->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>
                                             <form id="delete-form-{{ $returnProduct->id }}" method="POST"
@@ -134,7 +117,7 @@
 
 <!-- Delete Invoice -->
     <script type="text/javascript">
-        function deleteInvoice(id) {
+        function deleteReturnProduct(id) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',

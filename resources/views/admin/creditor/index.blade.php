@@ -37,6 +37,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Creditor Name</th>
+                                    <th>Organization</th>
                                     <th>Date</th>
                                     <th>Description</th>
                                     <th>Amount</th>
@@ -48,6 +49,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Creditor Name</th>
+                                    <th>Organization</th>
                                     <th>Date</th>
                                     <th>Description</th>
                                     <th>Amount</th>
@@ -59,7 +61,8 @@
                                 @foreach ($creditors as $key=>$creditor)
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $creditor->customer->name }}</td>
+                                        <td>{{ $creditor->supplier->name }}</td>
+                                        <td>{{ $creditor->supplier->organization }}</td>
                                         <td>{{ Carbon\Carbon::parse($creditor->credit_date)->format('d-m-Y') }}</td>
                                         <td>{{ $creditor->description }}</td>
                                         <td>{{ number_format($creditor->credit_amount, 2) }}</td>
@@ -68,10 +71,10 @@
                                             <a href="{{ route('admin.creditor.payment', $creditor->id) }}" class="btn btn-success waves-effect">
                                                 <span>Payment </span><i class="material-icons">account_balance_wallet</i>
                                             </a>
-                                            <a href="{{ route('admin.creditor.edit', $creditor->id) }}" class="btn btn-info waves-effect">
+                                            <a href="{{ route('admin.creditor.edit', $creditor->id) }}" class="btn btn-info waves-effect" {{ isset($creditor->purchase_id) ? 'disabled' : '' }}>
                                                 <i class="material-icons">edit</i>
                                             </a>
-                                            <button class="btn btn-danger waves-effect" type="button"
+                                            <button class="btn btn-danger waves-effect" type="button" {{ isset($creditor->purchase_id) ? 'disabled' : '' }}
                                                 onclick="deleteCreditor({{ $creditor->id }})">
                                                 <i class="material-icons">delete</i>
                                             </button>

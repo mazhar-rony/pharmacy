@@ -37,6 +37,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Debtor Name</th>
+                                    <th>Organization</th>
                                     <th>Date</th>
                                     <th>Description</th>
                                     <th>Amount</th>
@@ -48,6 +49,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Debtor Name</th>
+                                    <th>Organization</th>
                                     <th>Date</th>
                                     <th>Description</th>
                                     <th>Amount</th>
@@ -60,6 +62,7 @@
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $debtor->customer->name }}</td>
+                                        <td>{{ $debtor->customer->organization }}</td>
                                         <td>{{ Carbon\Carbon::parse($debtor->debit_date)->format('d-m-Y') }}</td>
                                         <td>{{ $debtor->description }}</td>
                                         <td>{{ number_format($debtor->debit_amount, 2) }}</td>

@@ -25,17 +25,17 @@
                     <form action="{{ route('admin.creditor.store') }}" method="POST">
                         @csrf
                         <div class="form-group form-float">
-                            <div class="form-line {{ $errors->has('customer') ? 'focused error' : '' }}">
-                                <label for="customer">Select Creditor Name</label>
-                                <select name="customer" id="customer" data-live-search="true" 
-                                    class="form-control show-tick @error('customer') is-invalid @enderror" required>
+                            <div class="form-line {{ $errors->has('supplier') ? 'focused error' : '' }}">
+                                <label for="supplier">Select Creditor Name</label>
+                                <select name="supplier" id="supplier" data-live-search="true" 
+                                    class="form-control show-tick @error('supplier') is-invalid @enderror" required>
                                         <option value="" selected disabled>Nothing Selected</option>
-                                    @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->name }} ( company: {{ $customer->organization }} | contact: {{ $customer->phone }} )</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}">{{ $supplier->name }} ( company: {{ $supplier->organization }} | contact: {{ $supplier->phone }} )</option>
                                     @endforeach
                                 </select>
                             </div>
-                            @error('customer')
+                            @error('supplier')
                                 <span class="invalid-feedback" role="alert">
                                     <strong style="color: red">{{ $message }}</strong>
                                 </span>

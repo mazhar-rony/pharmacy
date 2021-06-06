@@ -62,60 +62,19 @@
                         <span>Product Supplier</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/purchase*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.purchase.index') }}">
+                        <i class="material-icons">shopping_bag</i>
+                        <span>Purchase</span>
+                    </a>
+                </li>
                 <li class="{{ Request::is('admin/product*') ? 'active' : '' }}">
                     <a href="{{ route('admin.product.index') }}">
                         <i class="material-icons">production_quantity_limits</i>
                         <span>Stock</span>
                     </a>
                 </li>
-                {{-- <li class="{{ Request::is('admin/tag*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.tag.index') }}">
-                        <i class="material-icons">label</i>
-                        <span>Tag</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/category*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.category.index') }}">
-                        <i class="material-icons">apps</i>
-                        <span>Category</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/post*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.post.index') }}">
-                        <i class="material-icons">library_books</i>
-                        <span>Posts</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/pending/post') ? 'active' : '' }}">
-                    <a href="{{ route('admin.post.pending') }}">
-                        <i class="material-icons">pending</i>
-                        <span>Pending Posts</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/favorite') ? 'active' : '' }}">
-                    <a href="{{ route('admin.favorite.index') }}">
-                        <i class="material-icons">favorite</i>
-                        <span>Favorite Posts</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/comments') ? 'active' : '' }}">
-                    <a href="{{ route('admin.comment.index') }}">
-                        <i class="material-icons">comment</i>
-                        <span>Comments</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/authors') ? 'active' : '' }}">
-                    <a href="{{ route('admin.author.index') }}">
-                        <i class="material-icons">account_circle</i>
-                        <span>Authors</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/subscriber') ? 'active' : '' }}">
-                    <a href="{{ route('admin.subscriber.index') }}">
-                        <i class="material-icons">subscriptions</i>
-                        <span>Subscriber</span>
-                    </a>
-                </li> --}}
+
                 <li class="header">BANKING</li>
 
                 <li class="{{ Request::is('admin/bank*') ? 'active' : '' }}">
@@ -151,14 +110,12 @@
                         <span>Customers</span>
                     </a>
                 </li>
-
                 <li class="{{ Request::is('admin/invoice*') ? 'active' : '' }}">
                     <a href="{{ route('admin.invoice.index') }}">
                         <i class="material-icons">important_devices</i>
                         <span>Invoice</span>
                     </a>
                 </li>
-
                 <li class="{{ Request::is('admin/return*') ? 'active' : '' }}">
                     <a href="{{ route('admin.return.index') }}">
                         <i class="material-icons">replay</i>
@@ -174,7 +131,6 @@
                         <span>Creditors</span>
                     </a>
                 </li>
-
                 <li class="{{ Request::is('admin/debtor*') ? 'active' : '' }}">
                     <a href="{{ route('admin.debtor.index') }}">
                         <i class="material-icons">local_parking</i>
@@ -190,7 +146,6 @@
                         <span>Office Expense</span>
                     </a>
                 </li>
-
                 <li class="header">PROPRIETOR</li>
 
                 <li class="{{ Request::is('admin/proprietor*') ? 'active' : '' }}">

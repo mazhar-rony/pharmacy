@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Bank;
 use App\Cash;
 use App\Creditor;
-use App\Customer;
+use App\Purchase;
+use App\Supplier;
 use Carbon\Carbon;
 use App\BankAccount;
 use App\CreditorPayment;
@@ -39,9 +40,9 @@ class CreditorController extends Controller
      */
     public function create()
     {
-        $customers = Customer::orderBy('name')->get();
+        $suppliers = Supplier::orderBy('name')->get();
 
-        return view('admin.creditor.create', compact('customers'));
+        return view('admin.creditor.create', compact('suppliers'));
     }
 
     /**
@@ -53,14 +54,14 @@ class CreditorController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'customer' => 'required|integer',
+            'supplier' => 'required|integer',
             'amount' => 'required|numeric',
             'credit_date' => 'required|date'
         ]);
 
         $creditor = new Creditor();
         
-        $creditor->customer_id = $request->customer;
+        $creditor->supplier_id = $request->supplier;
         $creditor->credit_amount = $request->amount;
         $creditor->due = $request->amount;
         $creditor->credit_date = Carbon::parse($request->credit_date)->format('Y-m-d');
@@ -94,9 +95,9 @@ class CreditorController extends Controller
     public function edit($id)
     {
         $creditor = Creditor::find($id);
-        $customers = Customer::orderBy('name')->get();
+        $suppliers = Supplier::orderBy('name')->get();
 
-        return view('admin.creditor.edit', compact('creditor', 'customers'));
+        return view('admin.creditor.edit', compact('creditor', 'suppliers'));
     }
 
     /**
@@ -109,13 +110,13 @@ class CreditorController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'customer' => 'required|integer',
+            'supplier' => 'required|integer',
             'credit_date' => 'required|date'
         ]);
 
         $creditor = Creditor::find($id);
 
-        $creditor->customer_id = $request->customer;
+        $creditor->supplier_id = $request->supplier;
         $creditor->credit_date = Carbon::parse($request->credit_date)->format('Y-m-d');
         $creditor->description = $request->description;
 
@@ -176,6 +177,21 @@ class CreditorController extends Controller
                 $creditor->paid += $request->pay;
                 $creditor->consession += $request->consession;
                 $creditor->due -= $request->pay + $request->consession;
+
+                if(isset($creditor->purchase_id))
+                {
+                    $purchase = Purchase::find($creditor->purchase_id);
+
+                    $purchase->paid += $request->pay;
+                    $purchase->due -= $request->pay + $request->consession;
+                    
+                    if($purchase->due == 0)
+                    {
+                        $purchase->is_paid = 1;
+                    }
+
+                    $purchase->save();
+                }
                 if($creditor->due == 0)
                 {
                     $creditor->is_paid = 1;
@@ -193,7 +209,16 @@ class CreditorController extends Controller
                 {
                     $cash->date = $payment->payment_date;
                     $cash->expense = $payment->paid;
-                    $cash->description = 'Given Payment To ' . $creditor->customer->name;
+
+                    if(isset($creditor->purchase_id))
+                    {                        
+                        $cash->description = 'Given Payment of Purchase No ' . $creditor->description . ' to '. $creditor->supplier->name . ' of ' . $creditor->supplier->organization;
+                    }
+                    else
+                    {
+                        $cash->description = 'Given Payment To ' . $creditor->supplier->name . ' of ' . $creditor->supplier->organization;
+                    }
+                    
                     $cash->save();
                 }
                 else
@@ -210,7 +235,16 @@ class CreditorController extends Controller
                     $accTransaction->transaction_date = $payment->payment_date;
                     $accTransaction->withdraw = $payment->paid;
                     $accTransaction->balance = $account->balance;
-                    $accTransaction->description = 'Given Payment To ' . $creditor->customer->name;               
+
+                    if(isset($creditor->purchase_id))
+                    {
+                        $accTransaction->description = 'Given Payment of Purchase No ' . $creditor->description . ' to '. $creditor->supplier->name . ' of ' . $creditor->supplier->organization;
+                    }
+                    else
+                    {
+                        $accTransaction->description = 'Given Payment To ' . $creditor->supplier->name . ' of ' . $creditor->supplier->organization;
+                    }
+                                   
                     $accTransaction->save();
                 }
                 $creditor->save();

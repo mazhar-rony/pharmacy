@@ -32,6 +32,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Customer Name</th>
+                                    <th>Organization</th>
                                     <th>Phone No</th>
                                     <th>Address</th>
                                     <th>Action</th>
@@ -41,6 +42,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Customer Name</th>
+                                    <th>Organization</th>
                                     <th>Phone No</th>
                                     <th>Address</th>
                                     <th>Action</th>
@@ -51,6 +53,7 @@
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $customer->name }}</td>
+                                        <td>{{ $customer->organization }}</td>
                                         <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->address }}</td>
                                         <td class="text-center" style="white-space:nowrap;">

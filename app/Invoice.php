@@ -25,4 +25,14 @@ class Invoice extends Model
     {
         return $this->hasMany('App\InvoiceDetail');
     }
+
+    public function return_product()
+    {
+        return $this->hasOne('App\ReturnProduct');
+    }
+
+    public function debtor()
+    {
+        return $this->belongsTo('App\Debtor');
+    }
 }

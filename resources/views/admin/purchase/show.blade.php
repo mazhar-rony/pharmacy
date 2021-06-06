@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>invoice</title>
+<title>Purchase</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
@@ -9,8 +9,8 @@
     .footer { display: none; } /* footer will show only printing */
     }
   @media print{
-    .no-print{ visibility: hidden;}
-  }
+    .no-print{ visibility: hidden; }
+    }
     html, body {
         height: 100%;
       }
@@ -30,7 +30,7 @@
         height: 50px;
         clear:both;
         width: 100%;
-        padding-top: 60%; //resize footer for signature area
+        padding-top: 60%;//resize footer for signature area
       }*/
     .footer {
         position: fixed;
@@ -73,30 +73,30 @@
                             <div class="col-sm-4 invoice-col">
                               From
                               <address>
-                                <strong>Admin, Inc.</strong><br>
-                                Pressclub Foot Over Bridge,<br>
-                                Topkhana Road, Dhaka-1205<br>
-                                Phone: (+88) 8123212<br>
-                                Email: info@gsm.com
+                                <strong>{{ $purchase->supplier->name }}</strong><br>
+                                {{ $purchase->supplier->organization }}<br>
+                                {{ $purchase->supplier->address }}<br>
+                                Phone: {{ $purchase->supplier->phone }}<br>
                               </address>
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-4 invoice-col">
                               To
                               <address>
-                                <strong>{{ $invoice->customer->name }}</strong><br>
-                                {{ $invoice->customer->organization }}<br>
-                                {{ $invoice->customer->address }}<br>
-                                Phone: {{ $invoice->customer->phone }}<br>                                
+                                <strong>Admin, Inc.</strong><br>
+                                Pressclub Foot Over Bridge,<br>
+                                Topkhana Road, Dhaka-1205<br>
+                                Phone: (+88) 8123212<br>
+                                Email: info@gsm.com                          
                               </address>
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-4 invoice-col">
                               {{--  <b>Invoice: {{ 'INV-' . $invoice->invoice_no }}</b><br>  --}}
                               <br>
-                              <b>Invoice: {{ 'INV-' . $invoice->invoice_no }}</b><br><br>
+                              <b>Purchase No: {{ 'P-' . $purchase->purchase_no }}</b><br><br>
                               {{--  <b>Order ID:</b> 4F3S8J<br>  --}}
-                              <b>Invoice Date:</b> {{ Carbon\Carbon::parse($invoice->date)->format('d-m-Y') }}<br>
+                              <b>Purchase Date:</b> {{ Carbon\Carbon::parse($purchase->date)->format('d-m-Y') }}<br>
                               {{--  <b>Account:</b> 968-34567  --}}
                             </div>
                             <!-- /.col -->
@@ -118,14 +118,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($invoiceDetails as $key=>$invoiceDetail)
+                                @foreach ($purchaseDetails as $key=>$purchaseDetail)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
-                                    <td>{{ $invoiceDetail->product->category->name }}</td>
-                                    <td>{{ $invoiceDetail->product->name }}</td>
-                                    <td>{{ $invoiceDetail->quantity }}</td>
-                                    <td>{{ number_format(round($invoiceDetail->selling_price, 2), 2) }}</td>
-                                    <td>{{ number_format($invoiceDetail->quantity * round($invoiceDetail->selling_price, 2), 2) }}</td>
+                                    <td>{{ $purchaseDetail->product->category->name }}</td>
+                                    <td>{{ $purchaseDetail->product->name }}</td>
+                                    <td>{{ $purchaseDetail->quantity }}</td>
+                                    <td>{{ number_format(round($purchaseDetail->cost, 2), 2) }}</td>
+                                    <td>{{ number_format($purchaseDetail->quantity * round($purchaseDetail->cost, 2), 2) }}</td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -143,7 +143,7 @@
                               <img src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/mastercard.png" alt="Mastercard">
                               <img src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/american-express.png" alt="American Express">
                               <img src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/paypal2.png" alt="Paypal">  --}}
-                                <b>{{ $invoice->payment_type }}</b><br><br><br>
+                                <b>{{ $purchase->payment_type }}</b><br><br><br>
                                 
                             </div>
                             <!-- /.col -->
@@ -154,23 +154,23 @@
                                 <table class="table">
                                   <tbody><tr>
                                     <th style="width:50%">Subtotal:</th>
-                                    <td>{{ number_format(round($invoice->amount, 2), 2) }}</td>
+                                    <td>{{ number_format(round($purchase->amount, 2), 2) }}</td>
                                   </tr>
                                   <tr>
                                     <th>Discount</th>
-                                    <td>{{ number_format(round($invoice->discount, 2), 2) }}</td>
+                                    <td>{{ number_format(round($purchase->discount, 2), 2) }}</td>
                                   </tr>
                                   <tr>
                                     <th>Total:</th>
-                                    <td>{{ number_format(round($invoice->total_amount, 2), 2) }}</td>
+                                    <td>{{ number_format(round($purchase->total_amount, 2), 2) }}</td>
                                   </tr>
                                   <tr>
                                     <th>Paid:</th>
-                                    <td>{{ number_format(round($invoice->paid, 2), 2) }}</td>
+                                    <td>{{ number_format(round($purchase->paid, 2), 2) }}</td>
                                   </tr>
                                   <tr>
                                     <th>Due:</th>
-                                    <td>{{ number_format(round($invoice->due, 2), 2) }}</td>
+                                    <td>{{ number_format(round($purchase->due, 2), 2) }}</td>
                                   </tr>
                                 </tbody></table>
                               </div>

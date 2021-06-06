@@ -18,6 +18,16 @@ class Product extends Model
 
     public function invoice_details()
     {
-        return $this->hasMany('App\InvoiceDetails');
+        return $this->hasMany('App\InvoiceDetail');
     }
+
+    public function purchase_details()
+    {
+        return $this->hasMany('App\PurchaseDetail');
+    }
+
+    public function return_product_details()
+    {
+        return $this->hasMany('App\ReturnProductDetail');
+    }    
 }

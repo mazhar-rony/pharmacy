@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    public function creditor()
-    {
-        return $this->hasOne('App\Creditor');
-    }
-
     public function debtor()
     {
         return $this->hasOne('App\Debtor');
@@ -19,5 +14,10 @@ class Customer extends Model
     public function invoice()
     {
         return $this->hasOne('App\Invoice');
+    }
+
+    public function return_product()
+    {
+        return $this->hasOne('App\ReturnProduct');
     }
 }

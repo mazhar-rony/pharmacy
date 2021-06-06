@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Invoice')
+@section('title', 'Purchase')
 
 @push('css')
 <!-- Bootstrap Select Css -->
@@ -36,19 +36,21 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        INVOICE
+                        PURCHASE
                     </h2>
                 </div>
-                <form action="{{ route('admin.invoice.update', $invoice->id) }}" method="POST" id="invForm">
+                <form action="{{ route('admin.purchase.store') }}" method="POST" id="purchaseForm">
                 @csrf
-                @method('PUT')
+                @php
+                    $cash = $cash;
+                @endphp
                 <div class="body">                        
                     <div class="row clearfix">
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <div class="form-group form-float">
-                                <label for="invoice">Invoice No</label>
-                                <input id="invoice" name="invoice" type="text" class="form-control align-center"
-                                    value="{{ $invoice->invoice_no }}" 
+                                <label for="purchase">Purchase No</label>
+                                <input id="purchase" name="purchase" type="text" class="form-control align-center"
+                                    value="{{ $purchase_no }}" 
                                     style="border: 1px solid; 
                                     border-color: #ced4da; 
                                     background-color: #D8FDBA;
@@ -58,11 +60,8 @@
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <label for="date">Date</label>
                             <div class="form-group">
-                                <div class="form-line" id="bs_datepicker_container">                                    
-                                    <input type="text" id="invoice_date" name="invoice_date" 
-                                        class="form-control invoice_date" data-date-format="dd-mm-yyyy" 
-                                        value="{{ Carbon\Carbon::parse($invoice->date)->format('d-m-Y') }}" 
-                                        placeholder="Choose a date..." readonly>                                   
+                                <div class="form-line" id="bs_datepicker_container">                                   
+                                    <input type="text" id="purchase_date" name="purchase_date" class="form-control purchase_date" data-date-format="dd-mm-yyyy" placeholder="Choose a date...">
                                 </div>
                             </div>
                         </div>
@@ -71,7 +70,7 @@
                                 <div class="form-line {{ $errors->has('category') ? 'focused error' : '' }}">
                                     <label for="category">Select Category</label>
                                     <select name="category" id="category" data-live-search="true" 
-                                        class="form-control show-tick @error('category') is-invalid @enderror">
+                                        class="form-control show-tick @error('category') is-invalid @enderror" required>
                                             <option value="" disabled selected>Nothing Selected</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -91,7 +90,7 @@
                                     <label for="product">Select Product</label>
                                     <img class="loader" id="loader" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
                                     <select name="product" id="product" data-live-search="true" 
-                                        class="form-control selectpicker show-tick @error('product') is-invalid @enderror">
+                                        class="form-control selectpicker show-tick @error('product') is-invalid @enderror" required>
                                             <option value="" disabled selected>Nothing Selected</option>
                                     </select>
                                 </div>
@@ -126,8 +125,6 @@
                     </div>                                             
                 </div>
                 <div class="body">
-                    {{-- <form action="{{ route('admin.invoice.store') }}" method="POST" id="invForm">
-                    @csrf --}}
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead>
@@ -140,39 +137,6 @@
                                         <th width="7%">Action</th>                                   
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($invoiceDetails as $key=>$invoiceDetail)
-                                        <tr class="delete_add_more_item">
-                                            <input type="hidden" name="stock[]" class="form-control form-control-sm text-center stock" value="{{ $invoiceDetail->product->quantity }}">
-                                            <input type="hidden" id="cost" name="cost[]" value="{{ round($invoiceDetail->cost, 2) }}">
-                                            <td>
-                                                <input type="hidden" name="category[]" value="{{ $invoiceDetail->product->category->id }}">
-                                                    {{ $invoiceDetail->product->category->name }}
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="product[]" value="{{ $invoiceDetail->product->id }}">
-                                                    {{ $invoiceDetail->product->name }}
-                                            </td>
-                                            <td>
-                                                <input type="number" class="form-control form-control-sm text-center quantity"
-                                                    name="quantity[]" min="1" value="{{ $invoiceDetail->quantity }}">
-                                            </td>
-                                            <td>
-                                                <input type="number" class="form-control form-control-sm text-center unit_price"
-                                                    name="unit_price[]" value="{{ round($invoiceDetail->selling_price, 2) }}" min="0" step=".01">
-                                            </td>
-                                            <td>
-                                                <input type="number" class="form-control form-control-sm text-right total_price"
-                                                    name="total_price[]" value="{{ $invoiceDetail->quantity * $invoiceDetail->selling_price}}" readonly>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm waves-effect removeitem" type="button">
-                                                    <i class="material-icons">disabled_by_default</i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
                                 
                                 <tbody id="addRow" class="addRow">
                                     
@@ -181,7 +145,7 @@
                                     <tr>
                                         <td colspan="4" class="text-right" style="font-weight: bold;">Total Amount</td>
                                         <td>
-                                            <input type="number" id="amount" name="amount" value="{{ round($invoice->amount, 2) }}"
+                                            <input type="number" id="amount" name="amount" value="0"
                                                 class="form-control form-control-sm text-right amount" 
                                                 style="background-color: #bae4fd;" readonly>
                                         </td>
@@ -190,7 +154,7 @@
                                     <tr>
                                         <td colspan="4" class="text-right" style="font-weight: bold;">Discount</td>
                                         <td>
-                                            <input type="number" id="discount" name="discount" value="{{ round($invoice->discount, 2) }}"
+                                            <input type="number" id="discount" name="discount" value="0"
                                                 class="form-control form-control-sm text-right discount"
                                                 min="0" step=".01" required>
                                         </td>
@@ -199,7 +163,7 @@
                                     <tr>
                                         <td colspan="4" class="text-right" style="font-weight: bold;">Net Amount</td>
                                         <td>
-                                            <input type="number" id="total_amount" name="total_amount" value="{{ round($invoice->total_amount, 2) }}"
+                                            <input type="number" id="total_amount" name="total_amount" value="0"
                                                 class="form-control form-control-sm text-right total_amount" 
                                                 style="background-color: #D8FDBA;" readonly>
                                         </td>
@@ -208,7 +172,7 @@
                                     <tr>
                                         <td colspan="4" class="text-right" style="font-weight: bold;">Total Paid</td>
                                         <td>
-                                            <input type="number" id="total_paid" name="total_paid" value="{{ round($invoice->paid, 2) }}"
+                                            <input type="number" id="total_paid" name="total_paid" value="0"
                                                 class="form-control form-control-sm text-right total_paid"
                                                 min="0" step=".01" required>
                                         </td>
@@ -217,7 +181,7 @@
                                     <tr>
                                         <td colspan="4" class="text-right" style="font-weight: bold;">DUE</td>
                                         <td>
-                                            <input type="number" id="total_due" name="total_due" value="{{ round($invoice->due, 2) }}"
+                                            <input type="number" id="total_due" name="total_due" value="0"
                                                 class="form-control form-control-sm text-right total_due" 
                                                 style="background-color: #fdbaba;" readonly>
                                         </td>
@@ -228,23 +192,22 @@
                         </div>
                         <div>
                             <textarea name="description" id="description" class="form-control"
-                                placeholder="Write description here...">{{ !empty(old('description')) ? old('description') : $invoice->description }}</textarea>
+                                placeholder="Write description here..."></textarea>
                         </div>
                         <br>
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                
                                 <div class="form-group form-float">
-                                    <div class="form-line {{ $errors->has('customer') ? 'focused error' : '' }}">
-                                        <select name="customer" id="customer" data-live-search="true" 
-                                            class="form-control show-tick @error('customer') is-invalid @enderror" required>
-                                            @foreach ($customers as $customer)
-                                                <option {{ $invoice->customer_id == $customer->id ? 'selected' : '' }}
-                                                    value="{{ $customer->id }}"> {{ $customer->name }} ( company: {{ $customer->organization }} | contact: {{ $customer->phone }} )
-                                                </option>                                                
+                                    <div class="form-line {{ $errors->has('supplier') ? 'focused error' : '' }}">
+                                        <select name="supplier" id="supplier" data-live-search="true" 
+                                            class="form-control show-tick @error('supplier') is-invalid @enderror" required>
+                                                <option value="" disabled selected>Select supplier</option>
+                                            @foreach ($suppliers as $supplier)
+                                                <option value="{{ $supplier->id }}">{{ $supplier->name }} ( company: {{ $supplier->organization }} | contact: {{ $supplier->phone }} )</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    @error('customer')
+                                    @error('supplier')
                                         <span class="invalid-feedback" role="alert">
                                             <strong style="color: red">{{ $message }}</strong>
                                         </span>
@@ -257,23 +220,21 @@
                                 <div class="form-group form-float">
                                     <label for="">Payment Type:</label>
                                 
-                                    <input name="payment_type" type="radio" id="cash" value="cash" class="with-gap radio-col-pink" {{ $invoice->payment_type === 'cash' ? 'checked' : '' }}/>
+                                    <input name="payment_type" type="radio" id="cash" value="cash" class="with-gap radio-col-pink" checked />
                                     <label for="cash">CASH</label>
-                                    <input name="payment_type" type="radio" id="cheque" value="cheque" class="with-gap radio-col-pink" {{ $invoice->payment_type === 'cheque' ? 'checked' : '' }}/>
+                                    <input name="payment_type" type="radio" id="cheque" value="cheque" class="with-gap radio-col-pink" />
                                     <label for="cheque">CHEQUE</label>
                                 </div>
                             </div>
-                            <div class="bank_info" style="{{ $invoice->payment_type === 'cash' ? 'display:none' : '' }}">
+                            <div class="bank_info" style="display:none">
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">                                
                                     <div class="form-group form-float">
                                         <div class="form-line {{ $errors->has('bank') ? 'focused error' : '' }}">
                                             <select name="bank" id="bank" data-live-search="true" 
                                                 class="form-control show-tick @error('bank') is-invalid @enderror">
-                                                <option value="" disabled selected>Select Bank</option>
+                                                    <option value="" disabled selected>Select Bank</option>
                                                 @foreach ($banks as $bank)
-                                                    <option {{ isset($invoice->bank_account) && ($invoice->bank_account->bank->id == $bank->id) ? 'selected' : '' }}
-                                                        value="{{ $bank->id }}"> {{ $bank->name }}
-                                                    </option>
+                                                    <option value="{{ $bank->id }}">{{ $bank->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -290,8 +251,7 @@
                                             <img class="loader" id="loader_account" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">
                                             <select name="account" id="account" data-live-search="true" 
                                                 class="form-control selectpicker show-tick @error('account') is-invalid @enderror">
-                                                    {{--  <option value="" disabled selected>Select Account No</option>  --}}
-                                                    <option value="{{ isset($invoice->bank_account) ? $invoice->bank_account->id : '' }}">{{ isset($invoice->bank_account) ? $invoice->bank_account->account_number : '' }}</option>
+                                                    <option value="" disabled selected>Select Account No</option>
                                             </select>
                                         </div>
                                         @error('account')
@@ -304,8 +264,7 @@
                             </div>
                         </div>
                         <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.invoice.index') }}">BACK</a>
-                        <button type="submit" id="submitButton" class="btn btn-primary m-t-15 waves-effect">UPDATE</button>
-                    {{-- </form> --}}
+                        <button type="submit" id="submitButton" onclick="checkCash()" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                     </div>
                 </form>
             </div>
@@ -331,11 +290,12 @@
 <!-- Bootstrap Datepicker Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
 
+<!-- Sweet Alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <!-- Html Table Content for Add Products -->
     <script id="document-template" type="text/x-handlebars-template">
         <tr id="delete_add_more_item" class="delete_add_more_item">
-            <input type="hidden" name="invoice" value="@{{invoice}}">
-            <input type="hidden" name="invoice_date" value="@{{invoice_date}}">
             <input type="hidden" name="stock[]" class="form-control form-control-sm text-center stock" value="@{{stock}}">
             <input type="hidden" id="cost" name="cost[]" value="@{{cost}}">
             <td>
@@ -369,10 +329,10 @@
 <!-- Add to Cart Event -->
     <script>
         $(document).ready(function(){
-            //$('#submitButton').attr({"disabled":true});//prevent submit without adding item
+            $('#submitButton').attr({"disabled":true});//prevent submit without adding item
             $(document).on("click",".addmoreevent",function(){
-                var invoice_date = $('#invoice_date').val();
-                var invoice = $('#invoice').val();
+                var purchase_date = $('#purchase_date').val();
+                var purchase = $('#purchase').val();
                 var category = $('#category').val();
                 var category_name = $('#category').find('option:selected').text();
                 var product = $('#product').val();
@@ -392,7 +352,7 @@
                         progressBar:true,
                     });
                 }
-                else if(!isNaN(stock) && stock > 0){                    
+                else{                    
                     if(checkDuplicate(product)){
                         //alert("back to function");
                         toastr.warning('Item already added, Quantity Increased !', 'Warning',{
@@ -404,8 +364,8 @@
                         var source = $("#document-template").html();
                         var template = Handlebars.compile(source);
                         var data = {
-                            invoice_date:invoice_date,
-                            invoice:invoice,
+                            purchase_date:purchase_date,
+                            purchase:purchase,
                             category:category,
                             category_name:category_name,
                             product:product,
@@ -416,12 +376,6 @@
                         var html = template(data);
                         $("#addRow").append(html);
                     }                                       
-                }
-                else{
-                    toastr.error('Out of Stock', 'Error',{
-                        closeButton:true,
-                        progressBar:true,
-                    });
                 }
             });
 
@@ -448,35 +402,18 @@
 
             
             $(document).on("click", ".removeitem", function(event){
-                $(this).closest(".delete_add_more_item").remove();
+                $(this).closest("#delete_add_more_item").remove();
                 totalAmountPrice();
             });
 
             $(document).on("keyup click", ".unit_price, .quantity", function(){
                 var unit_price = $(this).closest("tr").find("input.unit_price").val();
-                var qty = $(this).closest("tr").find("input.quantity").val();                
-                //var stock_limit = $('#stock').val();
-                var stock_limit = $(this).closest("tr").find("input.stock").val();
-
-                $(this).closest("tr").find("input.quantity").attr({"max": stock_limit});
-
-                //if(qty <= stock_limit){
-                    //console.log(qty);
+                var qty = $(this).closest("tr").find("input.quantity").val();   
 
                 var total_price = unit_price * qty;
                 $(this).closest("tr").find("input.total_price").val(total_price.toFixed(2));
-                //totalAmountPrice();
+                
                 $('#discount').trigger('keyup');
-
-                //}
-                /*else{
-                    toastr.error('Quantity is more than Stock Limit !', 'Error',{
-                        closeButton:true,
-                        progressBar:true,
-                    });
-                }*/
-
-
             });
 
             $(document).on('keyup click', '#discount', function(){
@@ -539,49 +476,34 @@
 <!-- Show Bank Info for Cheque Payment -->
 
     <script>
-        //Enforce required for Update checking on load
-        $(document).ready(function() {            
-            var payment_type = $(":radio[name=payment_type]:checked").val();
+        $(document).on('change', 'input[name=payment_type]', function(){
+            var payment_type = $(this).val();
             if(payment_type == 'cheque'){
                 $('.bank_info').show();
                 $('#bank').attr({"required": true});
                 $('#account').attr({"required": true});
-                //$("#bank").removeAttr('disabled');
-                //$("#account").removeAttr('disabled');
             }else{
+                $('.bank_info').hide();
                 $('#bank').attr({"required": false});
                 $('#account').attr({"required": false});
-                //$('#bank').attr('disabled','disabled');
-                //$('#account').attr('disabled','disabled');
             }
-            $(document).on('change', 'input[name=payment_type]', function(){
-                var payment_type = $(this).val();
-                if(payment_type == 'cheque'){
-                    $('.bank_info').show();
-                    $('#bank').attr({"required": true});
-                    $('#account').attr({"required": true});
-                    $("#bank").removeAttr('disabled');
-                    $("#account").removeAttr('disabled');
-                }else{
-                    $('.bank_info').hide();
-                    $('#bank').attr({"required": false});
-                    $('#account').attr({"required": false});
-                    $('#bank').attr('disabled','disabled');
-                    $('#account').attr('disabled','disabled');
-                }
-            });
         });
     </script>
 
-<!-- Date Picker Select Disable -->
+<!-- Date Picker Select Today -->
     <script type="text/javascript">    
-        $(document).ready(function() {            
-            $('.invoice_date').datepicker({
-                //Other options...
-                beforeShowDay: function() {
-                   return false;
-                }
-             });
+        $(document).ready(function() {
+            
+            $('.purchase_date').datepicker('setDate', 'now');
+
+            //end date working but set default date today not working
+            /*$(".invoice_date").datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                //format: 'mm/dd/yyyy',
+                //startDate: new Date(),
+                endDate: new Date(new Date().setDate(new Date().getDate()))
+            });*/         
         });
     </script>
 
@@ -662,7 +584,7 @@
         account = $('select[name="account"]');
 
         loader_account.hide();
-        //account.attr('disabled','disabled');//Removing disabled for Update
+        account.attr('disabled','disabled');
 
             $(document).on('change', '#bank', function(){
                 var bank = $(this).val();
@@ -702,4 +624,55 @@
                     
         //});
     </script>
+
+<!-- Dependency Purchase No with Selected Date -->
+    <script>         
+        $(document).on('change', '#purchase_date', function(){
+            var purchase_date = $(this).val();
+            if(purchase_date){                   
+                $.ajax({
+                    url: "{{route('admin.invoice.getPurchaseNo')}}",
+                    type: "GET",
+                    data: {purchase_date:purchase_date},                   
+                    success: function(data){
+                        $('#purchase').val(data);
+                    },
+                    error: function(xhr, status, error) {
+                        // check status && error
+                        //console.log(error);
+                    },
+                });
+            }
+        });
+    </script>
+
+<!-- Check Cash Availability before Submit -->
+    <script>
+        function checkCash(){
+            event.preventDefault();
+    
+            var cash = '<?php echo $cash;?>';
+            var total_paid = parseFloat(document.getElementById('total_paid').value);
+            var radio = $("input[type='radio'][name='payment_type']:checked").val();
+    
+            if(radio == 'cash'){
+                if(total_paid > cash){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Insufficient Balance in Cash !',
+                        footer: 'You have only '+ parseFloat(cash).toFixed(2) + ' Tk in your Cash.'
+                      })
+                }
+                else{
+                    document.getElementById('purchaseForm').submit();
+                }
+            }
+            else{
+                document.getElementById('purchaseForm').submit();
+            }
+    
+        };
+    </script>
+   
 @endpush
