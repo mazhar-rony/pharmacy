@@ -25,4 +25,9 @@ class ReturnProduct extends Model
     {
         return $this->belongsTo('App\Invoice',);
     }
+
+    public function bank_account()
+    {
+        return $this->belongsTo('App\BankAccount');
+    }
 }

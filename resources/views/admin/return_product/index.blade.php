@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        ALL INVOICES
+                        ALL RETURN PRODUCTS
                         <span class="badge bg-red">{{ $returnProducts->count() }}</span
                     </h2>
                 </div>
@@ -72,7 +72,7 @@
                                                 <i class="material-icons">delete</i>
                                             </button>
                                             <form id="delete-form-{{ $returnProduct->id }}" method="POST"
-                                                action="{{ route('admin.invoice.destroy', $returnProduct->id) }}"
+                                                action="{{ route('admin.return.destroy', $returnProduct->id) }}"
                                                 style="display: none;">
                                                     @csrf
                                                     @method('DELETE')

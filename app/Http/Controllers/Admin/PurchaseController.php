@@ -146,6 +146,7 @@ class PurchaseController extends Controller
         $this->validate($request,[
             'purchase' => 'required',
             'purchase_date' => 'required|date',
+            'quantity.*' => 'required|integer',
             'unit_price.*' => 'required|numeric',
             'discount' => 'required|numeric',
             'total_amount' => 'required|numeric',

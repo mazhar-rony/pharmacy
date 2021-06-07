@@ -36,7 +36,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        INVOICE
+                        EDIT INVOICE
                     </h2>
                 </div>
                 <form action="{{ route('admin.invoice.update', $invoice->id) }}" method="POST" id="invForm">

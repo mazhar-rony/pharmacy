@@ -36,7 +36,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        PURCHASE
+                        CREATE NEW PURCHASE
                     </h2>
                 </div>
                 <form action="{{ route('admin.purchase.store') }}" method="POST" id="purchaseForm">
@@ -263,7 +263,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.invoice.index') }}">BACK</a>
+                        <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.purchase.index') }}">BACK</a>
                         <button type="submit" id="submitButton" onclick="checkCash()" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                     </div>
                 </form>

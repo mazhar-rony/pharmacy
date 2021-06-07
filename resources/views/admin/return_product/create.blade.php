@@ -36,7 +36,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        RETURN PRODUCT
+                        CREATE RETURN PRODUCT
                     </h2>
                 </div>
                 <form action="{{ route('admin.return.store') }}" method="POST" id="returnForm">
@@ -49,7 +49,7 @@
                         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                             <div class="form-group form-float">
                                 <div class="form-line {{ $errors->has('invoice') ? 'focused error' : '' }}">
-                                    <label for="invoice">Select Invoice</label>
+                                    <label for="invoice">Select Invoice ( If Any )</label>
                                     <select name="invoice" id="invoice" data-live-search="true" 
                                         class="form-control show-tick @error('invoice') is-invalid @enderror">
                                             <option value="" disabled selected>Nothing Selected</option>
@@ -159,9 +159,10 @@
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                
                                 <div class="form-group form-float">
-                                    <div class="form-line {{ $errors->has('customer') ? 'focused error' : '' }}">
+                                    <div class="form-line {{ $errors->has('customer') ? 'focused error' : '' }}">   
+                                        <img class="loader" id="loader_customer" src="{{Storage::disk('public')->url('ajax-loader.gif')}}" alt="">                                     
                                         <select name="customer" id="customer" data-live-search="true" 
-                                            class="form-control show-tick @error('customer') is-invalid @enderror" required>
+                                            class="form-control selectpicker show-tick @error('customer') is-invalid @enderror" required>
                                                 <option value="" disabled selected>Select Customer</option>
                                             @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">{{ $customer->name }} ( company: {{ $customer->organization }} | contact: {{ $customer->phone }} )</option>
@@ -558,6 +559,44 @@
             }
     
         };
+    </script>
+
+<!-- Dependency Dropdown for Customer -->
+    <script>    
+        //$(function() {
+        var loader_customer = $('#loader_customer'),
+        invoice = $('select[name="invoice"]'),
+        customer = $('select[name="customer"]');
+
+        loader_customer.hide();
+        //customer.attr('disabled','disabled');
+
+            $(document).on('change', '#invoice', function(){
+                var invoice = $(this).val();
+                if(invoice){
+                    loader_customer.show();
+                    //customer.attr('disabled','disabled');
+
+                    $.ajax({
+                        url: "{{route('admin.invoice.getCustomer')}}",
+                        type: "GET",
+                        data: {invoice:invoice},                   
+                        success: function(data){ 
+                              var option = '<option value="'+data.id+'">'+ data.name + ' ( company: ' + data.organization + ' | contact: ' + data.phone +' )</option>';                           
+                            //customer.removeAttr('disabled');
+                            $('#customer').html(option);
+                            loader_customer.hide();
+                            $(".selectpicker").selectpicker("refresh");
+                        },
+                        error: function(xhr, status, error) {
+                            // check status && error
+                            //console.log(error);
+                        },
+                    });
+                }
+            });
+                    
+        //});
     </script>
 
 @endpush

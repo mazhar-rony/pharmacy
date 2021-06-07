@@ -58,7 +58,7 @@ class InvoiceController extends Controller
         }
         
 
-        return view('admin.invoice.createnew', compact('categories', 'banks', 'customers', 'invoice_no'));
+        return view('admin.invoice.create', compact('categories', 'banks', 'customers', 'invoice_no'));
     }
 
     public function getPurchaseNo(Request $request)
@@ -131,6 +131,18 @@ class InvoiceController extends Controller
             $accounts =  Bank::find($bank)->accounts()->get();
             
             return response()->json($accounts);
+        }
+    }
+
+    public function getCustomer(Request $request)
+    {
+        $invoice = $request->invoice;
+
+        if($request->has('invoice'))
+        {
+            $customer = Invoice::find($invoice)->customer()->first();
+
+            return response()->json($customer);
         }
     }
 

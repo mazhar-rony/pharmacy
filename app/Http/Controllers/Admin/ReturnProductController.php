@@ -10,6 +10,7 @@ use App\Category;
 use App\Customer;
 use Carbon\Carbon;
 use App\BankAccount;
+use App\InvoiceDetail;
 use App\ReturnProduct;
 use App\ReturnProductDetail;
 use Illuminate\Http\Request;
@@ -62,13 +63,119 @@ class ReturnProductController extends Controller
     {
         $this->validate($request,[
             'return_date' => 'required|date',
+            'quantity.*' => 'required|integer',
+            'unit_price.*' => 'required|numeric',
             'amount' => 'required|numeric',
             'customer' => 'required|integer',
             'payment_type' => 'required', 
             'bank' => 'required_if:payment_type,==,cheque|integer',
             //'account' => 'required_if:payment_type,==,cheque|integer'
         ]);
-        
+
+        if(isset($request->invoice) && $this->checkInvoiceReturn($request))
+        {
+            return redirect()->back();
+        }
+        else
+        {            
+            $this->saveReturnProduct($request);
+            
+            Toastr::success('Product Successfully Returned !' ,'Success');
+
+            return redirect()->route('admin.return.index');
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $returnProduct = ReturnProduct::find($id);
+        $returnProductDetails = $returnProduct->return_product_details;
+
+        return view('admin.return_product.show', compact('returnProduct', 'returnProductDetails'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $returnProduct = ReturnProduct::find($id);
+        $returnProductDetails = $returnProduct->return_product_details;
+        $categories = Category::orderBy('name')->get();
+        $banks = Bank::orderBy('name')->get();
+        $customers = Customer::orderBy('name')->get();
+        $invoices = Invoice::orderBy('invoice_no')->get(); 
+        $income = DB::table('cashes')->sum('income');
+        $expense = DB::table('cashes')->sum('expense');
+        $cash = $income - $expense;  
+
+        return view('admin.return_product.edit', 
+            compact('returnProduct', 'returnProductDetails', 'categories', 'banks', 
+                    'customers', 'invoices', 'cash'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate($request,[
+            'return_date' => 'required|date',
+            'quantity.*' => 'required|integer',
+            'unit_price.*' => 'required|numeric',
+            'amount' => 'required|numeric',
+            'customer' => 'required|integer',
+            'payment_type' => 'required', 
+            'bank' => 'required_if:payment_type,==,cheque|integer',
+            //'account' => 'required_if:payment_type,==,cheque|integer'
+        ]);
+
+        if(isset($request->invoice) && $this->checkInvoiceReturn($request))
+        {
+            return redirect()->back();
+        }
+        else
+        {   
+            $this->deleteReturnProduct($id);        
+
+            $this->saveReturnProduct($request);
+            
+            Toastr::success('Product Return Successfully Updated !' ,'Success');
+
+            return redirect()->route('admin.return.index');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->deleteReturnProduct($id);
+
+        Toastr::success('Return Product Successfully Deleted !' ,'Success');
+
+        return redirect()->back();
+    }
+
+    public function saveReturnProduct(Request $request)
+    {
         $cash = new Cash();
         $bankAccount = BankAccount::find($request->account);
         $accTransaction = new BankAccountTransaction();
@@ -114,11 +221,11 @@ class ReturnProductController extends Controller
                     $cash->expense =  $returnProduct->amount;
                     if(isset($request->invoice))
                     {
-                        $cash->description = 'Return Product of Invoice No INV-' . $returnProduct->invoice->invoice_no;
+                        $cash->description = 'Return Product RT-' . $returnProduct->id . ' of Invoice No INV-' . $returnProduct->invoice->invoice_no;
                     }
                     else
                     {
-                        $cash->description = 'Return Product from ' . $returnProduct->customer->name . ' of ' . $returnProduct->customer->organization;
+                        $cash->description = 'Return Product RT-' . $returnProduct->id . ' from ' . $returnProduct->customer->name . ' of ' . $returnProduct->customer->organization;
                     }
                     
                     $cash->save();
@@ -139,11 +246,11 @@ class ReturnProductController extends Controller
                     $accTransaction->balance =  $bankAccount->balance;
                     if(isset($request->invoice))
                     {
-                        $accTransaction->description =  'Return Product of Invoice No INV-' . $returnProduct->invoice->invoice_no;
+                        $accTransaction->description =  'Return Product RT-' . $returnProduct->id . ' of Invoice No INV-' . $returnProduct->invoice->invoice_no;
                     }
                     else
                     {
-                        $accTransaction->description =  'Return Product from ' . $returnProduct->customer->name . ' of ' . $returnProduct->customer->organization;
+                        $accTransaction->description =  'Return Product RT-' . $returnProduct->id . ' from ' . $returnProduct->customer->name . ' of ' . $returnProduct->customer->organization;
                     }
                                    
                     $accTransaction->save();
@@ -166,79 +273,35 @@ class ReturnProductController extends Controller
 
             return redirect()->back();
         }
-        
-        Toastr::success('Product Successfully Returned !' ,'Success');
-
-        return redirect()->route('admin.return.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function deleteReturnProduct($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $invoice = Invoice::find($id);
-        $account = BankAccountTransaction::where('description', 'like', '%' . $invoice->invoice_no . '%')->first();
+        $returnProduct = ReturnProduct::find($id);
+        $account = BankAccountTransaction::where('description', 'like', '%RT-' . $returnProduct->id . '%')->first();
        
         try{
-            DB::transaction(function () use($invoice, $account){
-                if($invoice->payment_type === 'cash')
+            DB::transaction(function () use($returnProduct, $account){
+                if($returnProduct->payment_type === 'cash')
                 {
-                    Cash::where('description', 'like', '%' . $invoice->invoice_no . '%')->delete();
+                    Cash::where('description', 'like', '%RT-' . $returnProduct->id . '%')->delete();
                 }
-                if($invoice->payment_type === 'cheque' && $account !== null)
+                if($returnProduct->payment_type === 'cheque' && $account !== null)
                 {
                     //$account = BankAccountTransaction::where('description', 'like', '%' . $invoice->invoice_no . '%')->first();
                     $bankAccount = BankAccount::find($account->bank_account_id);
-                    $bankAccount->balance -= $invoice->paid;
-                    BankAccountTransaction::where('description', 'like', '%' . $invoice->invoice_no . '%')->delete();
+                    $bankAccount->balance += $returnProduct->amount;
+                    BankAccountTransaction::where('description', 'like', '%RT-' . $returnProduct->id . '%')->delete();
                     $bankAccount->save();
                 }
-                $invoiceDetails = InvoiceDetail::where('invoice_id', $invoice->id)->get();
-                foreach($invoiceDetails as $invoiceDetail)
+                $returnProductDetails = ReturnProductDetail::where('return_product_id', $returnProduct->id)->get();
+                foreach($returnProductDetails as $returnProductDetail)
                 {
-                    $product = Product::find($invoiceDetail->product_id);
-                    $product->quantity += $invoiceDetail->quantity;
+                    $product = Product::find($returnProductDetail->product_id);
+                    $product->quantity -= $returnProductDetail->quantity;
                     $product->save();
                 }
-                $invoice->delete();
+                $returnProduct->delete();
             }, 3);
 
         }
@@ -250,5 +313,35 @@ class ReturnProductController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function checkInvoiceReturn(Request $request)
+    {
+        $count_products = count($request->product); 
+                
+            if(isset($request->invoice))
+            {   
+                for($i=0; $i<$count_products; $i++)
+                {
+                    $isExistProduct = InvoiceDetail::where('product_id', $request->product[$i])->where('invoice_id', $request->invoice)->first();
+                    
+                    $product = Product::find($request->product[$i]);
+
+                    if($isExistProduct === null)
+                    {                        
+                        Toastr::error('" <strong><span style="color: black;">' . $product->name. '</span></strong> " Not Found in this Invoice No.' ,'Error');
+                        //return redirect()->back();
+                        return true;
+                    }
+                    else if($request->quantity[$i] > $isExistProduct->quantity)
+                    {
+                        Toastr::error('Trying to Return More Quantity than Listed in Invoice. There are Only <strong><span style="color: black;">' . $isExistProduct->quantity .  ' ' . $product->name . '</span></strong> Found in this Invoice No.' ,'Error');
+                        //return redirect()->back();
+                        return true;
+                    }
+                }
+                                    
+            }
+            return false;
     }
 }

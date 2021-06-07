@@ -36,7 +36,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        PURCHASE
+                        EDIT PURCHASE
                     </h2>
                 </div>
                 <form action="{{ route('admin.purchase.update', $purchase->id) }}" method="POST" id="purchaseForm">

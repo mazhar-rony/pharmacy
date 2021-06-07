@@ -103,7 +103,7 @@
                             @enderror
                         </div>
                     
-                        <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.bank.index') }}">BACK</a>
+                        <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.branch.index') }}">BACK</a>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                     </form>
                 </div>

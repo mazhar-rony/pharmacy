@@ -36,9 +36,11 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        INVOICE
+                        CREATE NEW INVOICE
                     </h2>
                 </div>
+                <form action="{{ route('admin.invoice.store') }}" method="POST" id="invForm">
+                @csrf
                 <div class="body">                        
                     <div class="row clearfix">
                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
@@ -56,7 +58,9 @@
                             <label for="date">Date</label>
                             <div class="form-group">
                                 <div class="form-line" id="bs_datepicker_container">
-                                    <input type="text" id="invoice_date" name="invoice_date" class="form-control invoice_date" data-date-format="dd/mm/yyyy" placeholder="Choose a date...">
+                                    {{--  <input type="text" id="invoice_date" name="invoice_date" class="form-control invoice_date" data-date-format="dd/mm/yyyy" placeholder="Choose a date...">  --}}
+                                    <input type="text" id="invoice_date" name="invoice_date" class="form-control invoice_date" data-date-format="dd-mm-yyyy" placeholder="Choose a date...">
+                                    {{-- <input type="text" id="debit_date" name="debit_date" class="datepicker form-control" placeholder="Please choose a date..." required> --}}
                                 </div>
                             </div>
                         </div>
@@ -120,8 +124,8 @@
                     </div>                                             
                 </div>
                 <div class="body">
-                    <form action="{{ route('admin.invoice.store') }}" method="POST" id="invForm">
-                    @csrf
+                    {{-- <form action="{{ route('admin.invoice.store') }}" method="POST" id="invForm">
+                    @csrf --}}
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover">
                                 <thead>
@@ -138,26 +142,52 @@
                                 <tbody id="addRow" class="addRow">
                                     
                                 </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4" class="text-right" style="font-weight: bold;">Total Amount</td>
+                                        <td>
+                                            <input type="number" id="amount" name="amount" value="0"
+                                                class="form-control form-control-sm text-right amount" 
+                                                style="background-color: #bae4fd;" readonly>
+                                        </td>
+                                        <td></td>
+                                    </tr>
                                     <tr>
                                         <td colspan="4" class="text-right" style="font-weight: bold;">Discount</td>
                                         <td>
                                             <input type="number" id="discount" name="discount" value="0"
                                                 class="form-control form-control-sm text-right discount"
-                                                min="0" step=".01">
+                                                min="0" step=".01" required>
                                         </td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4" class="text-right" style="font-weight: bold;">Total Amount</td>
+                                        <td colspan="4" class="text-right" style="font-weight: bold;">Net Amount</td>
                                         <td>
-                                            <input type="text" id="total_amount" name="total_amount" value="0"
+                                            <input type="number" id="total_amount" name="total_amount" value="0"
                                                 class="form-control form-control-sm text-right total_amount" 
                                                 style="background-color: #D8FDBA;" readonly>
                                         </td>
                                         <td></td>
                                     </tr>
-                                <tbody>
-                                    
+                                    <tr>
+                                        <td colspan="4" class="text-right" style="font-weight: bold;">Total Paid</td>
+                                        <td>
+                                            <input type="number" id="total_paid" name="total_paid" value="0"
+                                                class="form-control form-control-sm text-right total_paid"
+                                                min="0" step=".01" required>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-right" style="font-weight: bold;">DUE</td>
+                                        <td>
+                                            <input type="number" id="total_due" name="total_due" value="0"
+                                                class="form-control form-control-sm text-right total_due" 
+                                                style="background-color: #fdbaba;" readonly>
+                                        </td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -174,7 +204,7 @@
                                             class="form-control show-tick @error('customer') is-invalid @enderror" required>
                                                 <option value="" disabled selected>Select Customer</option>
                                             @foreach ($customers as $customer)
-                                                <option value="{{ $customer->id }}">{{ $customer->name }} ( contact: {{ $customer->phone }} )</option>
+                                                <option value="{{ $customer->id }}">{{ $customer->name }} ( company: {{ $customer->organization }} | contact: {{ $customer->phone }} )</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -236,8 +266,9 @@
                         </div>
                         <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.invoice.index') }}">BACK</a>
                         <button type="submit" id="submitButton" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
-                    </form>
-                </div>
+                    {{-- </form> --}}
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -299,6 +330,7 @@
 <!-- Add to Cart Event -->
     <script>
         $(document).ready(function(){
+            $('#submitButton').attr({"disabled":true});//prevent submit without adding item
             $(document).on("click",".addmoreevent",function(){
                 var invoice_date = $('#invoice_date').val();
                 var invoice = $('#invoice').val();
@@ -421,11 +453,46 @@
                         sum += parseFloat(value);
                     }
                 });
+                $("#amount").val(sum.toFixed(2));
+
                 var discount = parseFloat($('#discount').val());
                 if(!isNaN(discount) && discount.length != 0){
                     sum -= parseFloat(discount);
                 }
                 $("#total_amount").val(sum.toFixed(2));
+                $("#total_amount").trigger('change');//Calling Change Event of Total Amount for Enable Disable Submit Button Acconding to Items Added or Not
+                totalDue();
+            }
+
+            $(document).on('keyup click', '#total_paid', function(){
+                totalDue();
+            });
+
+            function totalDue(){
+                var sum = 0;
+                var totalAmount = parseFloat($('#total_amount').val());
+                var totalPaid = parseFloat($('#total_paid').val());
+                $('#total_paid').attr({"max": totalAmount});
+
+                //if(!isNaN(totalPaid) && totalPaid.length != 0){
+                    sum += parseFloat(totalAmount) - parseFloat(totalPaid);
+               // }
+                $("#total_due").val(sum.toFixed(2));
+            }
+            
+        });
+    </script>
+
+<!-- Enable Disable Submit Button Acconding to Items Added or Not -->
+
+    <script>
+        $(document).on('change', '#total_amount', function(){
+            var totalAmount = parseFloat($('#total_amount').val());
+            if(totalAmount > 0){
+                $('#submitButton').attr({"disabled":false});
+            }
+            else{
+                $('#submitButton').attr({"disabled":true});
             }
         });
     </script>
@@ -453,18 +520,14 @@
             
             $('.invoice_date').datepicker('setDate', 'now');
 
-            $(".invoice_date").datepicker({
-                endDate: new Date()
-            });
-            
-            //Not Working....
-            /*$('#datepicker').datepicker({
-                //format: "dd-mm-yyyy",
-                //autoclose:true,
-                //minDate: new Date(year, 0, 1),
-                //maxDate:new Date(year, 11, 31)
-           
-            });*/              
+            //end date working but set default date today not working
+            /*$(".invoice_date").datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                //format: 'mm/dd/yyyy',
+                //startDate: new Date(),
+                endDate: new Date(new Date().setDate(new Date().getDate()))
+            });*/         
         });
     </script>
 
@@ -584,6 +647,28 @@
             })
                     
         //});
+    </script>
+
+<!-- Dependency Invoice No with Selected Date -->
+    <script>    
+        
+            $(document).on('change', '#invoice_date', function(){
+                var invoice_date = $(this).val();
+                if(invoice_date){                   
+                    $.ajax({
+                        url: "{{route('admin.invoice.getInvoice')}}",
+                        type: "GET",
+                        data: {invoice_date:invoice_date},                   
+                        success: function(data){
+                            $('#invoice').val(data);
+                        },
+                        error: function(xhr, status, error) {
+                            // check status && error
+                            //console.log(error);
+                        },
+                    });
+                }
+            });
     </script>
    
 @endpush

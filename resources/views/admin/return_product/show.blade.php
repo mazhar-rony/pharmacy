@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-<title>invoice</title>
+<title>Return</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 <style>
+  @media screen {
+    .footer { display: none; } /* footer will show only printing */
+    }
   @media print{
-    .no-print{
-      visibility: hidden;
+    .no-print{ visibility: hidden; }
     }
     html, body {
         height: 100%;
@@ -22,23 +24,23 @@
         padding-bottom: 150px; /* this needs to be bigger than footer height*/
       }
       
-      .footer {
+      /*.footer {
         position: relative;
-        margin-top: -20px; /* negative value of footer height */
+        margin-top: -20px; // negative value of footer height 
         height: 50px;
         clear:both;
         width: 100%;
         padding-top: 60%;//resize footer for signature area
-      }
-    /*.footer {
-        position: relative;
+      }*/
+    .footer {
+        position: fixed;
         left: 0;
         bottom: 0;
         width: 100%;
         //background-color: red;
         //color: white;
         //text-align: center;
-        }*/
+        }
       .signature {
         //border: 0;
         //border-bottom: 1px solid #000;
@@ -47,8 +49,7 @@
         border-top: 1px solid #000;
         width: 200px; 
         text-align: center;
-        }
-  }
+      }
 </style>
 <body>
  <div class="container" id="wrap">
@@ -83,20 +84,20 @@
                             <div class="col-sm-4 invoice-col">
                               To
                               <address>
-                                <strong>{{ $invoice->customer->name }}</strong><br>
-                                {{ $invoice->customer->organization }}<br>
-                                {{ $invoice->customer->address }}<br>
-                                Phone: {{ $invoice->customer->phone }}<br>
+                                <strong>{{ $returnProduct->customer->name }}</strong><br>
+                                {{ $returnProduct->customer->organization }}<br>
+                                {{ $returnProduct->customer->address }}<br>
+                                Phone: {{ $returnProduct->customer->phone }}<br>
                                 
                               </address>
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-4 invoice-col">
-                              {{--  <b>Invoice: {{ 'INV-' . $invoice->invoice_no }}</b><br>  --}}
-                              <br>
-                              <b>Invoice: {{ 'INV-' . $invoice->invoice_no }}</b><br><br>
+                              <b>Return Id: {{ 'RT-' . $returnProduct->id }}</b><br>
+                              <b>Invoice: {{ $returnProduct->invoice_id ? 'INV-' . $returnProduct->invoice->invoice_no : '' }}</b><br><br>
                               {{--  <b>Order ID:</b> 4F3S8J<br>  --}}
-                              <b>Invoice Date:</b> {{ $invoice->date }}<br>
+                              <b>Invoice Date:</b> {{ $returnProduct->invoice_id ? Carbon\Carbon::parse($returnProduct->invoice->date)->format('d-m-Y') :'' }}<br>
+                              <b>Return Date:</b> {{ Carbon\Carbon::parse($returnProduct->date)->format('d-m-Y') }}<br>
                               {{--  <b>Account:</b> 968-34567  --}}
                             </div>
                             <!-- /.col -->
@@ -118,14 +119,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($invoiceDetails as $key=>$invoiceDetail)
+                                @foreach ($returnProductDetails as $key=>$returnProductDetail)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
-                                    <td>{{ $invoiceDetail->product->category->name }}</td>
-                                    <td>{{ $invoiceDetail->product->name }}</td>
-                                    <td>{{ $invoiceDetail->quantity }}</td>
-                                    <td>{{ number_format(round($invoiceDetail->selling_price, 2), 2) }}</td>
-                                    <td>{{ number_format($invoiceDetail->quantity * round($invoiceDetail->selling_price, 2), 2) }}</td>
+                                    <td>{{ $returnProductDetail->product->category->name }}</td>
+                                    <td>{{ $returnProductDetail->product->name }}</td>
+                                    <td>{{ $returnProductDetail->quantity }}</td>
+                                    <td>{{ number_format(round($returnProductDetail->price, 2), 2) }}</td>
+                                    <td>{{ number_format($returnProductDetail->quantity * round($returnProductDetail->price, 2), 2) }}</td>
                                 </tr>
                                 @endforeach
                                 </tbody>
@@ -143,7 +144,7 @@
                               <img src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/mastercard.png" alt="Mastercard">
                               <img src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/american-express.png" alt="American Express">
                               <img src="https://adminlte.io/themes/dev/AdminLTE/dist/img/credit/paypal2.png" alt="Paypal">  --}}
-                                <b>{{ $invoice->payment_type }}</b><br><br><br>
+                                <b>{{ $returnProduct->payment_type }}</b><br><br><br>
                                 
                             </div>
                             <!-- /.col -->
@@ -154,23 +155,7 @@
                                 <table class="table">
                                   <tbody><tr>
                                     <th style="width:50%">Subtotal:</th>
-                                    <td>{{ number_format(round($invoice->amount, 2), 2) }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th>Discount</th>
-                                    <td>{{ number_format(round($invoice->discount, 2), 2) }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th>Total:</th>
-                                    <td>{{ number_format(round($invoice->total_amount, 2), 2) }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th>Paid:</th>
-                                    <td>{{ number_format(round($invoice->paid, 2), 2) }}</td>
-                                  </tr>
-                                  <tr>
-                                    <th>Due:</th>
-                                    <td>{{ number_format(round($invoice->due, 2), 2) }}</td>
+                                    <td>{{ number_format(round($returnProduct->amount, 2), 2) }}</td>
                                   </tr>
                                 </tbody></table>
                               </div>

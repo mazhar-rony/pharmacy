@@ -163,12 +163,12 @@ class ProprietorController extends Controller
                 $transaction->proprietor_id = $proprietor->id;
                 $transaction->deposite = $request->deposite;
                 $transaction->transaction_date = Carbon::parse($request->deposite_date)->format('Y-m-d');
-                $transaction->description = $proprietor->name . ' Deposited to Cash';
+                $transaction->description = 'Proprietor' . $proprietor->name . ' Deposited to Cash';
                 $transaction->save();
 
                 $cash->date = $transaction->transaction_date;
                 $cash->income = $transaction->deposite;
-                $cash->description = $proprietor->name . ' Deposited to Cash';
+                $cash->description = 'Proprietor' . $proprietor->name . ' Deposited to Cash';
                 $cash->save();
             }, 3);
 
@@ -208,12 +208,12 @@ class ProprietorController extends Controller
                 $transaction->proprietor_id = $proprietor->id;
                 $transaction->withdraw = $request->withdraw;
                 $transaction->transaction_date = Carbon::parse($request->withdraw_date)->format('Y-m-d');
-                $transaction->description = $proprietor->name . ' Withdrawn from Cash for: '.$request->description;
+                $transaction->description = 'Proprietor' . $proprietor->name . ' Withdrawn from Cash for: '.$request->description;
                 $transaction->save();
 
                 $cash->date = $transaction->transaction_date;
                 $cash->expense = $transaction->withdraw;
-                $cash->description = $proprietor->name . ' Withdrawn from Cash for: '.$request->description;
+                $cash->description = 'Proprietor' . $proprietor->name . ' Withdrawn from Cash for: '.$request->description;
                 $cash->save();
             }, 3);
 
