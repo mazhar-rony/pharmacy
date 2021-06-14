@@ -34,7 +34,7 @@ CREATE TABLE `bank_account_transactions` (
   PRIMARY KEY (`id`),
   KEY `bank_account_transactions_bank_account_id_foreign` (`bank_account_id`),
   CONSTRAINT `bank_account_transactions_bank_account_id_foreign` FOREIGN KEY (`bank_account_id`) REFERENCES `bank_accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `bank_account_transactions` */
 
@@ -46,7 +46,12 @@ insert  into `bank_account_transactions`(`id`,`bank_account_id`,`transaction_dat
 (6,2,'2021-06-05','Given Payment To Mr. Ashik of Car Bazar',0.0000,1000.0000,0.0000,4000.0000,'2021-06-05 08:44:19','2021-06-05 08:44:19'),
 (7,1,'2021-06-05','Purchased Product of Purchase No P-2021060502',0.0000,1500.0000,0.0000,90500.0000,'2021-06-05 14:47:38','2021-06-05 14:47:38'),
 (8,1,'2021-06-05','Given Payment of Purchase No P-2021060501 to Mr. Jamal of Gadget & Gear',0.0000,1000.0000,0.0000,89500.0000,'2021-06-05 15:20:54','2021-06-05 15:20:54'),
-(12,3,'2021-06-06','Purchased Product of Purchase No P-2021060601',0.0000,7000.0000,0.0000,43000.0000,'2021-06-05 23:05:57','2021-06-05 23:05:57');
+(12,3,'2021-06-06','Purchased Product of Purchase No P-2021060601',0.0000,7000.0000,0.0000,43000.0000,'2021-06-05 23:05:57','2021-06-05 23:05:57'),
+(13,2,'2021-06-14','Given Advance Salary to Employee: Mark Zukarbarg',0.0000,3000.0000,0.0000,1000.0000,'2021-06-13 20:02:48','2021-06-13 20:02:48'),
+(14,3,'2021-06-14','Given Bonus Salary to Employee: Imran Hossain',0.0000,3000.0000,0.0000,40000.0000,'2021-06-13 21:02:22','2021-06-13 21:02:22'),
+(15,3,'2021-06-14','Given Bonus Salary for July, 2021 to Employee: Imran Hossain',0.0000,2000.0000,0.0000,38000.0000,'2021-06-13 21:31:00','2021-06-13 21:31:00'),
+(16,3,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,2000.0000,0.0000,36000.0000,'2021-06-13 22:31:27','2021-06-13 22:31:27'),
+(17,3,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,3000.0000,0.0000,33000.0000,'2021-06-13 22:41:42','2021-06-13 22:41:42');
 
 /*Table structure for table `bank_accounts` */
 
@@ -74,8 +79,8 @@ CREATE TABLE `bank_accounts` (
 
 insert  into `bank_accounts`(`id`,`user_id`,`bank_id`,`branch_id`,`account_type`,`account_name`,`account_number`,`balance`,`created_at`,`updated_at`) values 
 (1,1,1,3,'Current','Imran Hossain','123456',89500.0000,'2021-06-03 11:25:14','2021-06-05 23:05:56'),
-(2,1,3,1,'Current','Adib Hossain','123',4000.0000,'2021-06-03 11:25:50','2021-06-05 08:44:19'),
-(3,1,2,4,'Savings','Adib Hossain','654321',43000.0000,'2021-06-03 11:26:26','2021-06-05 23:05:57');
+(2,1,3,1,'Current','Adib Hossain','123',1000.0000,'2021-06-03 11:25:50','2021-06-13 20:02:48'),
+(3,1,2,4,'Savings','Adib Hossain','654321',33000.0000,'2021-06-03 11:26:26','2021-06-13 22:41:42');
 
 /*Table structure for table `bank_branches` */
 
@@ -195,7 +200,7 @@ CREATE TABLE `cashes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `cashes` */
 
@@ -215,7 +220,16 @@ insert  into `cashes`(`id`,`date`,`description`,`income`,`expense`,`created_at`,
 (16,'2021-06-05','Sold Product of Invoice No INV-202106050001',50000.0000,0.0000,'2021-06-05 15:14:34','2021-06-05 15:14:34'),
 (17,'2021-06-05','Given Payment of Purchase No P-2021060501 to Mr. Jamal of Gadget & Gear',0.0000,2000.0000,'2021-06-05 15:18:24','2021-06-05 15:18:24'),
 (18,'2021-06-05','Given Payment To Mr. Kamal of Hatil',0.0000,5000.0000,'2021-06-05 15:22:02','2021-06-05 15:22:02'),
-(25,'2021-06-06','Sold Product of Invoice No INV-202106060001',30000.0000,0.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44');
+(25,'2021-06-06','Sold Product of Invoice No INV-202106060001',30000.0000,0.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
+(26,'2021-06-14','Given Advance Salary to Employee Imran Hossain',0.0000,5000.0000,'2021-06-13 20:00:53','2021-06-13 20:00:53'),
+(27,'2021-06-14','Given Bonus Salary to Employee: Mark Zukarbarg',0.0000,1000.0000,'2021-06-13 21:00:40','2021-06-13 21:00:40'),
+(28,'2021-06-14','Given Bonus Salary for April, 2021 to Employee: Mark Zukarbarg',0.0000,1000.0000,'2021-06-13 21:29:06','2021-06-13 21:29:06'),
+(29,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,4000.0000,'2021-06-13 22:28:02','2021-06-13 22:28:02'),
+(30,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,3000.0000,'2021-06-13 22:38:47','2021-06-13 22:38:47'),
+(31,'2021-06-14','Given Salary for July, 2021 to Employee: Imran Hossain',0.0000,5000.0000,'2021-06-13 22:43:49','2021-06-13 22:43:49'),
+(33,'2021-06-14','Given Advance Salary to Employee: Bill Gates',0.0000,5000.0000,'2021-06-14 03:02:30','2021-06-14 03:02:30'),
+(34,'2021-06-14','Given Salary for June, 2021 to Employee: Bill Gates',0.0000,6000.0000,'2021-06-14 03:59:40','2021-06-14 03:59:40'),
+(35,'2021-06-14','Given Salary for June, 2021 to Employee: Bill Gates',0.0000,4000.0000,'2021-06-14 04:01:09','2021-06-14 04:01:09');
 
 /*Table structure for table `categories` */
 
@@ -370,6 +384,72 @@ insert  into `debtors`(`id`,`customer_id`,`invoice_id`,`description`,`debit_date
 (3,1,3,'INV-202106030002','2021-06-03',6000.0000,5500.0000,500.0000,0.0000,1,'2021-06-03 11:37:13','2021-06-03 13:06:48'),
 (4,1,5,'INV-202106060001','2021-06-06',5000.0000,0.0000,0.0000,5000.0000,0,'2021-06-06 01:14:44','2021-06-06 01:14:44');
 
+/*Table structure for table `employee_payments` */
+
+DROP TABLE IF EXISTS `employee_payments`;
+
+CREATE TABLE `employee_payments` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `employee_id` bigint(20) unsigned NOT NULL,
+  `year` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `payment_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bank_account_id` bigint(20) unsigned DEFAULT NULL,
+  `salary` decimal(13,4) NOT NULL DEFAULT 0.0000,
+  `advance_deduct` decimal(13,4) NOT NULL DEFAULT 0.0000,
+  `bonus` decimal(13,4) NOT NULL DEFAULT 0.0000,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `employee_payments_employee_id_foreign` (`employee_id`),
+  CONSTRAINT `employee_payments_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `employee_payments` */
+
+insert  into `employee_payments`(`id`,`employee_id`,`year`,`month`,`date`,`payment_type`,`bank_account_id`,`salary`,`advance_deduct`,`bonus`,`created_at`,`updated_at`) values 
+(1,2,2021,6,'2021-06-14','cash',NULL,0.0000,0.0000,1000.0000,'2021-06-13 21:00:40','2021-06-13 21:00:40'),
+(2,1,2021,5,'2021-06-14','cheque',3,0.0000,0.0000,3000.0000,'2021-06-13 21:02:22','2021-06-13 21:02:22'),
+(3,2,2021,4,'2021-06-14','cash',NULL,0.0000,0.0000,1000.0000,'2021-06-13 21:29:06','2021-06-13 21:29:06'),
+(4,1,2021,7,'2021-06-14','cheque',3,0.0000,0.0000,2000.0000,'2021-06-13 21:31:00','2021-06-13 21:31:00'),
+(5,1,2021,6,'2021-06-14','cash',NULL,4000.0000,0.0000,0.0000,'2021-06-13 22:28:02','2021-06-13 22:28:02'),
+(6,1,2021,6,'2021-06-14','cheque',3,2000.0000,0.0000,0.0000,'2021-06-13 22:31:27','2021-06-13 22:31:27'),
+(7,1,2021,6,'2021-06-14','cash',NULL,0.0000,1000.0000,0.0000,'2021-06-13 22:33:14','2021-06-13 22:33:14'),
+(8,1,2021,6,'2021-06-14','cheque',3,0.0000,1000.0000,0.0000,'2021-06-13 22:34:58','2021-06-13 22:34:58'),
+(9,1,2021,6,'2021-06-14','cash',NULL,3000.0000,1500.0000,0.0000,'2021-06-13 22:38:47','2021-06-13 22:38:47'),
+(10,1,2021,6,'2021-06-14','cheque',3,3000.0000,1500.0000,0.0000,'2021-06-13 22:41:42','2021-06-13 22:41:42'),
+(11,1,2021,7,'2021-06-14','cash',NULL,5000.0000,0.0000,0.0000,'2021-06-13 22:43:49','2021-06-13 22:43:49'),
+(13,3,2021,6,'2021-06-14','cash',NULL,6000.0000,0.0000,0.0000,'2021-06-14 03:59:40','2021-06-14 03:59:40'),
+(14,3,2021,6,'2021-06-14','cash',NULL,4000.0000,2000.0000,0.0000,'2021-06-14 04:01:09','2021-06-14 04:01:09'),
+(15,3,2021,6,'2021-06-14','cheque',3,0.0000,3000.0000,0.0000,'2021-06-14 04:01:57','2021-06-14 04:01:57');
+
+/*Table structure for table `employees` */
+
+DROP TABLE IF EXISTS `employees`;
+
+CREATE TABLE `employees` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `designation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.png',
+  `advance` decimal(13,4) NOT NULL DEFAULT 0.0000,
+  `advance_date` date DEFAULT NULL,
+  `salary` decimal(13,4) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `employees` */
+
+insert  into `employees`(`id`,`name`,`designation`,`address`,`phone`,`image`,`advance`,`advance_date`,`salary`,`created_at`,`updated_at`) values 
+(1,'Imran Hossain','Executive','Noor Jahan Road, Mohammadpur, Dhaka','01711111111','imran-hossain-2021-06-13-60c653e7eb1f8.jpg',0.0000,'2021-06-14',12000.0000,'2021-06-13 18:52:24','2021-06-13 22:41:42'),
+(2,'Mark Zukarbarg','Peon','keranigonj','01911111111','mark-zukarbarg-2021-06-13-60c6547eb77a9.png',3000.0000,'2021-06-14',5000.0000,'2021-06-13 18:54:54','2021-06-13 20:02:48'),
+(3,'Bill Gates','Manager','Dhaka','01712222222','bill-gates-2021-06-13-60c67eb015374.jpg',0.0000,'2021-06-14',15000.0000,'2021-06-13 21:54:56','2021-06-14 04:01:57');
+
 /*Table structure for table `invoice_details` */
 
 DROP TABLE IF EXISTS `invoice_details`;
@@ -448,7 +528,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `migrations` */
 
@@ -479,7 +559,9 @@ insert  into `migrations`(`id`,`migration`,`batch`) values
 (34,'2021_06_05_090353_create_purchases_table',5),
 (36,'2021_06_05_090636_create_purchase_details_table',6),
 (37,'2021_05_01_200040_create_creditors_table',7),
-(38,'2021_05_03_013829_create_creditor_payments_table',7);
+(38,'2021_05_03_013829_create_creditor_payments_table',7),
+(40,'2021_06_09_104235_create_employees_table',8),
+(41,'2021_06_13_183640_create_employee_payments_table',8);
 
 /*Table structure for table `office_expenses` */
 

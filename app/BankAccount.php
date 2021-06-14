@@ -55,4 +55,9 @@ class BankAccount extends Model
     {
         return $this->hasMany('App\BankLoanTransaction');
     }
+
+    public function employee_payments()
+    {
+        return $this->hasMany('App\EmployeePayment');
+    }
 }

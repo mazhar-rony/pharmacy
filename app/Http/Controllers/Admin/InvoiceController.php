@@ -146,6 +146,21 @@ class InvoiceController extends Controller
         }
     }
 
+    public function getEmployeeSalary(Request $request)
+    {
+        $salary = DB::table('employee_payments')->where('employee_id', $request->employee_id)
+                                                ->where('year', $request->salary_year)
+                                                ->where('month', $request->salary_month)
+                                                ->sum('salary');
+        $deduct = DB::table('employee_payments')->where('employee_id', $request->employee_id)
+                                                ->where('year', $request->salary_year)
+                                                ->where('month', $request->salary_month)
+                                                ->sum('advance_deduct');
+        $totalPaid = round(($salary + $deduct), 2);
+        
+        return $totalPaid;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

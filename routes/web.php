@@ -29,6 +29,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('customer', 'CustomerController');
 
     //dependency dropdown
+    Route::get('invoice/employee', 'InvoiceController@getEmployeeSalary')->name('invoice.getEmployeeSalary');
     Route::get('invoice/customer', 'InvoiceController@getCustomer')->name('invoice.getCustomer');
     Route::get('invoice/purchase', 'InvoiceController@getPurchaseNo')->name('invoice.getPurchaseNo');
     Route::get('invoice/invoice', 'InvoiceController@getInvoice')->name('invoice.getInvoice');
@@ -70,6 +71,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::put('proprietor/deposite/{proprietor}', 'ProprietorController@deposite')->name('proprietor.deposite');
     Route::put('proprietor/withdraw/{proprietor}', 'ProprietorController@withdraw')->name('proprietor.withdraw');
     
+    Route::get('employee/{employee}/payment', 'EmployeeController@payment')->name('employee.payment');
+    Route::put('employee/salary/{employee}', 'EmployeeController@salary')->name('employee.salary');
+    Route::put('employee/advance/{employee}', 'EmployeeController@advance')->name('employee.advance');
+    Route::put('employee/bonus/{employee}', 'EmployeeController@bonus')->name('employee.bonus');
+    Route::resource('employee', 'EmployeeController');
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {

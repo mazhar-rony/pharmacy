@@ -104,7 +104,8 @@
                     @foreach(range(1,12) as $month)
               
                             <option value="{{$month}}">
-                                    {{date("M", strtotime('2016-'.$month))}}
+                                    {{--  {{date("M", strtotime('2016-'.$month))}}  --}}
+                                    {{date("F", strtotime('2016-'.$month))}}
                             </option>
                     @endforeach
               </select>

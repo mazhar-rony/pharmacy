@@ -155,6 +155,15 @@
                     </a>
                 </li>
 
+                <li class="header">EMPLOYEE</li>
+
+                <li class="{{ Request::is('admin/employee*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.employee.index') }}">
+                        <i class="material-icons">groups</i>
+                        <span>Employees</span>
+                    </a>
+                </li>
+
                 <li class="header">SYSTEM</li>
 
                 {{-- <li class="{{ Request::is('admin/settings') ? 'active' : '' }}">
