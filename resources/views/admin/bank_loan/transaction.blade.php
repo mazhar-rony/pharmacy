@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
-                                                <div class="form-line">
+                                                <div class="form-line" style="background-color: #D8FDBA;">
                                                     <input type="text" id="emi_no" name="emi_no" value="{{ $account->emi_given + 1 }}" class="form-control" readonly>
                                                 </div>
                                             </div>
@@ -76,7 +76,7 @@
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                             <div class="form-group">
-                                                <div class="form-line">
+                                                <div class="form-line" style="background-color: #D8FDBA;">
                                                     <input type="text" id="emi" name="emi" value="{{  round($account->emi_amount, 2) }}" class="form-control" readonly>
                                                 </div>
                                             </div>

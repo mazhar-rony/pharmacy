@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" id="debit_date" name="debit_date" value="{{ Carbon\Carbon::parse($debtor->debit_date)->format('l d M Y') }}" class="datepicker form-control" required>
+                                <input type="text" id="debit_date" name="debit_date" value="{{ Carbon\Carbon::parse($debtor->debit_date)->format('l d F Y') }}" class="datepicker form-control" required>
                                 <label class="form-label">Date</label>
                             </div>
                         </div>

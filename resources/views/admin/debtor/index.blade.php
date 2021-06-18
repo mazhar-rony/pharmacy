@@ -63,7 +63,7 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $debtor->customer->name }}</td>
                                         <td>{{ $debtor->customer->organization }}</td>
-                                        <td>{{ Carbon\Carbon::parse($debtor->debit_date)->format('d-m-Y') }}</td>
+                                        <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($debtor->debit_date)->format('d-m-Y') }}</td>
                                         <td>{{ $debtor->description }}</td>
                                         <td>{{ number_format($debtor->debit_amount, 2) }}</td>
                                         <td><span class="badge bg-pink">{{ number_format($debtor->due, 2) }}</td>

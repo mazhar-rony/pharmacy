@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" id="credit_date" name="credit_date" value="{{ Carbon\Carbon::parse($creditor->credit_date)->format('l d M Y') }}" class="datepicker form-control" required>
+                                <input type="text" id="credit_date" name="credit_date" value="{{ Carbon\Carbon::parse($creditor->credit_date)->format('l d F Y') }}" class="datepicker form-control" required>
                                 <label class="form-label">Date</label>
                             </div>
                         </div>

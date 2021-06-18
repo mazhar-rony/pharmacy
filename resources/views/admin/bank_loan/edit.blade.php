@@ -155,7 +155,7 @@
                         </div>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" id="loan_date" name="loan_date" class="datepicker form-control" value="{{ Carbon\Carbon::parse($account->loan_date)->format('l d M Y') }}" placeholder="Please choose loan date..." required>
+                                <input type="text" id="loan_date" name="loan_date" class="datepicker form-control" value="{{ Carbon\Carbon::parse($account->loan_date)->format('l d F Y') }}" placeholder="Please choose loan date..." required>
                             </div>
                         </div> 
                     

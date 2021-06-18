@@ -76,6 +76,31 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::put('employee/advance/{employee}', 'EmployeeController@advance')->name('employee.advance');
     Route::put('employee/bonus/{employee}', 'EmployeeController@bonus')->name('employee.bonus');
     Route::resource('employee', 'EmployeeController');
+
+    Route::get('report/sold', 'ReportController@soldProducts')->name('report.sold');
+    Route::post('report/sold', 'ReportController@showSoldProducts')->name('report.showSold');
+    Route::get('report/return', 'ReportController@returnProducts')->name('report.return');
+    Route::post('report/return', 'ReportController@showReturnProducts')->name('report.showReturn');
+    Route::get('report/purchase', 'ReportController@purchaseProducts')->name('report.purchase');
+    Route::post('report/purchase', 'ReportController@showPurchaseProducts')->name('report.showPurchase');
+    Route::get('report/cash', 'ReportController@dailyCash')->name('report.cash');
+    Route::post('report/cash', 'ReportController@showDailyCash')->name('report.showCash');
+    Route::get('report/sales', 'ReportController@sales')->name('report.sales');
+    Route::post('report/sales', 'ReportController@showSales')->name('report.showSales');
+    Route::get('report/purchases', 'ReportController@purchases')->name('report.purchases');
+    Route::post('report/purchases', 'ReportController@showPurchases')->name('report.showPurchases');
+    Route::get('report/sales-details', 'ReportController@salesDetails')->name('report.salesDetails');
+    Route::post('report/sales-details', 'ReportController@showSalesDetails')->name('report.showSalesDetails');
+    Route::get('report/purchase-details', 'ReportController@purchaseDetails')->name('report.purchaseDetails');
+    Route::post('report/purchase-details', 'ReportController@showPurchaseDetails')->name('report.showPurchaseDetails');
+    Route::get('report/proprietor', 'ReportController@proprietorExpenses')->name('report.proprietorExpenses');
+    Route::post('report/proprietor', 'ReportController@showProprietorExpenses')->name('report.showProprietorExpenses');
+    Route::get('report/office', 'ReportController@officeExpenses')->name('report.officeExpenses');
+    Route::post('report/office', 'ReportController@showOfficeExpenses')->name('report.showOfficeExpenses');
+    Route::get('report/bank', 'ReportController@bankTransactions')->name('report.bankTransactions');
+    Route::post('report/bank', 'ReportController@showBankTransactions')->name('report.showBankTransactions');
+    Route::get('report/salary', 'ReportController@employeeSalary')->name('report.employeeSalary');
+    Route::post('report/salary', 'ReportController@showEmployeeSalary')->name('report.showEmployeeSalary');
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {

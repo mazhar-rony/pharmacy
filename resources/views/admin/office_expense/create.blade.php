@@ -26,7 +26,7 @@
                             @endphp 
                             <div class="row clearfix" style="margin-top: 30px;">
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-control-label">
-                                    <label for="expense">Withdraw</label>
+                                    <label for="expense">Withdraw from Cash</label>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
                                     <div class="form-group">

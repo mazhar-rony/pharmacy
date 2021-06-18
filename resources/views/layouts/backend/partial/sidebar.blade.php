@@ -164,6 +164,53 @@
                     </a>
                 </li>
 
+                <li class="header">REPORT</li>
+
+                <li class="{{ Request::is('admin/report*') ? 'active' : '' }}">
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">insert_chart_outlined</i>
+                        <span>Reports</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li class="{{ Request::is('admin/report/cash') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.cash') }}">Daily Cash</a>
+                        </li> 
+                        <li class="{{ Request::is('admin/report/sold') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.sold') }}">Sold Products</a>
+                        </li>
+                        <li class="{{ Request::is('admin/report/return') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.return') }}">Returned Products</a>
+                        </li> 
+                        <li class="{{ Request::is('admin/report/purchase') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.purchase') }}">Purchased Products</a>
+                        </li>  
+                        <li class="{{ Request::is('admin/report/sales') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.sales') }}">Sales & Profit</a>
+                        </li> 
+                        <li class="{{ Request::is('admin/report/purchases') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.purchases') }}">Purchase & Cost</a>
+                        </li>  
+                        <li class="{{ Request::is('admin/report/sales-details') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.salesDetails') }}">Sales Details</a>
+                        </li> 
+                        <li class="{{ Request::is('admin/report/purchase-details') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.purchaseDetails') }}">Purchase Details</a>
+                        </li>
+                        <li class="{{ Request::is('admin/report/proprietor') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.proprietorExpenses') }}">Proprietor Expenses</a>
+                        </li> 
+                        <li class="{{ Request::is('admin/report/office') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.officeExpenses') }}">Office Expenses</a>
+                        </li> 
+                        <li class="{{ Request::is('admin/report/bank') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.bankTransactions') }}">Bank Transactions</a>
+                        </li> 
+                        <li class="{{ Request::is('admin/report/salary') ? 'active' : '' }}">
+                            <a href="{{ route('admin.report.employeeSalary') }}">Employee Salary</a>
+                        </li>                                     
+                    </ul>
+                </li>
+
                 <li class="header">SYSTEM</li>
 
                 {{-- <li class="{{ Request::is('admin/settings') ? 'active' : '' }}">
