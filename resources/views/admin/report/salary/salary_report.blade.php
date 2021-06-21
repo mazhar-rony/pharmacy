@@ -140,7 +140,7 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $employee->employee->name }}</td>
                                         <td>{{ $employee->employee->designation }}</td>
-                                        <td style="font-weight: bold; color: blue;">{{ number_format(round($employee->employee->salary, 2), 2) }}</td>                   
+                                        <td><span class="badge bg-indigo">{{ number_format(round($employee->employee->salary, 2), 2) }}</td>                   
                                         <td>{{ $employee->salary > 0 ? number_format(round($employee->salary, 2), 2) : '' }}</td>
                                         <td>{{ $employee->advance_deduct > 0 ? number_format(round($employee->advance_deduct, 2), 2) : '' }}</td>
                                         <td>{{ $employee->bonus > 0 ? number_format(round($employee->bonus, 2), 2) : '' }}</td>

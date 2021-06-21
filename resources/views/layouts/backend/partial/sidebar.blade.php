@@ -14,7 +14,7 @@
                         <i class="material-icons">person</i>Profile</a>
                     </li> --}}
                     <li><a href="#">
-                        <i class="material-icons">person</i>Profile</a>
+                        <i class="material-icons">face</i>Profile</a>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
@@ -59,7 +59,7 @@
                 <li class="{{ Request::is('admin/supplier*') ? 'active' : '' }}">
                     <a href="{{ route('admin.supplier.index') }}">
                         <i class="material-icons">people_alt</i>
-                        <span>Product Supplier</span>
+                        <span>Product Suppliers</span>
                     </a>
                 </li>
                 <li class="{{ Request::is('admin/purchase*') ? 'active' : '' }}">
@@ -75,11 +75,32 @@
                     </a>
                 </li>
 
+                <li class="header">POS</li>
+
+                <li class="{{ Request::is('admin/customer*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.customer.index') }}">
+                        <i class="material-icons">supervisor_account</i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/invoice*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.invoice.index') }}">
+                        <i class="material-icons">important_devices</i>
+                        <span>Invoice</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/return*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.return.index') }}">
+                        <i class="material-icons">replay</i>
+                        <span>Return Products</span>
+                    </a>
+                </li>
+
                 <li class="header">BANKING</li>
 
                 <li class="{{ Request::is('admin/bank*') ? 'active' : '' }}">
                     <a href="{{ route('admin.bank.index') }}">
-                        <i class="material-icons">home</i>
+                        <i class="material-icons">account_balance</i>
                         <span>Bank List</span>
                     </a>
                 </li>
@@ -99,27 +120,6 @@
                     <a href="{{ route('admin.loan.index') }}">
                         <i class="material-icons">try</i>
                         <span>Loan Accounts</span>
-                    </a>
-                </li>
-
-                <li class="header">POS</li>
-
-                <li class="{{ Request::is('admin/customer*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.customer.index') }}">
-                        <i class="material-icons">person</i>
-                        <span>Customers</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/invoice*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.invoice.index') }}">
-                        <i class="material-icons">important_devices</i>
-                        <span>Invoice</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/return*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.return.index') }}">
-                        <i class="material-icons">replay</i>
-                        <span>Return Products</span>
                     </a>
                 </li>
 
@@ -285,7 +285,7 @@
     <!-- Footer -->
     <div class="legal">
         <div class="copyright">
-            &copy; {{ now()->year }}. All rights reserved. <a href="javascript:void(0);">Pacific Surgical</a>.
+            &copy; {{ now()->year }}. All rights reserved. <a href="javascript:void(0);">Global Surgical</a>.
         </div>
         <div class="version">
             <b>Version: </b> 1.0.0

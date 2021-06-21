@@ -19,6 +19,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+    //get sales & profit chart data
+    Route::get('dashboard/get-chart-data', 'DashboardController@getChartData')->name('dashboard.chart');
+
     Route::resource('category', 'CategoryController');
     Route::resource('supplier', 'SupplierController');
     Route::resource('purchase', 'PurchaseController');
