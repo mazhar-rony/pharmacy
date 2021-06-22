@@ -233,6 +233,12 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+        //delete product image from folder
+        if(Storage::disk('public')->exists('product/'.$product->image) && strcmp($product->image, "default.png") != 0)
+        {
+            Storage::disk('public')->delete('product/'.$product->image);
+        }
+
         $product->delete();
 
         Toastr::success('Product Successfully Deleted !' ,'Success');

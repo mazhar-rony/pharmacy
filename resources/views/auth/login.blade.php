@@ -42,7 +42,7 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Pacific <b>SURGICAL</b></a>
+            <a href="javascript:void(0);" style="white-space:nowrap;"><b>Global</b> <i>SURGICAL</i> Mart</a>
             <small>Health is Wealth – Keep this treasure Safe</small>
         </div>
         <div class="card">

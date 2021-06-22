@@ -80,6 +80,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::put('employee/bonus/{employee}', 'EmployeeController@bonus')->name('employee.bonus');
     Route::resource('employee', 'EmployeeController');
 
+    // All Reports
     Route::get('report/sold', 'ReportController@soldProducts')->name('report.sold');
     Route::post('report/sold', 'ReportController@showSoldProducts')->name('report.showSold');
     Route::get('report/return', 'ReportController@returnProducts')->name('report.return');
@@ -104,6 +105,15 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::post('report/bank', 'ReportController@showBankTransactions')->name('report.showBankTransactions');
     Route::get('report/salary', 'ReportController@employeeSalary')->name('report.employeeSalary');
     Route::post('report/salary', 'ReportController@showEmployeeSalary')->name('report.showEmployeeSalary');
+
+    // Users
+    Route::resource('user', 'UserController');
+
+    // Settings
+    Route::get('settings/{profile}/profile', 'SettingsController@editProfile')->name('profile.edit');
+    Route::put('settings/profile/{profile}', 'SettingsController@updateProfile')->name('profile.update');
+    Route::get('settings/change-password', 'SettingsController@editPassword')->name('password.edit');
+    Route::post('settings/change-password', 'SettingsController@updatePassword')->name('password.update');
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {

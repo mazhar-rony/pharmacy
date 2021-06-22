@@ -2,7 +2,8 @@
     <!-- User Info -->
     <div class="user-info">
         <div class="image">
-            <img src="{{ Storage::disk('public')->url('profile/'.Auth::user()->image) }}" width="48" height="48" alt="User" />
+            {{--  <img src="{{ Storage::disk('public')->url('profile/'.Auth::user()->image) }}" width="48" height="48" alt="User" />  --}}
+            <img src="{{ Storage::disk('public')->url('user/'.Auth::user()->image) }}" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
             <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</div>
@@ -13,8 +14,12 @@
                     {{-- <li><a href="{{ Auth::user()->role->id == 1 ? route('admin.settings') : route('author.settings') }}">
                         <i class="material-icons">person</i>Profile</a>
                     </li> --}}
-                    <li><a href="#">
+                    <li><a href="{{ Auth::user()->role->id == 2 ? route('user.profile.edit', Auth::user()->id) : route('admin.profile.edit', Auth::user()->id) }}">
                         <i class="material-icons">face</i>Profile</a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="{{ Auth::user()->role->id == 2 ? route('user.password.edit', Auth::user()->id) : route('admin.password.edit', Auth::user()->id) }}">
+                        <i class="material-icons">vpn_key</i>Change Password &emsp;</a>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
@@ -212,6 +217,13 @@
                 </li>
 
                 <li class="header">SYSTEM</li>
+
+                <li class="{{ Request::is('admin/user') ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.index') }}">
+                        <i class="material-icons">support_agent</i>
+                        <span>Users</span>
+                    </a>
+                </li>
 
                 {{-- <li class="{{ Request::is('admin/settings') ? 'active' : '' }}">
                     <a href="{{ route('admin.settings') }}">

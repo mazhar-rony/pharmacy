@@ -158,7 +158,7 @@ class EmployeeController extends Controller
                 Storage::disk('public')->makeDirectory('employee');
             }
 
-            //delete old product image
+            //delete old employee image
             if(Storage::disk('public')->exists('employee/'.$employee->image) && strcmp($employee->image, "default.png") != 0)
             {
                 Storage::disk('public')->delete('employee/'.$employee->image);
@@ -196,6 +196,12 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $employee = Employee::find($id);
+
+        //delete employee image from folder
+        if(Storage::disk('public')->exists('employee/'.$employee->image) && strcmp($employee->image, "default.png") != 0)
+        {
+            Storage::disk('public')->delete('employee/'.$employee->image);
+        }
 
         $employee->delete();
 

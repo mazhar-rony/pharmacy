@@ -102,15 +102,20 @@
                         </div>
                         
                         <a type="button" class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.employee.index') }}">BACK</a>
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">UPDATE</button>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="card">
+                    <div class="header bg-pink">
+                        <h2 class="text-center">
+                            EMPLOYEE IMAGE
+                        </h2>
+                    </div>
                     <div class="body">
                         <div class="form-group form-float">
-                            <label class="form-label">Employee Image</label>
+                            {{--  <label class="form-label">Employee Image</label>  --}}
                             <input type="file" id="image" class="form-control @error('image') is-invalid @enderror" name="image" onchange="loadFile(event)">
                             
                             @if (isset($employee->image))

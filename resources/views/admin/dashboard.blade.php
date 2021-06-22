@@ -50,7 +50,7 @@
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-purple hover-expand-effect">
                 <div class="icon">
-                    <i class="material-icons">bookmark</i>
+                    <i class="material-icons">fiber_new</i>
                 </div>
                 <div class="content">
                     <div class="text">TODAY&apos;S SALES</div>
