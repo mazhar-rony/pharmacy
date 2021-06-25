@@ -81,7 +81,7 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::findOrFail($id);
 
         return view('admin.supplier.edit', compact('supplier'));
     }
@@ -102,7 +102,7 @@ class SupplierController extends Controller
             'address' => 'required'
         ]);
 
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::findOrFail($id);
 
         $supplier->name = $request->name;
         $supplier->organization = $request->organization;
@@ -125,7 +125,7 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        $supplier = Supplier::find($id);
+        $supplier = Supplier::findOrFail($id);
 
         $supplier->delete();
 

@@ -74,7 +74,7 @@ class EmployeeController extends Controller
                 Storage::disk('public')->makeDirectory('employee');
             }
 
-            $employeeImage = Image::make($image)->resize(500,333)->stream();
+            $employeeImage = Image::make($image)->resize(500,500)->stream();
 
             Storage::disk('public')->put('employee/'.$imageName, $employeeImage);
 
@@ -118,7 +118,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
 
         return view('admin.employee.edit', compact('employee'));
     }
@@ -142,7 +142,7 @@ class EmployeeController extends Controller
             'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
 
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
 
         $image = $request->file('image');
         $slug = str_slug($request->name);
@@ -164,7 +164,7 @@ class EmployeeController extends Controller
                 Storage::disk('public')->delete('employee/'.$employee->image);
             }
 
-            $employeeImage = Image::make($image)->resize(500,333)->stream();
+            $employeeImage = Image::make($image)->resize(500,500)->stream();
 
             Storage::disk('public')->put('employee/'.$imageName, $employeeImage);
 
@@ -195,7 +195,7 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
 
         //delete employee image from folder
         if(Storage::disk('public')->exists('employee/'.$employee->image) && strcmp($employee->image, "default.png") != 0)
@@ -212,7 +212,7 @@ class EmployeeController extends Controller
 
     public function payment($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
         $banks = Bank::orderBy('name')->get();
         $income = DB::table('cashes')->sum('income');
         $expense = DB::table('cashes')->sum('expense');
@@ -242,7 +242,7 @@ class EmployeeController extends Controller
         $monthName = $dateObj->format('F');
         /*...............................*/
 
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
         $payment = new EmployeePayment();
         $cash = new Cash();
         $account = BankAccount::find($request->salary_account);
@@ -325,7 +325,7 @@ class EmployeeController extends Controller
             'advance_date' => 'required|date'
         ]);
 
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
         $cash = new Cash();
         $account = BankAccount::find($request->advance_account);
         $accTransaction = new BankAccountTransaction();
@@ -403,7 +403,7 @@ class EmployeeController extends Controller
         $monthName = $dateObj->format('F');
         /*...............................*/
 
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
         $payment = new EmployeePayment();
         $cash = new Cash();
         $account = BankAccount::find($request->bonus_account);

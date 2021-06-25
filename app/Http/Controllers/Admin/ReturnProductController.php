@@ -94,7 +94,7 @@ class ReturnProductController extends Controller
      */
     public function show($id)
     {
-        $returnProduct = ReturnProduct::find($id);
+        $returnProduct = ReturnProduct::findOrFail($id);
         $returnProductDetails = $returnProduct->return_product_details;
 
         return view('admin.return_product.show', compact('returnProduct', 'returnProductDetails'));
@@ -108,7 +108,7 @@ class ReturnProductController extends Controller
      */
     public function edit($id)
     {
-        $returnProduct = ReturnProduct::find($id);
+        $returnProduct = ReturnProduct::findOrFail($id);
         $returnProductDetails = $returnProduct->return_product_details;
         $categories = Category::orderBy('name')->get();
         $banks = Bank::orderBy('name')->get();
@@ -277,7 +277,7 @@ class ReturnProductController extends Controller
 
     public function deleteReturnProduct($id)
     {
-        $returnProduct = ReturnProduct::find($id);
+        $returnProduct = ReturnProduct::findOrFail($id);
         $account = BankAccountTransaction::where('description', 'like', '%RT-' . $returnProduct->id . '%')->first();
        
         try{

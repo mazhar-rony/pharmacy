@@ -92,7 +92,7 @@ class DebtorController extends Controller
      */
     public function edit($id)
     {
-        $debtor = Debtor::find($id);
+        $debtor = Debtor::findOrFail($id);
         $customers = Customer::orderBy('name')->get();
 
         return view('admin.debtor.edit', compact('debtor', 'customers'));
@@ -112,7 +112,7 @@ class DebtorController extends Controller
             'debit_date' => 'required|date'
         ]);
 
-        $debtor = Debtor::find($id);
+        $debtor = Debtor::findOrFail($id);
 
         $debtor->customer_id = $request->customer;
         $debtor->debit_date = Carbon::parse($request->debit_date)->format('Y-m-d');
@@ -133,7 +133,7 @@ class DebtorController extends Controller
      */
     public function destroy($id)
     {
-        $debtor = Debtor::find($id);
+        $debtor = Debtor::findOrFail($id);
 
         $debtor->delete();
 
@@ -144,7 +144,7 @@ class DebtorController extends Controller
 
     public function payment($id)
     {
-        $debtor = Debtor::find($id);
+        $debtor = Debtor::findOrFail($id);
 
         $banks = Bank::orderBy('name')->get();
 
@@ -159,7 +159,7 @@ class DebtorController extends Controller
             'payment_date' => 'required|date'
         ]);
 
-        $debtor = Debtor::find($id);
+        $debtor = Debtor::findOrFail($id);
         $payment = new DebtorPayment();
         $cash = new Cash();
         $account = BankAccount::find($request->account);

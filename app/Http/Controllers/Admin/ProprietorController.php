@@ -81,7 +81,7 @@ class ProprietorController extends Controller
      */
     public function edit($id)
     {
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::findOrFail($id);
 
         return view('admin.proprietor.edit', compact('proprietor'));
     }
@@ -101,7 +101,7 @@ class ProprietorController extends Controller
             'phone' => 'required'
         ]);
 
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::findOrFail($id);
 
         $proprietor->name = $request->name;
         $proprietor->designation = $request->designation;
@@ -122,7 +122,7 @@ class ProprietorController extends Controller
      */
     public function destroy($id)
     {
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::findOrFail($id);
 
         $proprietor->delete();
 
@@ -133,7 +133,7 @@ class ProprietorController extends Controller
 
     public function transaction($id)
     {
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::findOrFail($id);
 
         $income = DB::table('cashes')->sum('income');
         $expense = DB::table('cashes')->sum('expense');
@@ -149,7 +149,7 @@ class ProprietorController extends Controller
             'deposite_date' => 'required|date'
         ]);
 
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::findOrFail($id);
         $transaction = new ProprietorTransaction();
         $cash = new Cash();
 
@@ -194,7 +194,7 @@ class ProprietorController extends Controller
             'description' => 'required'
         ]);
 
-        $proprietor = Proprietor::find($id);
+        $proprietor = Proprietor::findOrFail($id);
         $transaction = new ProprietorTransaction();
         $cash = new Cash();
         

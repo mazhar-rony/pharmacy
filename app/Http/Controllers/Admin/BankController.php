@@ -78,7 +78,7 @@ class BankController extends Controller
      */
     public function edit($id)
     {
-        $bank = Bank::find($id);
+        $bank = Bank::findOrFail($id);
 
         return view('admin.bank.edit', compact('bank'));
     }
@@ -98,7 +98,7 @@ class BankController extends Controller
             'address' => 'nullable'
         ]);
 
-        $bank = bank::find($id);
+        $bank = bank::findOrFail($id);
 
         $bank->name = $request->name;
         $bank->slug = str_slug($request->name);
@@ -120,7 +120,7 @@ class BankController extends Controller
      */
     public function destroy($id)
     {
-        $bank = Bank::find($id);
+        $bank = Bank::findOrFail($id);
 
         $bank->delete();
 

@@ -153,7 +153,7 @@
                               <div class="table-responsive">
                                 <table class="table">
                                   <tbody><tr>
-                                    <th style="width:50%">Subtotal:</th>
+                                    <th style="width:50%">Subtotal</th>
                                     <td>{{ number_format(round($invoice->amount, 2), 2) }}</td>
                                   </tr>
                                   <tr>
@@ -161,15 +161,15 @@
                                     <td>{{ number_format(round($invoice->discount, 2), 2) }}</td>
                                   </tr>
                                   <tr>
-                                    <th>Total:</th>
+                                    <th>Total</th>
                                     <td>{{ number_format(round($invoice->total_amount, 2), 2) }}</td>
                                   </tr>
                                   <tr>
-                                    <th>Paid:</th>
+                                    <th>Paid</th>
                                     <td>{{ number_format(round($invoice->paid, 2), 2) }}</td>
                                   </tr>
                                   <tr>
-                                    <th>Due:</th>
+                                    <th>Due</th>
                                     <td>{{ number_format(round($invoice->due, 2), 2) }}</td>
                                   </tr>
                                 </tbody></table>

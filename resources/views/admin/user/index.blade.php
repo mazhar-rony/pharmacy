@@ -30,18 +30,20 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>User Name</th>
                                     <th>Email</th>
+                                    <th>Image</th>
                                     <th>Role</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>User Name</th>
                                     <th>Email</th>
+                                    <th>Image</th>
                                     <th>Role</th>
                                     <th>Action</th>
                                 </tr>
@@ -52,6 +54,10 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td class="align-center">
+                                            <img src="{{ Storage::disk('public')->url('user/'.$user->image) }}" 
+                                                alt="{{ $user->imege }}" height="37" width="44">
+                                        </td>
                                         <td><span class="badge {{ $user->role_id == 2 ? 'bg-purple' : 'bg-green' }}">{{ $user->role->name }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-info waves-effect">

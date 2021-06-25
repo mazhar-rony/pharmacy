@@ -31,7 +31,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>A/C Name</th>
                                     <th>A/C No</th>
                                     <th>Bank</th>
@@ -43,7 +43,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>A/C Name</th>
                                     <th>A/C No</th>
                                     <th>Bank</th>

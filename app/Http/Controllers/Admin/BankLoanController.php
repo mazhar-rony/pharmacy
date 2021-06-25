@@ -111,7 +111,7 @@ class BankLoanController extends Controller
      */
     public function edit($id)
     {
-        $account = BankLoan::find($id);
+        $account = BankLoan::findOrFail($id);
         
         $banks = Bank::orderBy('name')->get();
         $branches = \DB::table('bank_branches')->where('bank_id', $account->bank->id)->get();
@@ -141,7 +141,7 @@ class BankLoanController extends Controller
             'loan_date' => 'required|date'         
         ]);
         
-        $loanAccount = BankLoan::find($id);
+        $loanAccount = BankLoan::findOrFail($id);
 
         $loanAccount->user_id = Auth::user()->id;
         $loanAccount->account_name = $request->account_name;
@@ -177,7 +177,7 @@ class BankLoanController extends Controller
      */
     public function destroy($id)
     {
-        $account = BankLoan::find($id);
+        $account = BankLoan::findOrFail($id);
 
         $account->delete();
 
@@ -188,7 +188,7 @@ class BankLoanController extends Controller
 
     public function transaction($id)
     {
-        $account = BankLoan::find($id);
+        $account = BankLoan::findOrFail($id);
 
         $banks = Bank::orderBy('name')->get();
 
@@ -210,7 +210,7 @@ class BankLoanController extends Controller
             'emi_date' => 'required|date'         
         ]);
         
-        $loanAccount = BankLoan::find($id);
+        $loanAccount = BankLoan::findOrFail($id);
         $loanTransaction = new BankLoanTransaction();
         $cash = new Cash();
         $bankAccount = BankAccount::find($request->account);
@@ -294,7 +294,7 @@ class BankLoanController extends Controller
             'closing_emi_date' => 'required|date'         
         ]);
         
-        $loanAccount = BankLoan::find($id);
+        $loanAccount = BankLoan::findOrFail($id);
         $loanTransaction = new BankLoanTransaction();
         $cash = new Cash();
         $bankAccount = BankAccount::find($request->closing_account);

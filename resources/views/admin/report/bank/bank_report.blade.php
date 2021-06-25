@@ -161,7 +161,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Date</th>
                                     <th>Description</th>
                                     <th>Deposite</th>
@@ -172,7 +172,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Date</th>
                                     <th>Description</th>
                                     <th>Deposite</th>

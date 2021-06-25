@@ -120,7 +120,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
         $categories = Category::orderBy('name')->get();
         $suppliers = Supplier::orderBy('name')->get();
 
@@ -146,7 +146,7 @@ class ProductController extends Controller
             'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
 
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
 
         $image = $request->file('image');
         $slug = str_slug($request->name);
@@ -199,7 +199,7 @@ class ProductController extends Controller
             'price' => 'nullable|numeric'
         ]);
 
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
         
         $oldItemsTotalPrice = $product->quantity * $product->price;
         
@@ -231,7 +231,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
 
         //delete product image from folder
         if(Storage::disk('public')->exists('product/'.$product->image) && strcmp($product->image, "default.png") != 0)

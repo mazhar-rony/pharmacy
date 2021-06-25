@@ -14,12 +14,15 @@
                     {{-- <li><a href="{{ Auth::user()->role->id == 1 ? route('admin.settings') : route('author.settings') }}">
                         <i class="material-icons">person</i>Profile</a>
                     </li> --}}
-                    <li><a href="{{ Auth::user()->role->id == 2 ? route('user.profile.edit', Auth::user()->id) : route('admin.profile.edit', Auth::user()->id) }}">
+                    {{-- <li><a href="{{ Auth::user()->role->id == 2 ? route('user.profile.edit', Auth::user()->id) : route('admin.profile.edit', Auth::user()->id) }}">
+                        <i class="material-icons">face</i>Profile</a>
+                    </li> --}}
+                    <li><a href="{{ Auth::user()->role->id == 2 ? route('user.profile.edit') : route('admin.profile.edit') }}">
                         <i class="material-icons">face</i>Profile</a>
                     </li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="{{ Auth::user()->role->id == 2 ? route('user.password.edit', Auth::user()->id) : route('admin.password.edit', Auth::user()->id) }}">
-                        <i class="material-icons">vpn_key</i>Change Password &emsp;</a>
+                    <li><a href="{{ Auth::user()->role->id == 2 ? route('user.password.edit') : route('admin.password.edit') }}">
+                        <i class="material-icons">vpn_key</i>Change Password &emsp;&emsp;</a>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
@@ -252,31 +255,9 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="{{ Request::is('author/post*') ? 'active' : '' }}">
-                    <a href="{{ route('author.post.index') }}">
-                        <i class="material-icons">library_books</i>
-                        <span>Posts</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('author/favorite') ? 'active' : '' }}">
-                    <a href="{{ route('author.favorite.index') }}">
-                        <i class="material-icons">favorite</i>
-                        <span>Favorite Posts</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('author/comments') ? 'active' : '' }}">
-                    <a href="{{ route('author.comment.index') }}">
-                        <i class="material-icons">comment</i>
-                        <span>Comments</span>
-                    </a>
-                </li> --}}
+
                 <li class="header">System</li>
-                {{-- <li class="{{ Request::is('author/settings') ? 'active' : '' }}">
-                    <a href="{{ route('author.settings') }}">
-                        <i class="material-icons">settings</i>
-                        <span>Settings</span>
-                    </a>
-                </li> --}}
+
                 <li>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();

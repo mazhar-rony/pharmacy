@@ -44,7 +44,7 @@
                     </h2>
                 </div>
                 <div class="body">
-                    <form class="form-horizontal" action="{{ route('admin.profile.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">

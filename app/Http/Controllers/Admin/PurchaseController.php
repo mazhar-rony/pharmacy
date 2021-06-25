@@ -108,7 +108,7 @@ class PurchaseController extends Controller
      */
     public function show($id)
     {
-        $purchase = Purchase::find($id);
+        $purchase = Purchase::findOrFail($id);
         $purchaseDetails = $purchase->purchase_details;
 
         return view('admin.purchase.show', compact('purchase', 'purchaseDetails'));
@@ -122,7 +122,7 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        $purchase = Purchase::find($id);
+        $purchase = Purchase::findOrFail($id);
         $categories = Category::orderBy('name')->get();
         $banks = Bank::orderBy('name')->get();
         $suppliers = Supplier::orderBy('name')->get();
@@ -303,7 +303,7 @@ class PurchaseController extends Controller
 
     public function deletePurchase($id)
     {
-        $purchase = Purchase::find($id);
+        $purchase = Purchase::findOrFail($id);
         $account = BankAccountTransaction::where('description', 'like', '%' . $purchase->purchase_no . '%')->first();
        
         try{

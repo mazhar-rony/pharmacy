@@ -102,7 +102,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Invoice No</th>
                                     <th>Sales</th>
                                     <th>Profit</th>
@@ -111,7 +111,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Invoice No</th>
                                     <th>Sales</th>
                                     <th>Profit</th>

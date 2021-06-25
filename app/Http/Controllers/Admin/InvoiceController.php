@@ -200,7 +200,7 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::findOrFail($id);
         $invoiceDetails = $invoice->invoice_details;
 
         return view('admin.invoice.show', compact('invoice', 'invoiceDetails'));
@@ -214,7 +214,7 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::findOrFail($id);
         $categories = Category::orderBy('name')->get();
         $banks = Bank::orderBy('name')->get();
         $customers = Customer::orderBy('name')->get();
@@ -378,7 +378,7 @@ class InvoiceController extends Controller
 
     public function deleteInvoice($id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::findOrFail($id);
         $account = BankAccountTransaction::where('description', 'like', '%' . $invoice->invoice_no . '%')->first();
        
         try{

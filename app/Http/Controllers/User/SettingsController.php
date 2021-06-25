@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\User;
 use Carbon\Carbon;
@@ -18,7 +18,7 @@ class SettingsController extends Controller
     {
         $user = User::find(Auth::id());
 
-        return view('admin.settings.profile', compact('user'));
+        return view('user.settings.profile', compact('user'));
     }
 
     public function updateProfile(Request $request)
@@ -28,7 +28,7 @@ class SettingsController extends Controller
             'email' => 'required|unique:users,id',
             'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
-
+        
         $user = User::find(Auth::id());
 
         $image = $request->file('image');
@@ -75,7 +75,7 @@ class SettingsController extends Controller
     public function editPassword()
     {
 
-        return view('admin.settings.password');
+        return view('user.settings.password');
     }
 
     public function updatePassword(Request $request)

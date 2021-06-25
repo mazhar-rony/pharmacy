@@ -79,7 +79,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::findOrFail($id);
 
         return view('admin.customer.edit', compact('customer'));
     }
@@ -100,7 +100,7 @@ class CustomerController extends Controller
             'address' => 'required'
         ]);
 
-        $customer = Customer::find($id);
+        $customer = Customer::findOrFail($id);
 
         $customer->name = $request->name;
         $customer->organization = $request->organization;
@@ -122,7 +122,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::find($id);
+        $customer = Customer::findOrFail($id);
 
         $customer->delete();
 

@@ -154,7 +154,7 @@
                               <div class="table-responsive">
                                 <table class="table">
                                   <tbody><tr>
-                                    <th style="width:50%">Subtotal:</th>
+                                    <th style="width:50%">Total Amount</th>
                                     <td>{{ number_format(round($returnProduct->amount, 2), 2) }}</td>
                                   </tr>
                                 </tbody></table>

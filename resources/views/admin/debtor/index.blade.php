@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Debtor Name</th>
                                     <th>Organization</th>
                                     <th>Date</th>
@@ -47,7 +47,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Debtor Name</th>
                                     <th>Organization</th>
                                     <th>Date</th>
@@ -64,7 +64,7 @@
                                         <td>{{ $debtor->customer->name }}</td>
                                         <td>{{ $debtor->customer->organization }}</td>
                                         <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($debtor->debit_date)->format('d-m-Y') }}</td>
-                                        <td>{{ $debtor->description }}</td>
+                                        <td style="white-space:nowrap;">{{ $debtor->description }}</td>
                                         <td>{{ number_format($debtor->debit_amount, 2) }}</td>
                                         <td><span class="badge bg-pink">{{ number_format($debtor->due, 2) }}</td>
                                         <td class="text-center" style="white-space:nowrap;">

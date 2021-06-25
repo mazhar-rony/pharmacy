@@ -30,7 +30,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Purchase No</th>
                                     <th>Supplier</th>
                                     <th>Organization</th>
@@ -45,7 +45,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Purchase No</th>
                                     <th>Supplier</th>
                                     <th>Organization</th>

@@ -87,7 +87,7 @@ class BankBranchController extends Controller
      */
     public function edit($id)
     {
-        $branch = BankBranch::find($id);
+        $branch = BankBranch::findOrFail($id);
         $banks = Bank::orderBy('name')->get();
 
         return view('admin.bank_branch.edit', compact('branch', 'banks'));
@@ -111,7 +111,7 @@ class BankBranchController extends Controller
             'address' => 'nullable'
         ]);
 
-        $branch = BankBranch::find($id);
+        $branch = BankBranch::findOrFail($id);
 
         $branch->name = $request->name;
         $branch->slug = str_slug($request->name);
@@ -136,7 +136,7 @@ class BankBranchController extends Controller
      */
     public function destroy($id)
     {
-        $branch = BankBranch::find($id);
+        $branch = BankBranch::findOrFail($id);
 
         $branch->delete();
 

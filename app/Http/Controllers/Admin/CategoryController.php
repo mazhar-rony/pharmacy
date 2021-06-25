@@ -74,8 +74,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-
+        //$category = Category::find($id);
+        $category = Category::findOrFail($id);
+        
         return view('admin.category.edit', compact('category'));
     }
 
@@ -92,7 +93,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,id'
         ]);
 
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
         $category->name = $request->name;
         $category->slug = str_slug($request->name);
@@ -112,7 +113,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
         $category->delete();
 

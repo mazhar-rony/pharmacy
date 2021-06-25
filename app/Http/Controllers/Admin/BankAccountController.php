@@ -112,7 +112,7 @@ class BankAccountController extends Controller
      */
     public function edit($id)
     {
-        $account = BankAccount::find($id);
+        $account = BankAccount::findOrFail($id);
         
         $banks = Bank::orderBy('name')->get();
         $branches = \DB::table('bank_branches')->where('bank_id', $account->bank->id)->get();
@@ -139,7 +139,7 @@ class BankAccountController extends Controller
             'balance' => 'required|numeric',  
         ]);
 
-        $account = BankAccount::find($id);
+        $account = BankAccount::findOrFail($id);
 
         $account->user_id = Auth::user()->id;
         $account->account_name = $request->account_name;
@@ -172,7 +172,7 @@ class BankAccountController extends Controller
      */
     public function destroy($id)
     {
-        $account = BankAccount::find($id);
+        $account = BankAccount::findOrFail($id);
 
         $account->delete();
 
@@ -183,7 +183,7 @@ class BankAccountController extends Controller
 
     public function transaction($id)
     {
-        $account = BankAccount::find($id);
+        $account = BankAccount::findOrFail($id);
 
         $income = DB::table('cashes')->sum('income');
         $expense = DB::table('cashes')->sum('expense');
@@ -200,7 +200,7 @@ class BankAccountController extends Controller
             'deposite_date' => 'required|date'
         ]);
 
-        $account = BankAccount::find($id);
+        $account = BankAccount::findOrFail($id);
         $transaction = new BankAccountTransaction();
         $cash = new Cash();
 
@@ -250,7 +250,7 @@ class BankAccountController extends Controller
             'withdraw_date' => 'required|date'
         ]);
 
-        $account = BankAccount::find($id);
+        $account = BankAccount::findOrFail($id);
         $transaction = new BankAccountTransaction();
         $cash = new Cash();
         
@@ -310,7 +310,7 @@ class BankAccountController extends Controller
             'interest_date' => 'required|date'
         ]);
 
-        $account = BankAccount::find($id);
+        $account = BankAccount::findOrFail($id);
         $transaction = new BankAccountTransaction();
 
         // Used Carbon Instead doing manually format date

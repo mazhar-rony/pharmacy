@@ -35,7 +35,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Creditor Name</th>
                                     <th>Organization</th>
                                     <th>Date</th>
@@ -47,7 +47,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Creditor Name</th>
                                     <th>Organization</th>
                                     <th>Date</th>
@@ -64,7 +64,7 @@
                                         <td>{{ $creditor->supplier->name }}</td>
                                         <td>{{ $creditor->supplier->organization }}</td>
                                         <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($creditor->credit_date)->format('d-m-Y') }}</td>
-                                        <td>{{ $creditor->description }}</td>
+                                        <td style="white-space:nowrap;">{{ $creditor->description }}</td>
                                         <td>{{ number_format($creditor->credit_amount, 2) }}</td>
                                         <td><span class="badge bg-pink">{{ number_format($creditor->due, 2) }}</td>
                                         <td class="text-center" style="white-space:nowrap;">

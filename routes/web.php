@@ -110,12 +110,18 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('user', 'UserController');
 
     // Settings
-    Route::get('settings/{profile}/profile', 'SettingsController@editProfile')->name('profile.edit');
-    Route::put('settings/profile/{profile}', 'SettingsController@updateProfile')->name('profile.update');
+    Route::get('settings/profile', 'SettingsController@editProfile')->name('profile.edit');
+    Route::put('settings/profile', 'SettingsController@updateProfile')->name('profile.update');
     Route::get('settings/change-password', 'SettingsController@editPassword')->name('password.edit');
     Route::post('settings/change-password', 'SettingsController@updatePassword')->name('password.update');
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+    // Settings
+    Route::get('settings/profile', 'SettingsController@editProfile')->name('profile.edit');
+    Route::put('settings/profile', 'SettingsController@updateProfile')->name('profile.update');
+    Route::get('settings/change-password', 'SettingsController@editPassword')->name('password.edit');
+    Route::post('settings/change-password', 'SettingsController@updatePassword')->name('password.update');
 });

@@ -85,7 +85,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $roles = Role::orderBy('name')->get();
 
         return view('admin.user.edit', compact('user', 'roles'));
@@ -104,7 +104,7 @@ class UserController extends Controller
             'role' => 'required|integer',
         ]);
 
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         $user->role_id = $request->role;
 
@@ -123,7 +123,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         //delete user image from folder
         if(Storage::disk('public')->exists('user/'.$user->image) && strcmp($user->image, "default.png") != 0)

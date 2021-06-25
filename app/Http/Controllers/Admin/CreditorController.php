@@ -94,7 +94,7 @@ class CreditorController extends Controller
      */
     public function edit($id)
     {
-        $creditor = Creditor::find($id);
+        $creditor = Creditor::findOrFail($id);
         $suppliers = Supplier::orderBy('name')->get();
 
         return view('admin.creditor.edit', compact('creditor', 'suppliers'));
@@ -114,7 +114,7 @@ class CreditorController extends Controller
             'credit_date' => 'required|date'
         ]);
 
-        $creditor = Creditor::find($id);
+        $creditor = Creditor::findOrFail($id);
 
         $creditor->supplier_id = $request->supplier;
         $creditor->credit_date = Carbon::parse($request->credit_date)->format('Y-m-d');
@@ -136,7 +136,7 @@ class CreditorController extends Controller
      */
     public function destroy($id)
     {
-        $creditor = Creditor::find($id);
+        $creditor = Creditor::findOrFail($id);
 
         $creditor->delete();
 
@@ -147,7 +147,7 @@ class CreditorController extends Controller
 
     public function payment($id)
     {
-        $creditor = Creditor::find($id);
+        $creditor = Creditor::findOrFail($id);
 
         $banks = Bank::orderBy('name')->get();
 
@@ -166,7 +166,7 @@ class CreditorController extends Controller
             'payment_date' => 'required|date'
         ]);
 
-        $creditor = Creditor::find($id);
+        $creditor = Creditor::findOrFail($id);
         $payment = new CreditorPayment();
         $cash = new Cash();
         $account = BankAccount::find($request->account);

@@ -112,7 +112,7 @@
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Employee Name</th>
                                     <th>Designation</th>
                                     <th>Salary</th>
@@ -124,7 +124,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>SL</th>
                                     <th>Employee Name</th>
                                     <th>Designation</th>
                                     <th>Salary</th>
