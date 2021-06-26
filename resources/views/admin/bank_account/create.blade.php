@@ -136,7 +136,8 @@
 @push('js')
 <!-- Select Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
-    
+
+<!-- Dependency Dropdown for Bank Branches -->
     <script>
         var loader = $('#loader'),
             bank = $('select[name="bank"]'),
@@ -151,7 +152,7 @@
                 loader.show();
                 branch.attr('disabled','disabled');
 
-                $.get('{{url('/admin/account/branches?bank=')}}'+id)
+                $.get('{{url('/dependency/branches?bank=')}}'+id)
                     .success(function(data){
                         var option = '<option value="" selected disabled>Nothing Selected</option>';
                         data.forEach(function(row){

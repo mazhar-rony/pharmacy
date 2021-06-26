@@ -12,9 +12,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/*Route::group(['middleware' => ['auth']], function() {
-    Route::resource('customer', 'CustomerController');
-});*/
+Route::group(['middleware' => ['auth']], function() {
+    //dependency dropdown
+    Route::get('dependency/employee', 'DependencyController@getEmployeeSalary')->name('dependency.getEmployeeSalary');
+    Route::get('dependency/customer', 'DependencyController@getCustomer')->name('dependency.getCustomer');
+    Route::get('dependency/purchase', 'DependencyController@getPurchaseNo')->name('dependency.getPurchaseNo');
+    Route::get('dependency/invoice', 'DependencyController@getInvoice')->name('dependency.getInvoice');
+    Route::get('dependency/products', 'DependencyController@getProducts')->name('dependency.getProducts');
+    Route::get('dependency/quantity', 'DependencyController@getQuantity')->name('dependency.getQuantity');
+    Route::get('dependency/account', 'DependencyController@getBankAccounts')->name('dependency.getBankAccounts');
+    Route::get('dependency/branches', 'DependencyController@getBranches')->name('dependency.getBranches');
+});
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
@@ -31,21 +39,9 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('branch', 'BankBranchController');
     Route::resource('customer', 'CustomerController');
 
-    //dependency dropdown
-    Route::get('invoice/employee', 'InvoiceController@getEmployeeSalary')->name('invoice.getEmployeeSalary');
-    Route::get('invoice/customer', 'InvoiceController@getCustomer')->name('invoice.getCustomer');
-    Route::get('invoice/purchase', 'InvoiceController@getPurchaseNo')->name('invoice.getPurchaseNo');
-    Route::get('invoice/invoice', 'InvoiceController@getInvoice')->name('invoice.getInvoice');
-    Route::get('invoice/products', 'InvoiceController@getProducts')->name('invoice.getProducts');
-    Route::get('invoice/quantity', 'InvoiceController@getQuantity')->name('invoice.getQuantity');
-    Route::get('invoice/account', 'InvoiceController@getBankAccounts')->name('invoice.getBankAccounts');
-
     Route::resource('invoice', 'InvoiceController');
 
     Route::resource('return', 'ReturnProductController');
-
-    //dependency dropdown
-    Route::get('account/branches', 'BankAccountController@getBranches')->name('account.getBranches');
 
     Route::resource('account', 'BankAccountController');
     Route::get('account/{account}/transaction', 'BankAccountController@transaction')->name('account.transaction');

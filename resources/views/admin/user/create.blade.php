@@ -96,6 +96,7 @@
                             </div>
             
                             <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SUBMIT</button>
+                            <a type="button" class="btn btn-block btn-lg bg-amber waves-effect" href="{{ route('admin.user.index') }}">BACK</a>
             
                         </form>
                     </div>

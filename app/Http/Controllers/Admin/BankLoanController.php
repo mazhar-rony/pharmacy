@@ -100,7 +100,7 @@ class BankLoanController extends Controller
      */
     public function show($id)
     {
-        //
+        $account = BankLoan::findOrFail($id);
     }
 
     /**

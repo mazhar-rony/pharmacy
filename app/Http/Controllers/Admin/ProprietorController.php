@@ -70,7 +70,7 @@ class ProprietorController extends Controller
      */
     public function show($id)
     {
-        //
+        $proprietor = Proprietor::findOrFail($id);
     }
 
     /**

@@ -501,7 +501,7 @@
                     product.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getProducts')}}",
+                        url: "{{route('dependency.getProducts')}}",
                         type: "GET",
                         data: {category:category},                   
                         success: function(data){
@@ -551,7 +551,7 @@
                     account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){

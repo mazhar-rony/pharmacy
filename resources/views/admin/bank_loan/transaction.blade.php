@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Bank')
+@section('title', 'Bank Loan')
 
 @push('css')
 <!-- Bootstrap Select Css -->
@@ -333,7 +333,7 @@
                     account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){
@@ -421,7 +421,7 @@
                     account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:closing_bank},                   
                         success: function(data){

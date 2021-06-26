@@ -83,7 +83,7 @@ class CreditorController extends Controller
      */
     public function show($id)
     {
-        //
+        $creditor = Creditor::findOrFail($id);
     }
 
     /**

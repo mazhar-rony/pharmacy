@@ -221,7 +221,7 @@
 
                 <li class="header">SYSTEM</li>
 
-                <li class="{{ Request::is('admin/user') ? 'active' : '' }}">
+                <li class="{{ Request::is('admin/user*') ? 'active' : '' }}">
                     <a href="{{ route('admin.user.index') }}">
                         <i class="material-icons">support_agent</i>
                         <span>Users</span>

@@ -35,12 +35,12 @@
                                     <th>Customer</th>
                                     <th>Organization</th>
                                     <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Discount</th>
+                                    {{-- <th>Amount</th>
+                                    <th>Discount</th> --}}
                                     <th>Total Amount</th>
                                     {{--  <th>Paid</th>
                                     <th>Due</th>  --}}
-                                    <th>Profit</th>
+                                    {{-- <th>Profit</th> --}}
                                     <th>Status</th>
                                     {{--  <th>Created_by</th>  --}}
                                     <th>Action</th>
@@ -53,12 +53,12 @@
                                     <th>Customer</th>
                                     <th>Organization</th>
                                     <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Discount</th>
+                                    {{-- <th>Amount</th>
+                                    <th>Discount</th> --}}
                                     <th>Total Amount</th>
                                     {{--  <th>Paid</th>
                                     <th>Due</th>  --}}
-                                    <th>Profit</th>
+                                    {{-- <th>Profit</th> --}}
                                     <th>Status</th>
                                     {{--  <th>Created_by</th>  --}}
                                     <th>Action</th>
@@ -72,12 +72,12 @@
                                         <td>{{ $invoice->customer->name }}</td>
                                         <td>{{ $invoice->customer->organization }}</td>
                                         <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($invoice->date)->format('d-m-Y') }}</td>   
-                                        <td>{{ number_format(round($invoice->amount, 2), 2) }}</td>
-                                        <td>{{ number_format(round($invoice->discount, 2), 2) }}</td>
+                                        {{-- <td>{{ number_format(round($invoice->amount, 2), 2) }}</td>
+                                        <td>{{ number_format(round($invoice->discount, 2), 2) }}</td> --}}
                                         <td>{{ number_format(round($invoice->total_amount, 2), 2) }}</td>
                                         {{--  <td>{{ $invoice->paid }}</td> 
                                         <td>{{ $invoice->due }}</td>  --}}
-                                        <td>{{ number_format(round($invoice->profit, 2), 2) }}</td>
+                                        {{-- <td>{{ number_format(round($invoice->profit, 2), 2) }}</td> --}}
                                         <td><span class="badge {{ $invoice->is_paid == TRUE ? 'bg-green' : 'bg-pink' }}">{{ $invoice->is_paid == TRUE ? 'Paid' : 'Due' }}</span></td>
                                         {{--  <td>{{ $invoice->user->name }}</td>   --}}
                                         <td class="text-center" style="white-space:nowrap;">

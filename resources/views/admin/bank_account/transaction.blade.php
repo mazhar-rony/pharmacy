@@ -304,7 +304,7 @@
 
 <script type="text/javascript">
 
-    <!-- Revice Balance after Deposite -->
+<!-- Revice Balance after Deposite -->
     function newBalanceDeposite(){
         var deposite = parseFloat(document.getElementById('deposite').value);
         var balance = parseFloat(document.getElementById('balance_deposite').value);
@@ -343,7 +343,7 @@
         }
     };
 
-    <!-- Revice Balance after Withdraw -->
+<!-- Revice Balance after Withdraw -->
     function newBalanceWithdraw(){
         var withdraw = parseFloat(document.getElementById('withdraw').value);
         var balance = parseFloat(document.getElementById('balance_withdraw').value);
@@ -368,7 +368,7 @@
         }
     };
     
-    <!-- Revice Balance after Interest -->
+<!-- Revice Balance after Interest -->
     function newBalanceInterest(){
         var interest = parseFloat(document.getElementById('interest').value);
         var balance = parseFloat(document.getElementById('balance_interest').value);

@@ -67,7 +67,7 @@ class BankController extends Controller
      */
     public function show($id)
     {
-        //
+        $bank = Bank::findOrFail($id);
     }
 
     /**

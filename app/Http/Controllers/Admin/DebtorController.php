@@ -81,7 +81,7 @@ class DebtorController extends Controller
      */
     public function show($id)
     {
-        //
+        $debtor = Debtor::findOrFail($id);
     }
 
     /**

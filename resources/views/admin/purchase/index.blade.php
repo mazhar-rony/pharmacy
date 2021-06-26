@@ -35,8 +35,8 @@
                                     <th>Supplier</th>
                                     <th>Organization</th>
                                     <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Discount</th>
+                                    {{-- <th>Amount</th>
+                                    <th>Discount</th> --}}
                                     <th>Total Amount</th>
                                     <th>Status</th>
                                     {{--  <th>Created_by</th>  --}}
@@ -50,8 +50,8 @@
                                     <th>Supplier</th>
                                     <th>Organization</th>
                                     <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Discount</th>
+                                    {{-- <th>Amount</th>
+                                    <th>Discount</th> --}}
                                     <th>Total Amount</th>
                                     <th>Status</th>
                                     {{--  <th>Created_by</th>  --}}
@@ -66,8 +66,8 @@
                                         <td>{{ $purchase->supplier->name }}</td>
                                         <td>{{ $purchase->supplier->organization }}</td>
                                         <td style="white-space:nowrap;">{{ Carbon\Carbon::parse($purchase->date)->format('d-m-Y') }}</td>   
-                                        <td>{{ number_format(round($purchase->amount, 2), 2) }}</td>
-                                        <td>{{ number_format(round($purchase->discount, 2), 2) }}</td>
+                                        {{-- <td>{{ number_format(round($purchase->amount, 2), 2) }}</td>
+                                        <td>{{ number_format(round($purchase->discount, 2), 2) }}</td> --}}
                                         <td>{{ number_format(round($purchase->total_amount, 2), 2) }}</td>                                        
                                         <td><span class="badge {{ $purchase->is_paid == TRUE ? 'bg-green' : 'bg-pink' }}">{{ $purchase->is_paid == TRUE ? 'Paid' : 'Due' }}</span></td>
                                         {{--  <td>{{ $purchase->user->name }}</td>   --}}

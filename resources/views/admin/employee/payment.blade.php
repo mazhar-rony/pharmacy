@@ -565,7 +565,7 @@
                     salary_account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){
@@ -625,7 +625,7 @@
                     advance_account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){
@@ -685,7 +685,7 @@
                     bonus_account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){
@@ -794,7 +794,7 @@
         var employee_id = '<?php echo $employee_id;?>';
         if(salary_year){                   
             $.ajax({
-                url: "{{route('admin.invoice.getEmployeeSalary')}}",
+                url: "{{route('dependency.getEmployeeSalary')}}",
                 type: "GET",
                 data: {salary_year:salary_year, salary_month:salary_month, employee_id:employee_id},                   
                 success: function(data){
@@ -817,7 +817,7 @@
         var employee_id = '<?php echo $employee_id;?>';
         if(salary_month){                   
             $.ajax({
-                url: "{{route('admin.invoice.getEmployeeSalary')}}",
+                url: "{{route('dependency.getEmployeeSalary')}}",
                 type: "GET",
                 data: {salary_year:salary_year, salary_month:salary_month, employee_id:employee_id},                   
                 success: function(data){

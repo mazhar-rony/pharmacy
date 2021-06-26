@@ -76,7 +76,7 @@ class BankBranchController extends Controller
      */
     public function show($id)
     {
-        //
+        $branch = BankBranch::findOrFail($id);
     }
 
     /**

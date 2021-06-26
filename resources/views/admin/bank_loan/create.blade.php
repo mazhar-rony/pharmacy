@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title', 'Bank')
+@section('title', 'Bank Loan')
 
 @push('css')
 <!-- Bootstrap Select Css -->
@@ -177,7 +177,8 @@
 
 <!-- Bootstrap Material Datetime Picker Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>   
-    
+ 
+<!-- Dependency Dropdown for Bank Branches -->
     <script>
         var loader = $('#loader'),
             bank = $('select[name="bank"]'),
@@ -192,7 +193,7 @@
                 loader.show();
                 branch.attr('disabled','disabled');
 
-                $.get('{{url('/admin/account/branches?bank=')}}'+id)
+                $.get('{{url('/dependency/branches?bank=')}}'+id)
                     .success(function(data){
                         var option = '<option value="" selected disabled>Nothing Selected</option>';
                         data.forEach(function(row){

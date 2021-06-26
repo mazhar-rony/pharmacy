@@ -229,7 +229,7 @@
                     account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){

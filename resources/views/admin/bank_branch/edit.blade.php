@@ -3,7 +3,8 @@
 @section('title', 'Bank')
 
 @push('css')
-    
+<!-- Bootstrap Select Css -->
+    <link href="{{ asset('assets/backend/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" /> 
 @endpush
 
 @section('content')
@@ -117,5 +118,6 @@
 @endsection
 
 @push('js')
-
+<!-- Select Plugin Js -->
+    <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 @endpush

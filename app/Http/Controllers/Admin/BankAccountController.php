@@ -41,15 +41,6 @@ class BankAccountController extends Controller
         return view('admin.bank_account.create', compact('banks'));
     }
 
-    public function getBranches(Request $request)
-    {
-        if($request->has('bank'))
-        {
-            return Bank::find($request->bank)->branches()->get();
-            //return \DB::table('bank_branches')->where('bank_id', $request->bank)->get();
-        }
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -101,7 +92,7 @@ class BankAccountController extends Controller
      */
     public function show($id)
     {
-        //
+        $account = BankAccount::findOrFail($id);
     }
 
     /**

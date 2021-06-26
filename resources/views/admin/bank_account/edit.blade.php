@@ -141,42 +141,43 @@
 <!-- Select Plugin Js -->
     <script src="{{ asset('assets/backend/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
 
-<script>
-    //$(function(){
-        var loader = $('#loader'),
-            bank = $('select[name="bank"]'),
-            branch = $('select[name="branch"]');
+<!-- Dependency Dropdown for Bank Branches -->
+    <script>
+        //$(function(){
+            var loader = $('#loader'),
+                bank = $('select[name="bank"]'),
+                branch = $('select[name="branch"]');
 
-        loader.hide();
-        //branch.attr('disabled','disabled');
-        
-        bank.change(function(){
-            var id = $(this).val();
-            if(id){
-                loader.show();
-                branch.attr('disabled','disabled');
+            loader.hide();
+            //branch.attr('disabled','disabled');
+            
+            bank.change(function(){
+                var id = $(this).val();
+                if(id){
+                    loader.show();
+                    branch.attr('disabled','disabled');
 
-                $.get('{{url('/admin/account/branches?bank=')}}'+id)
-                    .success(function(data){
-                        var option = '<option value="" selected disabled>Nothing Selected</option>';
-                        data.forEach(function(row){
-                            option += '<option value="'+row.id+'">'+row.name+'</option>'
+                    $.get('{{url('/dependency/branches?bank=')}}'+id)
+                        .success(function(data){
+                            var option = '<option value="" selected disabled>Nothing Selected</option>';
+                            data.forEach(function(row){
+                                option += '<option value="'+row.id+'">'+row.name+'</option>'
+                            })
+                            branch.removeAttr('disabled');
+                            branch.html(option);
+                            loader.hide();
+                            $(".selectpicker").selectpicker("refresh");
                         })
-                        branch.removeAttr('disabled');
-                        branch.html(option);
-                        loader.hide();
-                        $(".selectpicker").selectpicker("refresh");
-                    })
-            }
-        })
+                }
+            })
 
-        branch.change(function(){
-            var id = $(this).val();
-            if(!id){
-                branch.attr('disabled','disabled');
-            }
-        })
-    //});
-</script>
+            branch.change(function(){
+                var id = $(this).val();
+                if(!id){
+                    branch.attr('disabled','disabled');
+                }
+            })
+        //});
+    </script>
 
 @endpush

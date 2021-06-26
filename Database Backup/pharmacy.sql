@@ -39,7 +39,7 @@ CREATE TABLE `bank_account_transactions` (
 /*Data for the table `bank_account_transactions` */
 
 insert  into `bank_account_transactions`(`id`,`bank_account_id`,`transaction_date`,`description`,`deposite`,`withdraw`,`interest`,`balance`,`created_at`,`updated_at`) values 
-(1,2,'2021-06-03','Sold Product of Invoice No INV-202106030002',15000.0000,0.0000,0.0000,85000.0000,'2021-06-03 11:37:13','2021-06-03 11:37:13'),
+(1,2,'2021-06-03','Sold Product of Invoice No INV-202106030002',15000.0000,0.0000,0.0000,35000.0000,'2021-06-03 11:37:13','2021-06-03 11:37:13'),
 (3,2,'2021-06-04','Return Product from Customer',0.0000,25000.0000,0.0000,10000.0000,'2021-06-04 00:58:40','2021-06-04 00:58:40'),
 (4,1,'2021-06-04','Return Product of Invoice No INV-202106030001',0.0000,8000.0000,0.0000,92000.0000,'2021-06-04 01:13:15','2021-06-04 01:13:15'),
 (5,2,'2021-06-05','Given Payment To Mr. Ashik',0.0000,5000.0000,0.0000,5000.0000,'2021-06-05 08:15:19','2021-06-05 08:15:19'),
@@ -210,7 +210,7 @@ CREATE TABLE `cashes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `cashes` */
 
@@ -263,7 +263,14 @@ insert  into `cashes`(`id`,`date`,`description`,`income`,`expense`,`created_at`,
 (56,'2021-06-09','Given Bank Loan EMI To Account No 123456 of City Bank',0.0000,5000.0000,'2021-06-18 03:02:33','2021-06-18 03:02:33'),
 (57,'2021-05-08','Given Bank Loan EMI To Account No 123456 of Dhaka Bank',0.0000,13000.0000,'2021-06-18 03:05:25','2021-06-18 03:05:25'),
 (58,'2021-06-18','Given Advance Salary to Employee: Mark Zukarbarg',0.0000,2000.0000,'2021-06-18 03:46:36','2021-06-18 03:46:36'),
-(59,'2021-06-19','Sold Product of Invoice No INV-202106190001',5000.0000,0.0000,'2021-06-19 02:31:23','2021-06-19 02:31:23');
+(59,'2021-06-19','Sold Product of Invoice No INV-202106190001',5000.0000,0.0000,'2021-06-19 02:31:23','2021-06-19 02:31:23'),
+(60,'2021-06-24','Sold Product of Invoice No INV-202106240001',7000.0000,0.0000,'2021-06-24 16:15:25','2021-06-24 16:15:25'),
+(61,'2021-06-24','Taken Due Payment of Invoice No INV-202106240001 From Take Away Customer of Unknown',800.0000,0.0000,'2021-06-24 16:17:43','2021-06-24 16:17:43'),
+(62,'2021-06-24','Given Advance Salary to Employee: Mr. Ashik',0.0000,5000.0000,'2021-06-24 16:23:17','2021-06-24 16:23:17'),
+(63,'2021-06-24','Given Salary for June, 2021 to Employee: Mr. Ashik',0.0000,6000.0000,'2021-06-24 16:23:54','2021-06-24 16:23:54'),
+(64,'2021-06-25','Sold Product of Invoice No INV-202106250001',20500.0000,0.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
+(65,'2021-06-25','Taken Due Payment of Invoice No INV-202106250001 From Take Away Customer of Unknown',500.0000,0.0000,'2021-06-25 00:00:10','2021-06-25 00:00:10'),
+(66,'2021-06-26','Sold Product of Invoice No INV-202106260001',5000.0000,0.0000,'2021-06-26 01:00:03','2021-06-26 01:00:03');
 
 /*Table structure for table `categories` */
 
@@ -383,13 +390,15 @@ CREATE TABLE `debtor_payments` (
   PRIMARY KEY (`id`),
   KEY `debtor_payments_debtor_id_foreign` (`debtor_id`),
   CONSTRAINT `debtor_payments_debtor_id_foreign` FOREIGN KEY (`debtor_id`) REFERENCES `debtors` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `debtor_payments` */
 
 insert  into `debtor_payments`(`id`,`debtor_id`,`payment_date`,`payment_type`,`bank_account_id`,`paid`,`created_at`,`updated_at`) values 
 (1,2,'2021-06-05','cash',NULL,1000.0000,'2021-06-05 08:12:15','2021-06-05 08:12:15'),
-(2,2,'2021-06-05','cash',NULL,1000.0000,'2021-06-05 08:47:40','2021-06-05 08:47:40');
+(2,2,'2021-06-05','cash',NULL,1000.0000,'2021-06-05 08:47:40','2021-06-05 08:47:40'),
+(3,6,'2021-06-24','cash',NULL,800.0000,'2021-06-24 16:17:43','2021-06-24 16:17:43'),
+(4,7,'2021-06-25','cash',NULL,500.0000,'2021-06-25 00:00:10','2021-06-25 00:00:10');
 
 /*Table structure for table `debtors` */
 
@@ -411,7 +420,7 @@ CREATE TABLE `debtors` (
   PRIMARY KEY (`id`),
   KEY `debtors_invoice_id_foreign` (`invoice_id`),
   CONSTRAINT `debtors_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `debtors` */
 
@@ -419,7 +428,9 @@ insert  into `debtors`(`id`,`customer_id`,`invoice_id`,`description`,`debit_date
 (2,2,2,'INV-202106030001','2021-06-03',7000.0000,5000.0000,0.0000,2000.0000,0,'2021-06-03 11:35:30','2021-06-05 08:47:40'),
 (3,1,3,'INV-202106030002','2021-06-03',6000.0000,5500.0000,500.0000,0.0000,1,'2021-06-03 11:37:13','2021-06-03 13:06:48'),
 (4,1,5,'INV-202106060001','2021-06-06',5000.0000,0.0000,0.0000,5000.0000,0,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(5,1,NULL,'House Rent','2021-04-01',30000.0000,0.0000,0.0000,30000.0000,0,'2021-06-16 06:04:04','2021-06-16 06:04:04');
+(5,1,NULL,'House Rent','2021-04-01',30000.0000,0.0000,0.0000,30000.0000,0,'2021-06-16 06:04:04','2021-06-16 06:04:04'),
+(6,3,9,'INV-202106240001','2021-06-24',800.0000,800.0000,0.0000,0.0000,1,'2021-06-24 16:15:24','2021-06-24 16:17:43'),
+(7,3,10,'INV-202106250001','2021-06-25',500.0000,500.0000,0.0000,0.0000,1,'2021-06-24 23:56:52','2021-06-25 00:00:10');
 
 /*Table structure for table `employee_payments` */
 
@@ -441,7 +452,7 @@ CREATE TABLE `employee_payments` (
   PRIMARY KEY (`id`),
   KEY `employee_payments_employee_id_foreign` (`employee_id`),
   CONSTRAINT `employee_payments_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `employee_payments` */
 
@@ -469,13 +480,14 @@ CREATE TABLE `employees` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `employees` */
 
 insert  into `employees`(`id`,`name`,`designation`,`address`,`phone`,`image`,`advance`,`advance_date`,`salary`,`created_at`,`updated_at`) values 
-(2,'Mark Zukarbarg','Peon','keranigonj','01911111111','mark-zukarbarg-2021-06-13-60c6547eb77a9.png',5000.0000,'2021-06-18',5000.0000,'2021-06-13 18:54:54','2021-06-18 03:46:36'),
-(3,'Bill Gates','Manager','Dhaka','01712222222','bill-gates-2021-06-13-60c67eb015374.jpg',0.0000,'2021-06-14',15000.0000,'2021-06-13 21:54:56','2021-06-14 04:01:57');
+(2,'Mark Zukarbarg','Peon','keranigonj','01911111111','mark-zukarbarg-2021-06-25-60d56d2be6d59.png',5000.0000,'2021-06-18',5000.0000,'2021-06-13 18:54:54','2021-06-25 05:44:12'),
+(3,'Bill Gates','Manager','Dhaka','01712222222','bill-gates-2021-06-25-60d56d1a4d3a1.jpg',0.0000,'2021-06-14',15000.0000,'2021-06-13 21:54:56','2021-06-25 05:43:54'),
+(6,'Zayn','Executive','Dhaka','01711111111','default.png',0.0000,NULL,16000.0000,'2021-06-25 05:17:33','2021-06-25 05:17:33');
 
 /*Table structure for table `invoice_details` */
 
@@ -493,7 +505,7 @@ CREATE TABLE `invoice_details` (
   PRIMARY KEY (`id`),
   KEY `invoice_details_invoice_id_foreign` (`invoice_id`),
   CONSTRAINT `invoice_details_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `invoice_details` */
 
@@ -516,7 +528,13 @@ insert  into `invoice_details`(`id`,`invoice_id`,`product_id`,`quantity`,`cost`,
 (19,6,2,2,4493.1556,5000.0000,'2021-06-16 02:47:05','2021-06-16 02:47:05'),
 (20,7,6,3,500.0000,700.0000,'2021-06-17 17:32:43','2021-06-17 17:32:43'),
 (21,7,4,1,10000.0000,12000.0000,'2021-06-17 17:32:43','2021-06-17 17:32:43'),
-(22,8,3,1,2000.0000,5000.0000,'2021-06-19 02:31:23','2021-06-19 02:31:23');
+(22,8,3,1,2000.0000,5000.0000,'2021-06-19 02:31:23','2021-06-19 02:31:23'),
+(23,9,1,2,1000.0000,1000.0000,'2021-06-24 16:15:25','2021-06-24 16:15:25'),
+(24,9,7,4,1000.0000,1500.0000,'2021-06-24 16:15:25','2021-06-24 16:15:25'),
+(25,10,6,3,500.0000,1000.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
+(26,10,7,1,1000.0000,2000.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
+(27,10,5,2,5000.0000,8000.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
+(28,11,3,1,2000.0000,5000.0000,'2021-06-26 01:00:03','2021-06-26 01:00:03');
 
 /*Table structure for table `invoices` */
 
@@ -541,7 +559,7 @@ CREATE TABLE `invoices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `invoices` */
 
@@ -552,7 +570,10 @@ insert  into `invoices`(`id`,`user_id`,`customer_id`,`invoice_no`,`date`,`paymen
 (5,1,1,202106060001,'2021-03-06','cash',NULL,35000.0000,0.0000,35000.0000,30000.0000,5000.0000,12506.8444,'big data',0,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
 (6,1,3,202106050002,'2021-06-05','cash',NULL,13000.0000,0.0000,13000.0000,13000.0000,0.0000,2013.6888,NULL,1,'2021-06-16 02:47:05','2021-06-16 02:47:05'),
 (7,1,2,202106170001,'2021-04-17','cash',NULL,14100.0000,100.0000,14000.0000,14000.0000,0.0000,2500.0000,'test',1,'2021-06-17 17:32:43','2021-06-17 17:32:43'),
-(8,1,3,202106190001,'2021-02-19','cash',NULL,5000.0000,0.0000,5000.0000,5000.0000,0.0000,3000.0000,NULL,1,'2021-06-19 02:31:23','2021-06-19 02:31:23');
+(8,1,3,202106190001,'2021-02-19','cash',NULL,5000.0000,0.0000,5000.0000,5000.0000,0.0000,3000.0000,NULL,1,'2021-06-19 02:31:23','2021-06-19 02:31:23'),
+(9,1,3,202106240001,'2021-06-24','cash',NULL,8000.0000,200.0000,7800.0000,7800.0000,0.0000,1800.0000,NULL,1,'2021-06-24 16:15:24','2021-06-24 16:17:43'),
+(10,1,3,202106250001,'2021-06-25','cash',NULL,21000.0000,0.0000,21000.0000,21000.0000,0.0000,8500.0000,NULL,1,'2021-06-24 23:56:52','2021-06-25 00:00:10'),
+(11,1,3,202106260001,'2021-06-26','cash',NULL,5000.0000,0.0000,5000.0000,5000.0000,0.0000,3000.0000,NULL,1,'2021-06-26 01:00:02','2021-06-26 01:00:02');
 
 /*Table structure for table `migrations` */
 
@@ -661,14 +682,14 @@ CREATE TABLE `products` (
 /*Data for the table `products` */
 
 insert  into `products`(`id`,`name`,`category_id`,`supplier_id`,`slug`,`quantity`,`low_quantity_alert`,`price`,`image`,`created_at`,`updated_at`) values 
-(1,'Mobile',3,2,'mobile',17,10,1000.0000,'mobile-2021-06-03-60b8b8b117bea.jpg','2021-06-03 11:10:42','2021-06-16 20:26:34'),
-(2,'TV',3,4,'tv',3,10,4493.1556,'tv-2021-06-03-60b8b8ef0205b.png','2021-06-03 11:11:43','2021-06-16 02:47:05'),
-(3,'Laptop',3,2,'laptop',19,10,2000.0000,'laptop-2021-06-03-60b8b92d6caac.jpg','2021-06-03 11:12:45','2021-06-19 02:31:23'),
-(4,'Car',1,3,'car',16,5,10000.0000,'car-2021-06-03-60b8b95d65e97.jpg','2021-06-03 11:13:33','2021-06-17 17:32:43'),
-(5,'Bike',1,3,'bike',20,10,5000.0000,'bike-2021-06-03-60b8b98136039.jpg','2021-06-03 11:14:09','2021-06-04 00:58:40'),
-(6,'Chair',2,1,'chair',20,10,500.0000,'chair-2021-06-03-60b8b9b16baeb.jpg','2021-06-03 11:14:57','2021-06-17 17:32:43'),
-(7,'Table',2,1,'table',13,5,1000.0000,'table-2021-06-03-60b8ba2f688a6.jpg','2021-06-03 11:17:03','2021-06-06 01:14:44'),
-(8,'Speaker',3,2,'speaker',7,5,1000.0000,'speaker-2021-06-05-60bb59de2c5be.jpeg','2021-06-05 11:02:54','2021-06-06 01:14:44');
+(1,'Mobile',3,2,'mobile',15,10,1000.0000,'mobile-2021-06-25-60d56f8d4fb2a.jpg','2021-06-03 11:10:42','2021-06-25 05:54:21'),
+(2,'TV',3,4,'tv',0,10,4493.1600,'tv-2021-06-25-60d56f8072afe.png','2021-06-03 11:11:43','2021-06-25 05:54:08'),
+(3,'Laptop',3,2,'laptop',18,10,2000.0000,'laptop-2021-06-25-60d56f74b7349.jpg','2021-06-03 11:12:45','2021-06-26 01:00:03'),
+(4,'Car',1,3,'car',16,5,10000.0000,'car-2021-06-25-60d56f646a85f.jpg','2021-06-03 11:13:33','2021-06-25 05:53:40'),
+(5,'Bike',1,3,'bike',18,10,5000.0000,'bike-2021-06-25-60d56f5704e2c.jpg','2021-06-03 11:14:09','2021-06-25 05:53:27'),
+(6,'Chair',2,1,'chair',17,10,500.0000,'chair-2021-06-25-60d56f4a60659.jpg','2021-06-03 11:14:57','2021-06-25 05:53:14'),
+(7,'Table',2,1,'table',8,5,1000.0000,'table-2021-06-25-60d56f3b135b4.jpg','2021-06-03 11:17:03','2021-06-25 05:52:59'),
+(8,'Speaker',3,2,'speaker',7,5,1000.0000,'speaker-2021-06-25-60d56f22e8b92.jpeg','2021-06-05 11:02:54','2021-06-25 05:52:35');
 
 /*Table structure for table `proprietor_transactions` */
 
@@ -908,9 +929,9 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`role_id`,`name`,`email`,`email_verified_at`,`password`,`image`,`phone`,`address`,`remember_token`,`created_at`,`updated_at`) values 
-(1,1,'Admin','admin@admin.com',NULL,'$2y$10$DefAPWMi9mk24B6zYlzRP.S0wYv./BYSIvIl4Bu7dd7MYOU2l/D4u','default.png','01711111111','Noorjahan road Mohammmaddpur dhaka 1207',NULL,NULL,'2021-06-22 08:14:10'),
-(2,2,'User','user@user.com',NULL,'$2y$10$OsA81gFwSYSWI8THR99hwu7EgtGnmGRjw0Ov4QnBjpLxtHphvE14C','default.png',NULL,NULL,NULL,NULL,NULL),
-(4,2,'Adib','adib@gmail.com',NULL,'$2y$10$yhubrCaCryv4lHZTA7u9TeDL/wEf2l4Kp1.dRqgDnZlTkOCEoBCcW','default.png',NULL,NULL,NULL,'2021-06-22 08:01:19','2021-06-22 08:01:19');
+(1,1,'Admin','admin@admin.com',NULL,'$2y$10$qPWNr5FYGHVvzyb6yfsY1OvL48iBmMEuAT1bAIbdA8TyphiCw/7EK','admin-2021-06-25-60d56a743fc13.jpg','01711111111','Noorjahan road Mohammmaddpur dhaka 1207',NULL,NULL,'2021-06-25 05:32:36'),
+(2,2,'User','user@user.com',NULL,'$2y$10$WyYQvm1LsmtzhM7B4NZIZ.E3uugH7GWwsoagZE8nAzihIYP/ZPWdq','default.png','01911111111','Dhaka',NULL,NULL,'2021-06-25 04:01:35'),
+(4,2,'Adib','adib@gmail.com',NULL,'$2y$10$yhubrCaCryv4lHZTA7u9TeDL/wEf2l4Kp1.dRqgDnZlTkOCEoBCcW','adib-2021-06-25-60d56cb742179.jpg','01712222222','Dhaka',NULL,'2021-06-22 08:01:19','2021-06-25 05:42:15');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

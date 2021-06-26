@@ -602,7 +602,7 @@
                     product.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getProducts')}}",
+                        url: "{{route('dependency.getProducts')}}",
                         type: "GET",
                         data: {category:category},                   
                         success: function(data){
@@ -640,7 +640,7 @@
         $(document).on('change', '#product', function(){
             var product = $(this).val();
                 $.ajax({
-                    url: "{{route('admin.invoice.getQuantity')}}",
+                    url: "{{route('dependency.getQuantity')}}",
                     type: "GET",
                     data: {product:product},                   
                     success: function(data){
@@ -671,7 +671,7 @@
                     account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){
