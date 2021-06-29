@@ -64,7 +64,7 @@
                                         <td>{{ $employee->phone }}</td>
                                         <td class="align-center">
                                             <img src="{{ Storage::disk('public')->url('employee/'.$employee->image) }}" 
-                                                alt="{{ $employee->imege }}" height="37" width="44">
+                                                alt="{{ $employee->imege }}" height="44" width="44">
                                         </td>
                                         <td>{{ number_format(round($employee->advance, 2), 2) }}</td>
                                         <td>{{ number_format(round($employee->salary, 2), 2) }}</td>

@@ -94,6 +94,7 @@
                                     <th>SL</th>
                                     <th>Purchase No</th>
                                     <th>Cost</th>
+                                    <th>Created By</th>
                                     <th>Show Detail</th>
                                 </tr>
                             </thead>
@@ -102,6 +103,7 @@
                                     <th>SL</th>
                                     <th>Purchase No</th>
                                     <th>Cost</th>
+                                    <th>Created By</th>
                                     <th>Show Detail</th>
                                 </tr>
                             </tfoot>
@@ -111,6 +113,7 @@
                                         <td>{{ $key+1 }}</td>                          
                                         <td>{{ 'P-' . $purchaseDetail->purchase_no }}</td>
                                         <td>{{ number_format(round($purchaseDetail->total_amount, 2), 2) }}</td> 
+                                        <td>{{ $purchaseDetail->user->name }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('admin.purchase.show', $purchaseDetail->id) }}" class="btn bg-indigo waves-effect" target="_blank">
                                                 <i class="material-icons">visibility</i>

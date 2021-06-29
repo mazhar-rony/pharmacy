@@ -106,6 +106,7 @@
                                     <th>SL</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
+                                    <th>Cost</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -113,6 +114,7 @@
                                     <th>SL</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
+                                    <th>Cost</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -120,7 +122,8 @@
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $purchaseProduct->product->name }}</td>                   
-                                        <td>{{ $purchaseProduct->quantity }}</td>                                        
+                                        <td>{{ $purchaseProduct->quantity }}</td>  
+                                        <td>{{ number_format(round($purchaseProduct->cost, 2), 2) }}</td>                                      
                                     </tr>
                                 @endforeach
                             </tbody>

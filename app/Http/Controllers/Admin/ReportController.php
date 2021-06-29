@@ -50,8 +50,14 @@ class ReportController extends Controller
                 
         $invoice = Invoice::whereBetween('date', [$start_date,  $end_date])->pluck('id')->toArray();
         
-        $soldProducts = InvoiceDetail::groupBy('product_id')
+        /*$soldProducts = InvoiceDetail::groupBy('product_id')
                         ->select('product_id', DB::raw('SUM(quantity) AS quantity'))
+                        ->whereIn('invoice_id', $invoice)
+                        ->orderBy('quantity','DESC')
+                        ->get();*/
+        $soldProducts = InvoiceDetail::groupBy('product_id')
+                        ->select('product_id', DB::raw('SUM(quantity) AS quantity'), 
+                            DB::raw('SUM(quantity * cost) AS cost'), DB::raw('SUM(quantity * selling_price) AS price'))
                         ->whereIn('invoice_id', $invoice)
                         ->orderBy('quantity','DESC')
                         ->get();
@@ -81,8 +87,14 @@ class ReportController extends Controller
 
         $return = ReturnProduct::whereBetween('date', [$start_date,  $end_date])->pluck('id')->toArray();
         
-        $returnProducts = ReturnProductDetail::groupBy('product_id')
+        /*$returnProducts = ReturnProductDetail::groupBy('product_id')
                         ->select('product_id', DB::raw('SUM(quantity) AS quantity'))
+                        ->whereIn('return_product_id', $return)
+                        ->orderBy('quantity','DESC')
+                        ->get();*/
+        $returnProducts = ReturnProductDetail::groupBy('product_id')
+                        ->select('product_id', DB::raw('SUM(quantity) AS quantity'),
+                            DB::raw('SUM(quantity * price) AS amount'))
                         ->whereIn('return_product_id', $return)
                         ->orderBy('quantity','DESC')
                         ->get();
@@ -112,8 +124,14 @@ class ReportController extends Controller
 
         $purchase = Purchase::whereBetween('date', [$start_date,  $end_date])->pluck('id')->toArray();
         
-        $purchaseProducts = PurchaseDetail::groupBy('product_id')
+        /*$purchaseProducts = PurchaseDetail::groupBy('product_id')
                         ->select('product_id', DB::raw('SUM(quantity) AS quantity'))
+                        ->whereIn('purchase_id', $purchase)
+                        ->orderBy('quantity','DESC')
+                        ->get();*/
+        $purchaseProducts = PurchaseDetail::groupBy('product_id')
+                        ->select('product_id', DB::raw('SUM(quantity) AS quantity'), 
+                            DB::raw('SUM(quantity * cost) AS cost'))
                         ->whereIn('purchase_id', $purchase)
                         ->orderBy('quantity','DESC')
                         ->get();

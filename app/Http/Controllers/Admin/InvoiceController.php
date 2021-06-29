@@ -54,7 +54,8 @@ class InvoiceController extends Controller
         else
         {
             // Here Date is in UTC timezone so added +6 hours to make local timezone
-            $invoice_no = (int)(date('Y').date('m').date('d', strtotime('+6 hours'))."0001");
+            //$invoice_no = (int)(date('Y').date('m').date('d', strtotime('+6 hours'))."0001");
+            $invoice_no = (int)(date('Y').date('m').date('d')."0001");
         }
         
 

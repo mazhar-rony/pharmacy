@@ -95,8 +95,9 @@
     {{--  <script src="{{ asset('assets/backend/js/pages/charts/chartjs.js') }}"></script>  --}}
     
 <!-- This Chart is for canvas id="myChart"  -->
-    /*<script>
-        var ctx = document.getElementById('myChart').getContext('2d');
+    <script>
+        
+        /*var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -130,11 +131,10 @@
                 }
             }
         }
-    });
-    </script>*/
+    });*/
 
 <!-- Create Sales & Profit Chart from ajax request  -->
-    <script> 
+    
         $(function (){
             getData();  // get things started when the DOM is ready
         });
@@ -146,7 +146,7 @@
                 cache: false,
                 success: function(response)
                 {
-                    createChart(response);  // call createChart, passing it the response
+                    createChart(response);  // call createChart function, passing the response to it
                 }
             });
         }

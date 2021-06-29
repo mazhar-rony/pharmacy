@@ -63,7 +63,8 @@
                             <div class="col-12">
                               <h4>
                                 <i class="fa fa-globe"></i> Global Surgical Mart
-                                <small class="float-right">Date: {{ date("d/m/Y", strtotime('+6 hours')) }}</small>
+                                {{-- <small class="float-right">Date: {{ date("d/m/Y", strtotime('+6 hours')) }}</small> --}}
+                                <small class="float-right">Date: {{ date("d/m/Y") }}</small>
                               </h4>
                             </div>
                             <!-- /.col -->

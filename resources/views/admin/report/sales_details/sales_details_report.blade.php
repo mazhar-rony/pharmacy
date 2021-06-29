@@ -106,6 +106,7 @@
                                     <th>Invoice No</th>
                                     <th>Sales</th>
                                     <th>Profit</th>
+                                    <th>Created By</th>
                                     <th>Show Detail</th>
                                 </tr>
                             </thead>
@@ -115,6 +116,7 @@
                                     <th>Invoice No</th>
                                     <th>Sales</th>
                                     <th>Profit</th>
+                                    <th>Created By</th>
                                     <th>Show Detail</th>
                                 </tr>
                             </tfoot>
@@ -125,6 +127,7 @@
                                         <td>{{ 'INV-' . $salesDetail->invoice_no }}</td>
                                         <td>{{ number_format(round($salesDetail->total_amount, 2), 2) }}</td>                   
                                         <td>{{ number_format(round($salesDetail->profit, 2), 2) }}</td>
+                                        <td>{{ $salesDetail->user->name }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('admin.invoice.show', $salesDetail->id) }}" class="btn bg-indigo waves-effect" target="_blank">
                                                 <i class="material-icons">visibility</i>

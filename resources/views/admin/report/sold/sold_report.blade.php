@@ -106,6 +106,8 @@
                                     <th>SL</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
+                                    <th>Amount</th>
+                                    <th>Profit</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -113,6 +115,8 @@
                                     <th>SL</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
+                                    <th>Amount</th>
+                                    <th>Profit</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -120,7 +124,9 @@
                                     <tr>                          
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $soldProduct->product->name }}</td>                   
-                                        <td>{{ $soldProduct->quantity }}</td>                                        
+                                        <td>{{ $soldProduct->quantity }}</td>  
+                                        <td>{{ number_format(round($soldProduct->price, 2), 2) }}</td> 
+                                        <td>{{ number_format(round(($soldProduct->price) - ($soldProduct->cost), 2), 2) }}</td>                                     
                                     </tr>
                                 @endforeach
                             </tbody>

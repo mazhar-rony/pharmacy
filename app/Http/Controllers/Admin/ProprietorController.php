@@ -10,6 +10,8 @@ use App\ProprietorTransaction;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ProprietorController extends Controller
 {
@@ -46,14 +48,38 @@ class ProprietorController extends Controller
         $this->validate($request,[
             'name' => 'required',
             'designation' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
+            'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
+
+        $image = $request->file('image');
+        $slug = str_slug($request->name);
+
+        if(isset($image))
+        {
+            //make unique name for image
+            $currentDate = Carbon::now()->toDateString();
+            $imageName  = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+
+            if(!Storage::disk('public')->exists('proprietor'))
+            {
+                Storage::disk('public')->makeDirectory('proprietor');
+            }
+
+            $proprietorImage = Image::make($image)->resize(500,500)->stream();
+
+            Storage::disk('public')->put('proprietor/'.$imageName, $proprietorImage);
+
+        } else {
+            $imageName = "default.png";
+        }
 
         $proprietor = new Proprietor();
 
         $proprietor->name = $request->name;
         $proprietor->designation = $request->designation;
         $proprietor->phone = $request->phone;
+        $proprietor->image = $imageName;
 
         $proprietor->save();
 
@@ -98,14 +124,44 @@ class ProprietorController extends Controller
         $this->validate($request,[
             'name' => 'required',
             'designation' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
+            'image' => 'mimes:png,jpg,jpeg,bmp'
         ]);
 
         $proprietor = Proprietor::findOrFail($id);
 
+        $image = $request->file('image');
+        $slug = str_slug($request->name);
+
+        if(isset($image))
+        {
+            //make unique name for image
+            $currentDate = Carbon::now()->toDateString();
+            $imageName  = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+
+            if(!Storage::disk('public')->exists('proprietor'))
+            {
+                Storage::disk('public')->makeDirectory('proprietor');
+            }
+
+            //delete old employee image
+            if(Storage::disk('public')->exists('proprietor/'.$proprietor->image) && strcmp($proprietor->image, "default.png") != 0)
+            {
+                Storage::disk('public')->delete('proprietor/'.$proprietor->image);
+            }
+
+            $proprietorImage = Image::make($image)->resize(500,500)->stream();
+
+            Storage::disk('public')->put('proprietor/'.$imageName, $proprietorImage);
+
+        } else {
+            $imageName = $proprietor->image;
+        }
+
         $proprietor->name = $request->name;
         $proprietor->designation = $request->designation;
         $proprietor->phone = $request->phone;
+        $proprietor->image = $imageName;
         
         $proprietor->save();
 
@@ -123,6 +179,12 @@ class ProprietorController extends Controller
     public function destroy($id)
     {
         $proprietor = Proprietor::findOrFail($id);
+
+        //delete proprietor image from folder
+        if(Storage::disk('public')->exists('proprietor/'.$proprietor->image) && strcmp($proprietor->image, "default.png") != 0)
+            {
+                Storage::disk('public')->delete('proprietor/'.$proprietor->image);
+            }
 
         $proprietor->delete();
 

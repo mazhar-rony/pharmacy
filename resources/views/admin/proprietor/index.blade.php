@@ -34,6 +34,7 @@
                                     <th>Proprietor Name</th>
                                     <th>Designation</th>
                                     <th>Phone</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,7 @@
                                     <th>Proprietor Name</th>
                                     <th>Designation</th>
                                     <th>Phone</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -53,6 +55,10 @@
                                         <td>{{ $proprietor->name }}</td>
                                         <td>{{ $proprietor->designation }}</td>
                                         <td>{{ $proprietor->phone }}</td>
+                                        <td class="align-center">
+                                            <img src="{{ Storage::disk('public')->url('proprietor/'.$proprietor->image) }}" 
+                                                alt="{{ $proprietor->imege }}" height="44" width="44">
+                                        </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             <a href="{{ route('admin.proprietor.transaction', $proprietor->id) }}" class="btn btn-success waves-effect">
                                                 <span>Transaction </span><i class="material-icons">account_balance_wallet</i>

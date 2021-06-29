@@ -118,6 +118,7 @@
                                     <th>Salary</th>
                                     <th>Salary Paid</th>
                                     <th>Advance Deduct</th>
+                                    <th>Salary Due</th>
                                     <th>Bonus</th>
                                     <th>Total Paid</th>
                                 </tr>
@@ -130,6 +131,7 @@
                                     <th>Salary</th>
                                     <th>Salary Paid</th>
                                     <th>Advance Deduct</th>
+                                    <th>Salary Due</th>
                                     <th>Bonus</th>
                                     <th>Total Paid</th>
                                 </tr>
@@ -143,8 +145,9 @@
                                         <td><span class="badge bg-indigo">{{ number_format(round($employee->employee->salary, 2), 2) }}</td>                   
                                         <td>{{ $employee->salary > 0 ? number_format(round($employee->salary, 2), 2) : '' }}</td>
                                         <td>{{ $employee->advance_deduct > 0 ? number_format(round($employee->advance_deduct, 2), 2) : '' }}</td>
+                                        <td style="color: red;">{{ number_format(round($employee->employee->salary - ($employee->salary + $employee->advance_deduct), 2), 2) }}</td>
                                         <td>{{ $employee->bonus > 0 ? number_format(round($employee->bonus, 2), 2) : '' }}</td>
-                                        <td>{{ number_format(round($employee->salary + $employee->advance_deduct + $employee->bonus, 2), 2)}}</td>                                      
+                                        <td style="color: green; font-weight: bold;">{{ number_format(round($employee->salary + $employee->advance_deduct + $employee->bonus, 2), 2)}}</td>                                      
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -200,7 +203,7 @@
                     account.attr('disabled','disabled');
 
                     $.ajax({
-                        url: "{{route('admin.invoice.getBankAccounts')}}",
+                        url: "{{route('dependency.getBankAccounts')}}",
                         type: "GET",
                         data: {bank:bank},                   
                         success: function(data){

@@ -26,7 +26,6 @@ class DashboardController extends Controller
         $todaySales = Invoice::where('date', Carbon::now()->toDateString())->sum('total_amount');
         
         return view('admin.dashboard', compact('cash', 'totalPending', 'totalCredit', 'todaySales'));
-        
         //return view('welcome');
     }
 

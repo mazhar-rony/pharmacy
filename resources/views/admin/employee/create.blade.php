@@ -146,7 +146,7 @@
             preview.src = URL.createObjectURL(event.target.files[0]);
             preview.onload = function() {
                 //preview.style.height = '380px';
-                preview.style.height = '270px';
+                preview.style.height = '350px';
                 preview.style.width = '270px';
                
             URL.revokeObjectURL(preview.src) // free memory

@@ -57,7 +57,8 @@ class PurchaseController extends Controller
         else
         {
             // Here Date is in UTC timezone so added +6 hours to make local timezone
-            $purchase_no = (int)(date('Y').date('m').date('d', strtotime('+6 hours'))."01");
+            //$purchase_no = (int)(date('Y').date('m').date('d', strtotime('+6 hours'))."01");
+            $purchase_no = (int)(date('Y').date('m').date('d')."01");
         }
         
 

@@ -18,6 +18,7 @@ class CreateProprietorsTable extends Migration
             $table->string('name');
             $table->string('designation');
             $table->string('phone');
+            $table->string('image')->default('default.png');
             $table->timestamps();
         });
     }
