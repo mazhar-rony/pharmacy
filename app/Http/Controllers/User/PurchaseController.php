@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Bank;
 use App\Cash;
@@ -22,26 +22,15 @@ use Illuminate\Validation\ValidationException;
 
 class PurchaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //$purchases = Purchase::latest()->get();
         $purchases = Purchase::whereDate('date', '>', Carbon::now()->subDays(7))->orWhere('is_paid', 0)
                                 ->orderBy('date', 'DESC')
                                 ->get();
 
-        return view('admin.purchase.index', compact('purchases'));
+        return view('user.purchase.index', compact('purchases'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::orderBy('name')->get();
@@ -65,15 +54,9 @@ class PurchaseController extends Controller
         }
         
 
-        return view('admin.purchase.create', compact('categories', 'banks', 'suppliers', 'purchase_no', 'cash'));
+        return view('user.purchase.create', compact('categories', 'banks', 'suppliers', 'purchase_no', 'cash'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -101,94 +84,7 @@ class PurchaseController extends Controller
 
         Toastr::success('Purchase Successfully Created !' ,'Success');
 
-        return redirect()->route('admin.purchase.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $purchase = Purchase::findOrFail($id);
-        $purchaseDetails = $purchase->purchase_details;
-
-        return view('admin.purchase.show', compact('purchase', 'purchaseDetails'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $purchase = Purchase::findOrFail($id);
-        $categories = Category::orderBy('name')->get();
-        $banks = Bank::orderBy('name')->get();
-        $suppliers = Supplier::orderBy('name')->get();
-        $purchaseDetails = $purchase->purchase_details;
-        $income = DB::table('cashes')->sum('income');
-        $expense = DB::table('cashes')->sum('expense');
-        $cash = $income - $expense;
-        
-        return view('admin.purchase.edit', compact('purchase', 'categories', 'banks', 'suppliers', 'purchaseDetails', 'cash'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $this->validate($request,[
-            'purchase' => 'required',
-            'purchase_date' => 'required|date',
-            'quantity.*' => 'required|integer',
-            'unit_price.*' => 'required|numeric',
-            'discount' => 'required|numeric',
-            'total_amount' => 'required|numeric',
-            'total_paid' => 'required|numeric',
-            'total_due' => 'required|numeric',
-            'supplier' => 'required|integer',
-            'payment_type' => 'required', 
-            'bank' => 'required_if:payment_type,==,cheque|integer',
-            //'account' => 'required_if:payment_type,==,cheque|integer'
-        ]);
-        
-        if($request->total_paid > $request->total_amount)
-        {
-            Toastr::error('Trying to pay more than Net Amount !' ,'Error');
-            return redirect()->back();
-        }
-
-        $this->deletePurchase($id);
-        $this->savePurchase($request);
-        
-        Toastr::success('Purchase Successfully Updated !' ,'Success');
-
-        return redirect()->route('admin.purchase.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->deletePurchase($id);
-
-        Toastr::success('Purchase Successfully Deleted !' ,'Success');
-
-        return redirect()->back();
+        return redirect()->route('user.purchase.index');
     }
 
     public function savePurchase(Request $request)
@@ -305,42 +201,11 @@ class PurchaseController extends Controller
         }
     }
 
-    public function deletePurchase($id)
+    public function show($id)
     {
         $purchase = Purchase::findOrFail($id);
-        $account = BankAccountTransaction::where('description', 'like', '%' . $purchase->purchase_no . '%')->first();
-       
-        try{
-            DB::transaction(function () use($purchase, $account){
-                if($purchase->payment_type === 'cash')
-                {
-                    Cash::where('description', 'like', '%' . $purchase->purchase_no . '%')->delete();
-                }
-                if($purchase->payment_type === 'cheque' && $account !== null)
-                {                    
-                    $bankAccount = BankAccount::find($account->bank_account_id);
-                    $bankAccount->balance += $purchase->paid;
-                    BankAccountTransaction::where('description', 'like', '%' . $purchase->purchase_no . '%')->delete();
-                    $bankAccount->save();
-                }
-                $purchaseDetails = PurchaseDetail::where('purchase_id', $purchase->id)->get();
-                foreach($purchaseDetails as $purchaseDetail)
-                {
-                    $product = Product::find($purchaseDetail->product_id);
-                    $product->quantity -= $purchaseDetail->quantity;
-                    $product->save();
-                }
-                $purchase->delete();
-            }, 3);
+        $purchaseDetails = $purchase->purchase_details;
 
-        }
-        catch(\Exception $ex)
-        {
-
-            //Toastr::error('Something went wrong ! Try again...' ,'Error');
-            Toastr::error($ex->getMessage() ,'Error');
-
-            return redirect()->back();
-        }
+        return view('user.purchase.show', compact('purchase', 'purchaseDetails'));
     }
 }

@@ -154,6 +154,7 @@
                         <span>Office Expense</span>
                     </a>
                 </li>
+
                 <li class="header">PROPRIETOR</li>
 
                 <li class="{{ Request::is('admin/proprietor*') ? 'active' : '' }}">
@@ -253,6 +254,78 @@
                     <a href="{{ route('user.dashboard') }}">
                         <i class="material-icons">dashboard</i>
                         <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="header">INVENTORY</li>
+
+                <li class="{{ Request::is('user/category*') ? 'active' : '' }}">
+                    <a href="{{ route('user.category.index') }}">
+                        <i class="material-icons">apps</i>
+                        <span>Product Category</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('user/supplier*') ? 'active' : '' }}">
+                    <a href="{{ route('user.supplier.index') }}">
+                        <i class="material-icons">people_alt</i>
+                        <span>Product Suppliers</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('user/purchase*') ? 'active' : '' }}">
+                    <a href="{{ route('user.purchase.index') }}">
+                        <i class="material-icons">shopping_bag</i>
+                        <span>Purchase</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('user/product*') ? 'active' : '' }}">
+                    <a href="{{ route('user.product.index') }}">
+                        <i class="material-icons">production_quantity_limits</i>
+                        <span>Stock</span>
+                    </a>
+                </li>
+
+                <li class="header">POS</li>
+
+                <li class="{{ Request::is('user/customer*') ? 'active' : '' }}">
+                    <a href="{{ route('user.customer.index') }}">
+                        <i class="material-icons">supervisor_account</i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('user/invoice*') ? 'active' : '' }}">
+                    <a href="{{ route('user.invoice.index') }}">
+                        <i class="material-icons">important_devices</i>
+                        <span>Invoice</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('user/return*') ? 'active' : '' }}">
+                    <a href="{{ route('user.return.index') }}">
+                        <i class="material-icons">replay</i>
+                        <span>Return Products</span>
+                    </a>
+                </li>
+
+                <li class="header">PAYMENT</li>
+
+                <li class="{{ Request::is('user/creditor*') ? 'active' : '' }}">
+                    <a href="{{ route('user.creditor.index') }}">
+                        <i class="material-icons">attach_money</i>
+                        <span>Creditors</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('user/debtor*') ? 'active' : '' }}">
+                    <a href="{{ route('user.debtor.index') }}">
+                        <i class="material-icons">local_parking</i>
+                        <span>Pendings</span>
+                    </a>
+                </li>
+
+                <li class="header">EXPENSES</li>
+
+                <li class="{{ Request::is('user/expense*') ? 'active' : '' }}">
+                    <a href="{{ route('user.expense.create') }}">
+                        <i class="material-icons">local_atm</i>
+                        <span>Office Expense</span>
                     </a>
                 </li>
 

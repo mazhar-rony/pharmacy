@@ -117,10 +117,10 @@
                                     <th>Designation</th>
                                     <th>Salary</th>
                                     <th>Salary Paid</th>
-                                    <th>Advance Deduct</th>
-                                    <th>Salary Due</th>
+                                    <th>Advance Deduct</th>                                    
                                     <th>Bonus</th>
                                     <th>Total Paid</th>
+                                    <th>Salary Due</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -130,10 +130,10 @@
                                     <th>Designation</th>
                                     <th>Salary</th>
                                     <th>Salary Paid</th>
-                                    <th>Advance Deduct</th>
-                                    <th>Salary Due</th>
+                                    <th>Advance Deduct</th>                                    
                                     <th>Bonus</th>
                                     <th>Total Paid</th>
+                                    <th>Salary Due</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -144,10 +144,10 @@
                                         <td>{{ $employee->employee->designation }}</td>
                                         <td><span class="badge bg-indigo">{{ number_format(round($employee->employee->salary, 2), 2) }}</td>                   
                                         <td>{{ $employee->salary > 0 ? number_format(round($employee->salary, 2), 2) : '' }}</td>
-                                        <td>{{ $employee->advance_deduct > 0 ? number_format(round($employee->advance_deduct, 2), 2) : '' }}</td>
-                                        <td style="color: red;">{{ number_format(round($employee->employee->salary - ($employee->salary + $employee->advance_deduct), 2), 2) }}</td>
+                                        <td>{{ $employee->advance_deduct > 0 ? number_format(round($employee->advance_deduct, 2), 2) : '' }}</td>                                        
                                         <td>{{ $employee->bonus > 0 ? number_format(round($employee->bonus, 2), 2) : '' }}</td>
-                                        <td style="color: green; font-weight: bold;">{{ number_format(round($employee->salary + $employee->advance_deduct + $employee->bonus, 2), 2)}}</td>                                      
+                                        <td style="color: green; font-weight: bold;">{{ number_format(round($employee->salary + $employee->advance_deduct + $employee->bonus, 2), 2)}}</td>
+                                        <td style="color: red;">{{ number_format(round($employee->employee->salary - ($employee->salary + $employee->advance_deduct), 2), 2) }}</td>                                      
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -12,14 +12,9 @@
 @endpush
 
 @section('content')
-<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pull-right" style="margin-bottom: 20px;">
-    <button class="btn bg-teal btn-lg btn-block waves-effect" type="button" style="height: 50px; font-size: 14px; cursor: default; pointer-events: none;">Total Amount 
-        <span class="badge" style="font-size: 18px;">{{ number_format($total_amount->total_amount, 2) }}</span>
-    </button>
-</div>
 <div class="container-fluid">
     <div class="block-header">
-        <a class="btn btn-success waves-effect" href="{{ route('admin.product.create') }}">
+        <a class="btn btn-success waves-effect" href="{{ route('user.product.create') }}">
             <i class="material-icons">add</i>
             <span>Add New Product</span>
         </a>
@@ -48,7 +43,6 @@
                                     <th>Price</th>
                                     <th>Total Price</th>
                                     <th>Image</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -61,7 +55,6 @@
                                     <th>Price</th>
                                     <th>Total Price</th>
                                     <th>Image</th>
-                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -77,22 +70,6 @@
                                         <td class="align-center">
                                             <img src="{{ Storage::disk('public')->url('product/'.$product->image) }}" 
                                                 alt="{{ $product->name }}" height="37" width="44">
-                                        </td>
-                                        <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-info waves-effect">
-                                                <i class="material-icons">edit</i>
-                                            </a>
-                                            <button class="btn btn-danger waves-effect" type="button"
-                                                onclick="deleteProduct({{ $product->id }})">
-                                                <i class="material-icons">delete</i>
-                                            </button>
-                                            <form id="delete-form-{{ $product->id }}" method="POST"
-                                                action="{{ route('admin.product.destroy', $product->id) }}"
-                                                style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -119,50 +96,4 @@
     <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/pages/tables/jquery-datatable.js') }}"></script>
-
-    <!-- Sweet Alert 2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-    <script type="text/javascript">
-        function deleteProduct(id) {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-              })
-              
-              swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.isConfirmed) {
-
-                  event.preventDefault();
-                  document.getElementById('delete-form-' + id).submit();
-                    
-                  swalWithBootstrapButtons.fire(
-                    'Deleted!',
-                    'Your data has been deleted.',
-                    'success'
-                  )
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your data is safe :)',
-                    'error'
-                  )
-                }
-              })
-        }
-    </script>
 @endpush

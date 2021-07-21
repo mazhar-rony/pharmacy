@@ -115,6 +115,48 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
 Route::group(['as' => 'user.', 'prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth', 'user']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+    Route::get('category', 'CategoryController@index')->name('category.index');
+    Route::get('category/create', 'CategoryController@create')->name('category.create');
+    Route::post('category', 'CategoryController@store')->name('category.store');
+
+    Route::get('supplier', 'SupplierController@index')->name('supplier.index');
+    Route::get('supplier/create', 'SupplierController@create')->name('supplier.create');
+    Route::post('supplier', 'SupplierController@store')->name('supplier.store');
+
+    Route::get('purchase', 'PurchaseController@index')->name('purchase.index');
+    Route::get('purchase/create', 'PurchaseController@create')->name('purchase.create');
+    Route::post('purchase', 'PurchaseController@store')->name('purchase.store');
+    Route::get('purchase/{purchase}', 'PurchaseController@show')->name('purchase.show');
+
+    Route::get('product', 'ProductController@index')->name('product.index');
+    Route::get('product/create', 'ProductController@create')->name('product.create');
+    Route::post('product', 'ProductController@store')->name('product.store');
+
+    Route::get('customer', 'CustomerController@index')->name('customer.index');
+    Route::get('customer/create', 'CustomerController@create')->name('customer.create');
+    Route::post('customer', 'CustomerController@store')->name('customer.store');
+
+    Route::get('invoice', 'InvoiceController@index')->name('invoice.index');
+    Route::get('invoice/create', 'InvoiceController@create')->name('invoice.create');
+    Route::post('invoice', 'InvoiceController@store')->name('invoice.store');
+    Route::get('invoice/{invoice}', 'InvoiceController@show')->name('invoice.show');
+
+    Route::get('return', 'ReturnProductController@index')->name('return.index');
+    Route::get('return/create', 'ReturnProductController@create')->name('return.create');
+    Route::post('return', 'ReturnProductController@store')->name('return.store');
+    Route::get('return/{return}', 'ReturnProductController@show')->name('return.show');
+
+    Route::get('creditor/{creditor}/payment', 'CreditorController@payment')->name('creditor.payment');
+    Route::put('creditor/payment/{creditor}', 'CreditorController@payToCreditor')->name('creditor.payToCreditor');
+    Route::get('creditor', 'CreditorController@index')->name('creditor.index');
+
+    Route::get('debtor/{debtor}/payment', 'DebtorController@payment')->name('debtor.payment');
+    Route::put('debtor/payment/{debtor}', 'DebtorController@paidByDebtor')->name('debtor.paidByDebtor');
+    Route::get('debtor', 'DebtorController@index')->name('debtor.index');
+
+    Route::get('expense/create', 'OfficeExpenseController@create')->name('expense.create');
+    Route::post('expense', 'OfficeExpenseController@store')->name('expense.store');
+
     // Settings
     Route::get('settings/profile', 'SettingsController@editProfile')->name('profile.edit');
     Route::put('settings/profile', 'SettingsController@updateProfile')->name('profile.update');

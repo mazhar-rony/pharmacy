@@ -9,7 +9,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="block-header">
-        <a class="btn btn-success waves-effect" href="{{ route('admin.invoice.create') }}">
+        <a class="btn btn-success waves-effect" href="{{ route('user.invoice.create') }}">
             <i class="material-icons">add</i>
             <span>Create New Invoice</span>
         </a>
@@ -81,23 +81,9 @@
                                         <td><span class="badge {{ $invoice->is_paid == TRUE ? 'bg-green' : 'bg-pink' }}">{{ $invoice->is_paid == TRUE ? 'Paid' : 'Due' }}</span></td>
                                         {{--  <td>{{ $invoice->user->name }}</td>   --}}
                                         <td class="text-center" style="white-space:nowrap;">
-                                            <a href="{{ route('admin.invoice.show', $invoice->id) }}" class="btn btn-success waves-effect" target="_blank" data-toggle="tooltip" data-placement="top" title="Show">
+                                            <a href="{{ route('user.invoice.show', $invoice->id) }}" class="btn btn-success waves-effect" target="_blank" data-toggle="tooltip" data-placement="top" title="Show">
                                                 <i class="material-icons">visibility</i>
                                             </a>
-                                            <a href="{{ route('admin.invoice.edit', $invoice->id) }}" class="btn btn-info waves-effect" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="material-icons">edit</i>
-                                            </a>
-                                            <button class="btn btn-danger waves-effect" type="button" data-toggle="tooltip" data-placement="top" title="Delete"
-                                                onclick="deleteInvoice({{ $invoice->id }})">
-                                                <i class="material-icons">delete</i>
-                                            </button>
-                                            <form id="delete-form-{{ $invoice->id }}" method="POST"
-                                                action="{{ route('admin.invoice.destroy', $invoice->id) }}"
-                                                style="display: none;">
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -125,57 +111,10 @@
     <script src="{{ asset('assets/backend/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/pages/tables/jquery-datatable.js') }}"></script>
 
-    <!-- Sweet Alert 2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
 <!-- Show Tooltop on Buttons -->
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
-    </script>
-
-<!-- Delete Invoice -->
-    <script type="text/javascript">
-        function deleteInvoice(id) {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-              })
-              
-              swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.isConfirmed) {
-
-                  event.preventDefault();
-                  document.getElementById('delete-form-' + id).submit();
-                    
-                  swalWithBootstrapButtons.fire(
-                    'Deleted!',
-                    'Your data has been deleted.',
-                    'success'
-                  )
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your data is safe :)',
-                    'error'
-                  )
-                }
-              })
-        }
     </script>
 @endpush

@@ -30,7 +30,8 @@ class ReturnProductController extends Controller
      */
     public function index()
     {
-        $returnProducts = ReturnProduct::latest()->get();
+        //$returnProducts = ReturnProduct::latest()->get();
+        $returnProducts = ReturnProduct::whereDate('date', '>', Carbon::now()->subDays(7))->get();
 
         return view('admin.return_product.index', compact('returnProducts'));
     }

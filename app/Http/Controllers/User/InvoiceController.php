@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Bank;
 use App\Cash;
@@ -9,7 +9,6 @@ use App\Invoice;
 use App\Product;
 use App\Category;
 use App\Customer;
-use App\Purchase;
 use Carbon\Carbon;
 use App\BankAccount;
 use App\InvoiceDetail;
@@ -22,26 +21,15 @@ use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //$invoices = Invoice::latest()->get();
         $invoices = Invoice::whereDate('date', '>', Carbon::now()->subDays(7))->orWhere('is_paid', 0)
                             ->orderBy('date', 'DESC')
                             ->get();
 
-        return view('admin.invoice.index', compact('invoices'));
+        return view('user.invoice.index', compact('invoices'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::orderBy('name')->get();
@@ -62,15 +50,9 @@ class InvoiceController extends Controller
         }
         
 
-        return view('admin.invoice.create', compact('categories', 'banks', 'customers', 'invoice_no'));
+        return view('user.invoice.create', compact('categories', 'banks', 'customers', 'invoice_no'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -92,86 +74,8 @@ class InvoiceController extends Controller
         
         Toastr::success('Invoice Successfully Created !' ,'Success');
 
-        return redirect()->route('admin.invoice.index');
+        return redirect()->route('user.invoice.index');
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $invoice = Invoice::findOrFail($id);
-        $invoiceDetails = $invoice->invoice_details;
-
-        return view('admin.invoice.show', compact('invoice', 'invoiceDetails'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $invoice = Invoice::findOrFail($id);
-        $categories = Category::orderBy('name')->get();
-        $banks = Bank::orderBy('name')->get();
-        $customers = Customer::orderBy('name')->get();
-        $invoiceDetails = $invoice->invoice_details;
-        
-        return view('admin.invoice.edit', compact('invoice', 'categories', 'banks', 'customers', 'invoiceDetails'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {   
-        $this->validate($request,[
-            'invoice' => 'required',
-            'invoice_date' => 'required|date',            
-            'quantity.*' => 'required|integer',
-            'unit_price.*' => 'required|numeric',
-            'discount' => 'required|numeric',
-            'total_amount' => 'required|numeric',
-            'total_paid' => 'required|numeric',
-            'total_due' => 'required|numeric',
-            'customer' => 'required|integer',
-            'payment_type' => 'required', 
-            'bank' => 'required_if:payment_type,==,cheque|integer',
-            //'account' => 'required_if:payment_type,==,cheque|integer'
-        ]);
-        
-        $this->deleteInvoice($id);
-        $this->saveInvoice($request);
-
-        Toastr::success('Invoice Successfully Updated !' ,'Success');
-
-        return redirect()->route('admin.invoice.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->deleteInvoice($id);
-                
-        Toastr::success('Invoice Successfully Deleted !' ,'Success');
-
-        return redirect()->back();
     }
 
     public function saveInvoice(Request $request)
@@ -280,43 +184,11 @@ class InvoiceController extends Controller
         }
     }
 
-    public function deleteInvoice($id)
+    public function show($id)
     {
         $invoice = Invoice::findOrFail($id);
-        $account = BankAccountTransaction::where('description', 'like', '%' . $invoice->invoice_no . '%')->first();
-       
-        try{
-            DB::transaction(function () use($invoice, $account){
-                if($invoice->payment_type === 'cash')
-                {
-                    Cash::where('description', 'like', '%' . $invoice->invoice_no . '%')->delete();
-                }
-                if($invoice->payment_type === 'cheque' && $account !== null)
-                {
-                    //$account = BankAccountTransaction::where('description', 'like', '%' . $invoice->invoice_no . '%')->first();
-                    $bankAccount = BankAccount::find($account->bank_account_id);
-                    $bankAccount->balance -= $invoice->paid;
-                    BankAccountTransaction::where('description', 'like', '%' . $invoice->invoice_no . '%')->delete();
-                    $bankAccount->save();
-                }
-                $invoiceDetails = InvoiceDetail::where('invoice_id', $invoice->id)->get();
-                foreach($invoiceDetails as $invoiceDetail)
-                {
-                    $product = Product::find($invoiceDetail->product_id);
-                    $product->quantity += $invoiceDetail->quantity;
-                    $product->save();
-                }
-                $invoice->delete();
-            }, 3);
+        $invoiceDetails = $invoice->invoice_details;
 
-        }
-        catch(\Exception $ex)
-        {
-
-            //Toastr::error('Something went wrong ! Try again...' ,'Error');
-            Toastr::error($ex->getMessage() ,'Error');
-
-            return redirect()->back();
-        }
+        return view('user.invoice.show', compact('invoice', 'invoiceDetails'));
     }
 }

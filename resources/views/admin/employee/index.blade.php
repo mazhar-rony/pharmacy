@@ -4,6 +4,11 @@
 
 @push('css')
     <link href="{{ asset('assets/backend/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <style>
+        img:hover {
+            transform: scale(2);
+            }
+    </style>
 @endpush
 
 @section('content')

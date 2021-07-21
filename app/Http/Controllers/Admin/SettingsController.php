@@ -105,7 +105,7 @@ class SettingsController extends Controller
             }
             else
             {
-                Toastr::error('New password cannot be the same as old password.','Error');
+                Toastr::error('New Password cannot be same as Old Password.','Error');
 
                 return redirect()->back();
             }
