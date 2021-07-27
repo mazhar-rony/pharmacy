@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::where('is_super_admin', '0')->orderBy('name')->get();
 
         return view('admin.user.index', compact('users'));
     }
