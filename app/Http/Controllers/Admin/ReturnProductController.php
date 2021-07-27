@@ -46,7 +46,8 @@ class ReturnProductController extends Controller
         $categories = Category::orderBy('name')->get();
         $banks = Bank::orderBy('name')->get();
         $customers = Customer::orderBy('name')->get();
-        $invoices = Invoice::orderBy('invoice_no')->get(); 
+        // product return within 15 days
+        $invoices = Invoice::whereDate('date', '>', Carbon::now()->subDays(15))->orderBy('invoice_no')->get(); 
         $income = DB::table('cashes')->sum('income');
         $expense = DB::table('cashes')->sum('expense');
         $cash = $income - $expense;     
@@ -114,7 +115,8 @@ class ReturnProductController extends Controller
         $categories = Category::orderBy('name')->get();
         $banks = Bank::orderBy('name')->get();
         $customers = Customer::orderBy('name')->get();
-        $invoices = Invoice::orderBy('invoice_no')->get(); 
+        // product return within 15 days
+        $invoices = Invoice::whereDate('date', '>', Carbon::now()->subDays(15))->orderBy('invoice_no')->get(); 
         $income = DB::table('cashes')->sum('income');
         $expense = DB::table('cashes')->sum('expense');
         $cash = $income - $expense;  

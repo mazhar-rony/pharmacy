@@ -22,7 +22,7 @@
                 <div class="header">
                     <h2>
                         {{-- ALL RETURN PRODUCTS --}}
-                        RETURN PRODUCTS of LAST 7 DAYS
+                        RETURNED PRODUCTS of LAST 7 DAYS
                         <span class="badge bg-red">{{ $returnProducts->count() }}</span
                     </h2>
                 </div>

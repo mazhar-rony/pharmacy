@@ -36,7 +36,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        EDIT RETURN PRODUCT
+                        EDIT RETURN PRODUCT (Return within 15 days)
                     </h2>
                 </div>
                 <form action="{{ route('admin.return.update', $returnProduct->id) }}" method="POST" id="returnForm">

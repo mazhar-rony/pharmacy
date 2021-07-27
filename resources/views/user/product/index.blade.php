@@ -40,8 +40,6 @@
                                     <th>Category</th>
                                     <th>Supplier</th>
                                     <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Total Price</th>
                                     <th>Image</th>
                                 </tr>
                             </thead>
@@ -52,8 +50,6 @@
                                     <th>Category</th>
                                     <th>Supplier</th>
                                     <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Total Price</th>
                                     <th>Image</th>
                                 </tr>
                             </tfoot>
@@ -65,8 +61,6 @@
                                         <td>{{ $product->category->name }}</td>
                                         <td>{{ $product->supplier->organization }}</td>
                                         <td><span class="badge {{ $product->quantity <= $product->low_quantity_alert ? 'bg-pink' : 'bg-green' }}">{{ $product->quantity }}</span></td>
-                                        <td>{{ number_format(round($product->price, 2), 2) }}</td>
-                                        <td>{{ number_format(round($product->price, 2) * $product->quantity, 2) }}</td>
                                         <td class="align-center">
                                             <img src="{{ Storage::disk('public')->url('product/'.$product->image) }}" 
                                                 alt="{{ $product->name }}" height="37" width="44">

@@ -36,7 +36,7 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                        CREATE RETURN PRODUCT
+                        CREATE RETURN PRODUCT (Return within 15 days)
                     </h2>
                 </div>
                 <form action="{{ route('user.return.store') }}" method="POST" id="returnForm">
