@@ -52,8 +52,8 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->products->count() }}</td>
-                                        <td>{{ $category->created_at->addHours(6)->format('d-m-Y h:i:s A') }}</td>
-                                        <td>{{ $category->updated_at->addHours(6)->format('d-m-Y h:i:s A') }}</td>
+                                        <td>{{ $category->created_at->diffForHumans() }}</td>
+                                        <td>{{ $category->updated_at->diffForHumans() }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

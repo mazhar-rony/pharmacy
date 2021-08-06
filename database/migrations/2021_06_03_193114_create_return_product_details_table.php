@@ -18,7 +18,7 @@ class CreateReturnProductDetailsTable extends Migration
             $table->unsignedBigInteger('return_product_id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->decimal('price', 9, 4);
+            $table->decimal('price', 13, 4);
 
             $table->foreign('return_product_id')
                 ->references('id')

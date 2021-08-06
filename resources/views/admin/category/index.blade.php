@@ -54,8 +54,10 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->products->count() }}</td>
-                                        <td>{{ $category->created_at->addHours(6)->format('d-m-Y h:i:s A') }}</td>
-                                        <td>{{ $category->updated_at->addHours(6)->format('d-m-Y h:i:s A') }}</td>
+                                        {{-- <td>{{ $category->created_at->addHours(6)->format('d-m-Y h:i:s A') }}</td>
+                                        <td>{{ $category->updated_at->addHours(6)->format('d-m-Y h:i:s A') }}</td> --}}
+                                        <td>{{ $category->created_at->diffFOrHumans() }}</td>
+                                        <td>{{ $category->updated_at->diffFOrHumans() }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-info waves-effect">
                                                 <i class="material-icons">edit</i>

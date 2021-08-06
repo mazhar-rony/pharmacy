@@ -21,12 +21,12 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->string('payment_type');
             $table->unsignedBigInteger('bank_account_id')->nullable();
-            $table->decimal('amount', 9, 4);
-            $table->decimal('discount', 9, 4)->default(0);
-            $table->decimal('total_amount', 9, 4);
-            $table->decimal('paid', 9, 4);
-            $table->decimal('due', 9, 4);
-            $table->decimal('profit', 9, 4);
+            $table->decimal('amount', 13, 4);
+            $table->decimal('discount', 13, 4)->default(0);
+            $table->decimal('total_amount', 13, 4);
+            $table->decimal('paid', 13, 4);
+            $table->decimal('due', 13, 4);
+            $table->decimal('profit', 13, 4);
             $table->text('description')->nullable();
             $table->boolean('is_paid')->default(0)->comment('0=Pending,1=Paid');
             $table->timestamps();

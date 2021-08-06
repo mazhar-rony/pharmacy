@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
-<title>Return</title>
+<title>Global Surgical Mart - Return</title>
+<!-- Favicon-->
+<link rel="icon" href="{{ asset('/favicon.ico') }}" type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />

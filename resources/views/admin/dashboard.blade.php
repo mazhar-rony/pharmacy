@@ -79,7 +79,7 @@
                 </div>
                 <div class="body">
                     {{--  <canvas id="line_chart" width="400" height="116"></canvas>  --}}
-                    <canvas id="line_chart" height="85"></canvas>
+                    <canvas id="line_chart" height="78"></canvas>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
     
 <!-- ChartJs -->
     <script src="{{ asset('assets/backend/plugins/chartjs/Chart.bundle.js') }}"></script>
-    {{--  <script src="{{ asset('assets/backend/js/pages/charts/chartjs.js') }}"></script>  --}}
+    {{-- <script src="{{ asset('assets/backend/js/pages/charts/chartjs.js') }}"></script>  --}}
     
 <!-- This Chart is for canvas id="myChart"  -->
     <script>

@@ -21,7 +21,7 @@ class CreateReturnProductsTable extends Migration
             $table->date('date');
             $table->string('payment_type');
             $table->unsignedBigInteger('bank_account_id')->nullable();
-            $table->decimal('amount', 9, 4);
+            $table->decimal('amount', 13, 4);
             $table->text('description')->nullable();
             $table->timestamps();
         });

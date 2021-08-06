@@ -9,18 +9,15 @@
 
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
 
-    {{-- <!-- Favicon-->
-    <link rel="icon" href="{{ asset('storage/favicon.ico') }}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="icon" href="{{ asset('/favicon.ico') }}" type="image/x-icon">
 
-    <!-- Font -->
+    {{-- <!-- Font -->
 
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet"> --}}
 
 
 	<!-- Stylesheets -->
-
-	<!-- Favicon-->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
