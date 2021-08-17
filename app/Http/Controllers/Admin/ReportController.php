@@ -195,7 +195,6 @@ class ReportController extends Controller
                         ->select('date', DB::raw('SUM(total_amount) AS amount'), DB::raw('SUM(profit) AS profit'))
                         ->whereBetween('date', [$start_date,  $end_date])
                         ->orderBy('date')
-                        ->orderBy('invoice_no')
                         ->get();
 
         $show_start_date = Carbon::parse($start_date)->format('d F Y');
@@ -227,7 +226,6 @@ class ReportController extends Controller
                         ->select('date', DB::raw('SUM(total_amount) AS amount'))
                         ->whereBetween('date', [$start_date,  $end_date])
                         ->orderBy('date')
-                        ->orderBy('purchase_no')
                         ->get();
 
         $show_start_date = Carbon::parse($start_date)->format('l d F Y');

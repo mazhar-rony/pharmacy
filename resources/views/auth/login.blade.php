@@ -55,8 +55,7 @@
                             <i class="material-icons">email</i>
                         </span>
                         <div class="form-line {{ $errors->has('email') ? 'focused error' : '' }}">
-                            {{-- <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required autocomplete="email" autofocus>  --}}
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="admin@mail.com" required autocomplete="email" autofocus>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required autocomplete="email" autofocus>
                         </div>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -69,8 +68,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line {{ $errors->has('password') ? 'focused error' : '' }}">
-                            {{-- <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password"> --}}
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="password" required autocomplete="current-password">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
                         </div>
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
