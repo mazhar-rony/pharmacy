@@ -34,26 +34,9 @@ CREATE TABLE `bank_account_transactions` (
   PRIMARY KEY (`id`),
   KEY `bank_account_transactions_bank_account_id_foreign` (`bank_account_id`),
   CONSTRAINT `bank_account_transactions_bank_account_id_foreign` FOREIGN KEY (`bank_account_id`) REFERENCES `bank_accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `bank_account_transactions` */
-
-insert  into `bank_account_transactions`(`id`,`bank_account_id`,`transaction_date`,`description`,`deposite`,`withdraw`,`interest`,`balance`,`created_at`,`updated_at`) values 
-(1,2,'2021-06-03','Sold Product of Invoice No INV-202106030002',15000.0000,0.0000,0.0000,35000.0000,'2021-06-03 11:37:13','2021-06-03 11:37:13'),
-(3,2,'2021-06-04','Return Product from Customer',0.0000,25000.0000,0.0000,10000.0000,'2021-06-04 00:58:40','2021-06-04 00:58:40'),
-(4,1,'2021-06-04','Return Product of Invoice No INV-202106030001',0.0000,8000.0000,0.0000,92000.0000,'2021-06-04 01:13:15','2021-06-04 01:13:15'),
-(5,2,'2021-06-05','Given Payment To Mr. Ashik',0.0000,5000.0000,0.0000,5000.0000,'2021-06-05 08:15:19','2021-06-05 08:15:19'),
-(6,2,'2021-06-05','Given Payment To Mr. Ashik of Car Bazar',0.0000,1000.0000,0.0000,4000.0000,'2021-06-05 08:44:19','2021-06-05 08:44:19'),
-(7,1,'2021-06-05','Purchased Product of Purchase No P-2021060502',0.0000,1500.0000,0.0000,90500.0000,'2021-06-05 14:47:38','2021-06-05 14:47:38'),
-(8,1,'2021-06-05','Given Payment of Purchase No P-2021060501 to Mr. Jamal of Gadget & Gear',0.0000,1000.0000,0.0000,89500.0000,'2021-06-05 15:20:54','2021-06-05 15:20:54'),
-(12,3,'2021-06-06','Purchased Product of Purchase No P-2021060601',0.0000,7000.0000,0.0000,43000.0000,'2021-06-05 23:05:57','2021-06-05 23:05:57'),
-(13,2,'2021-06-14','Given Advance Salary to Employee: Mark Zukarbarg',0.0000,3000.0000,0.0000,1000.0000,'2021-06-13 20:02:48','2021-06-13 20:02:48'),
-(14,3,'2021-06-14','Given Bonus Salary to Employee: Imran Hossain',0.0000,3000.0000,0.0000,40000.0000,'2021-06-13 21:02:22','2021-06-13 21:02:22'),
-(15,3,'2021-06-14','Given Bonus Salary for July, 2021 to Employee: Imran Hossain',0.0000,2000.0000,0.0000,38000.0000,'2021-06-13 21:31:00','2021-06-13 21:31:00'),
-(16,3,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,2000.0000,0.0000,36000.0000,'2021-06-13 22:31:27','2021-06-13 22:31:27'),
-(17,3,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,3000.0000,0.0000,33000.0000,'2021-06-13 22:41:42','2021-06-13 22:41:42'),
-(18,1,'2021-06-01','Given Bank Loan EMI To Account No 123456 of Dhaka Bank',0.0000,13000.0000,0.0000,76500.0000,'2021-06-18 03:06:59','2021-06-18 03:06:59'),
-(19,1,'2021-06-19','Given Payment To Mr. Hossain of Square',0.0000,2000.0000,0.0000,74500.0000,'2021-06-19 13:11:00','2021-06-19 13:11:00');
 
 /*Table structure for table `bank_accounts` */
 
@@ -75,14 +58,13 @@ CREATE TABLE `bank_accounts` (
   KEY `bank_accounts_branch_id_foreign` (`branch_id`),
   CONSTRAINT `bank_accounts_bank_id_foreign` FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`) ON DELETE CASCADE,
   CONSTRAINT `bank_accounts_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `bank_branches` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `bank_accounts` */
 
 insert  into `bank_accounts`(`id`,`user_id`,`bank_id`,`branch_id`,`account_type`,`account_name`,`account_number`,`balance`,`created_at`,`updated_at`) values 
-(1,1,1,3,'Current','Imran Hossain','123456',74500.0000,'2021-06-03 11:25:14','2021-06-19 13:11:00'),
-(2,1,3,1,'Current','Adib Hossain','123',1000.0000,'2021-06-03 11:25:50','2021-06-13 20:02:48'),
-(3,1,2,4,'Savings','Adib Hossain','654321',33000.0000,'2021-06-03 11:26:26','2021-06-13 22:41:42');
+(1,2,1,1,'Current','Imran Hossain','123456',200000.0000,'2021-09-07 23:27:18','2021-09-07 23:27:18'),
+(2,2,2,2,'Current','Adib Hossain','654321',100000.0000,'2021-09-07 23:27:51','2021-09-07 23:27:51');
 
 /*Table structure for table `bank_branches` */
 
@@ -107,10 +89,10 @@ CREATE TABLE `bank_branches` (
 /*Data for the table `bank_branches` */
 
 insert  into `bank_branches`(`id`,`bank_id`,`name`,`slug`,`phone`,`city`,`location`,`address`,`created_at`,`updated_at`) values 
-(1,3,'Dhanmondi Branch','dhanmondi-branch','01711111111','Dhaka','Dhanmondi','9/A, Dhanmondi','2021-06-03 11:20:51','2021-06-03 11:20:51'),
-(2,3,'Mohammadpur Branch','mohammadpur-branch','01911111111','Dhaka','Mohammadpur','Asad Gate','2021-06-03 11:21:33','2021-06-03 11:21:33'),
-(3,1,'Head Office','head-office','01711111111','Dhaka','Motijhil','Motijhil','2021-06-03 11:22:35','2021-06-03 11:22:35'),
-(4,2,'Main Branch','main-branch','01911111111','Dhaka','Uttara','House Building','2021-06-03 11:23:21','2021-06-03 11:23:21');
+(1,1,'Gulshan Branch','gulshan-branch','01911111111','Dhaka','Gulshan','Gulshan 2','2021-09-07 23:24:04','2021-09-07 23:24:04'),
+(2,2,'Uttara Branch','uttara-branch','01911111111','Dhaka','Uttara','House Building','2021-09-07 23:24:46','2021-09-07 23:24:46'),
+(3,3,'Main Branch','main-branch','01911111111','Dhaka','Motijhil','Motijhil','2021-09-07 23:25:37','2021-09-07 23:25:37'),
+(4,1,'Dhanmondi Branch','dhanmondi-branch','01712222222','Dhaka','Dhanmondi','dhanmondi','2021-09-07 23:26:26','2021-09-07 23:26:26');
 
 /*Table structure for table `bank_loan_transactions` */
 
@@ -129,16 +111,9 @@ CREATE TABLE `bank_loan_transactions` (
   PRIMARY KEY (`id`),
   KEY `bank_loan_transactions_bank_loan_id_foreign` (`bank_loan_id`),
   CONSTRAINT `bank_loan_transactions_bank_loan_id_foreign` FOREIGN KEY (`bank_loan_id`) REFERENCES `bank_loans` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `bank_loan_transactions` */
-
-insert  into `bank_loan_transactions`(`id`,`bank_loan_id`,`emi_date`,`payment_type`,`bank_account_id`,`emi_no`,`emi_amount`,`created_at`,`updated_at`) values 
-(1,1,'2021-06-04','cash',1,1,5000.0000,'2021-06-18 03:01:27','2021-06-18 03:01:27'),
-(2,1,'2021-06-06','cash',1,2,5000.0000,'2021-06-18 03:01:55','2021-06-18 03:01:55'),
-(3,1,'2021-06-09','cash',1,3,5000.0000,'2021-06-18 03:02:33','2021-06-18 03:02:33'),
-(4,2,'2021-05-08','cash',2,1,13000.0000,'2021-06-18 03:05:25','2021-06-18 03:05:25'),
-(5,2,'2021-06-01','cheque',1,2,13000.0000,'2021-06-18 03:06:59','2021-06-18 03:06:59');
 
 /*Table structure for table `bank_loans` */
 
@@ -166,13 +141,12 @@ CREATE TABLE `bank_loans` (
   KEY `bank_loans_branch_id_foreign` (`branch_id`),
   CONSTRAINT `bank_loans_bank_id_foreign` FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`) ON DELETE CASCADE,
   CONSTRAINT `bank_loans_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `bank_branches` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `bank_loans` */
 
 insert  into `bank_loans`(`id`,`user_id`,`bank_id`,`branch_id`,`account_type`,`account_name`,`account_number`,`loan_date`,`loan_amount`,`emi_amount`,`total_emi`,`emi_given`,`total_paid`,`is_paid`,`created_at`,`updated_at`) values 
-(1,1,3,2,'Savings','Imran Hossain','123456','2021-06-03',50000.0000,5000.0000,12,3,15000.0000,0,'2021-06-03 11:24:24','2021-06-18 03:02:33'),
-(2,1,1,3,'Current','Adib Hossain','123456','2021-04-01',60000.0000,13000.0000,5,2,26000.0000,0,'2021-06-18 03:05:02','2021-06-18 03:06:59');
+(1,2,3,3,'Current','Imran Hossain','123','2021-01-07',50000.0000,4000.0000,15,0,0.0000,0,'2021-09-07 23:29:26','2021-09-07 23:29:26');
 
 /*Table structure for table `banks` */
 
@@ -193,9 +167,9 @@ CREATE TABLE `banks` (
 /*Data for the table `banks` */
 
 insert  into `banks`(`id`,`name`,`slug`,`phone`,`address`,`created_at`,`updated_at`) values 
-(1,'Dhaka Bank','dhaka-bank','01711111111','Dhaka','2021-06-03 11:19:01','2021-06-03 11:19:01'),
-(2,'Prime Bank','prime-bank','01911111111','Dhaka','2021-06-03 11:19:19','2021-06-03 11:19:19'),
-(3,'City Bank','city-bank','01911111111','Dhaka','2021-06-03 11:19:44','2021-06-03 11:19:44');
+(1,'Dhaka Bank','dhaka-bank','01711111111','Dhaka','2021-09-07 23:22:38','2021-09-07 23:22:38'),
+(2,'Prime Bank','prime-bank','01711111111','Dhaka','2021-09-07 23:22:52','2021-09-07 23:22:52'),
+(3,'Sonali Bank','sonali-bank','01711111111','Dhaka','2021-09-07 23:23:13','2021-09-07 23:23:13');
 
 /*Table structure for table `cashes` */
 
@@ -210,67 +184,31 @@ CREATE TABLE `cashes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `cashes` */
 
 insert  into `cashes`(`id`,`date`,`description`,`income`,`expense`,`created_at`,`updated_at`) values 
-(2,'2021-06-03','Sold Product of Invoice No INV-202106030001',20000.0000,0.0000,'2021-06-03 11:35:30','2021-06-03 11:35:30'),
-(3,'2021-06-03','Taken Due Payment of INV-202106030001 From Mr. Ashik',3000.0000,0.0000,'2021-06-03 13:05:10','2021-06-03 13:05:10'),
-(4,'2021-06-03','Taken Due Payment of INV-202106030002 From Mr. John',5500.0000,0.0000,'2021-06-03 13:06:48','2021-06-03 13:06:48'),
-(7,'2021-06-04','Return Product from Customer',0.0000,3000.0000,'2021-06-04 00:53:00','2021-06-04 00:53:00'),
-(8,'2021-06-04','Return Product of Invoice No INV-202106030002',0.0000,3000.0000,'2021-06-04 00:54:37','2021-06-04 00:54:37'),
-(9,'2021-06-04','Return Product from Mr. Ashik of Beximco',0.0000,1000.0000,'2021-06-04 01:11:05','2021-06-04 01:11:05'),
-(10,'2021-06-05','Taken Due Payment of INV-202106030001 From Mr. Ashik',1000.0000,0.0000,'2021-06-05 08:12:15','2021-06-05 08:12:15'),
-(11,'2021-06-05','Given Payment To Mr. Ashik',0.0000,20000.0000,'2021-06-05 08:14:42','2021-06-05 08:14:42'),
-(12,'2021-06-05','Given Payment To Mr. Ashik of Car Bazar',0.0000,1000.0000,'2021-06-05 08:43:32','2021-06-05 08:43:32'),
-(13,'2021-06-05','Taken Due Payment of INV-202106030001 From Mr. Ashik of Beximco',30000.0000,0.0000,'2021-06-05 08:47:40','2021-06-05 08:47:40'),
-(14,'2021-06-05','Purchased Product of Purchase No P-2021060501',0.0000,7000.0000,'2021-06-05 14:29:39','2021-06-05 14:29:39'),
-(15,'2021-06-05','Given Payment of P-2021060502 to Mr. Kamal of Hatil',0.0000,500.0000,'2021-06-05 15:10:15','2021-06-05 15:10:15'),
-(16,'2021-06-05','Sold Product of Invoice No INV-202106050001',50000.0000,0.0000,'2021-06-05 15:14:34','2021-06-05 15:14:34'),
-(17,'2021-06-05','Given Payment of Purchase No P-2021060501 to Mr. Jamal of Gadget & Gear',0.0000,2000.0000,'2021-06-05 15:18:24','2021-06-05 15:18:24'),
-(18,'2021-06-05','Given Payment To Mr. Kamal of Hatil',0.0000,5000.0000,'2021-06-05 15:22:02','2021-06-05 15:22:02'),
-(25,'2021-06-06','Sold Product of Invoice No INV-202106060001',30000.0000,0.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(26,'2021-06-14','Given Advance Salary to Employee Imran Hossain',0.0000,5000.0000,'2021-06-13 20:00:53','2021-06-13 20:00:53'),
-(27,'2021-06-14','Given Bonus Salary to Employee: Mark Zukarbarg',0.0000,1000.0000,'2021-06-13 21:00:40','2021-06-13 21:00:40'),
-(28,'2021-06-14','Given Bonus Salary for April, 2021 to Employee: Mark Zukarbarg',0.0000,1000.0000,'2021-06-13 21:29:06','2021-06-13 21:29:06'),
-(29,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,4000.0000,'2021-06-13 22:28:02','2021-06-13 22:28:02'),
-(30,'2021-06-14','Given Salary for June, 2021 to Employee: Imran Hossain',0.0000,3000.0000,'2021-06-13 22:38:47','2021-06-13 22:38:47'),
-(31,'2021-06-14','Given Salary for July, 2021 to Employee: Imran Hossain',0.0000,5000.0000,'2021-06-13 22:43:49','2021-06-13 22:43:49'),
-(33,'2021-06-14','Given Advance Salary to Employee: Bill Gates',0.0000,5000.0000,'2021-06-14 03:02:30','2021-06-14 03:02:30'),
-(34,'2021-06-14','Given Salary for June, 2021 to Employee: Bill Gates',0.0000,6000.0000,'2021-06-14 03:59:40','2021-06-14 03:59:40'),
-(35,'2021-06-14','Given Salary for June, 2021 to Employee: Bill Gates',0.0000,4000.0000,'2021-06-14 04:01:09','2021-06-14 04:01:09'),
-(36,'2021-06-05','Sold Product of Invoice No INV-202106050002',13000.0000,0.0000,'2021-06-16 02:47:05','2021-06-16 02:47:05'),
-(37,'2021-06-17','Return Product RT-8 from Mr. Ashik of Beximco',0.0000,30000.0000,'2021-06-16 20:26:34','2021-06-16 20:26:34'),
-(38,'2021-06-05','checking...',0.0000,5000.0000,NULL,NULL),
-(39,'2021-06-05','checking 2',5000.0000,0.0000,NULL,NULL),
-(40,'2021-06-17','Sold Product of Invoice No INV-202106170001',14000.0000,0.0000,'2021-06-17 17:32:43','2021-06-17 17:32:43'),
-(41,'2021-06-10','ProprietorMazhar Deposited to Cash',5000.0000,0.0000,'2021-06-17 22:31:58','2021-06-17 22:31:58'),
-(42,'2021-06-02','ProprietorMazhar Withdrawn from Cash for: Car Oil',0.0000,2000.0000,'2021-06-17 22:32:31','2021-06-17 22:32:31'),
-(43,'2021-06-09','ProprietorMazhar Withdrawn from Cash for: Shopping',0.0000,3000.0000,'2021-06-17 22:33:38','2021-06-17 22:33:38'),
-(44,'2021-06-01','ProprietorMazhar Withdrawn from Cash for: House Rent',0.0000,15000.0000,'2021-06-17 22:34:08','2021-06-17 22:34:08'),
-(45,'2021-06-10','ProprietorImran Hossain Withdrawn from Cash for: Birthday Party',0.0000,5000.0000,'2021-06-17 22:35:06','2021-06-17 22:35:06'),
-(46,'2021-06-05','ProprietorImran Hossain Withdrawn from Cash for: Launch',0.0000,2000.0000,'2021-06-17 22:35:36','2021-06-17 22:35:36'),
-(47,'2021-06-12','ProprietorImran Hossain Withdrawn from Cash for: Paper Bill',0.0000,500.0000,'2021-06-17 22:36:06','2021-06-17 22:36:06'),
-(48,'2021-06-14','ProprietorImran Hossain Withdrawn from Cash for: Mobile Recharge',0.0000,1200.0000,'2021-06-17 22:36:42','2021-06-17 22:36:42'),
-(49,'2021-06-02','Cost for: Paper Bill',0.0000,200.0000,'2021-06-17 23:32:13','2021-06-17 23:32:13'),
-(50,'2021-06-05','Cost for: Internet Bill',0.0000,500.0000,'2021-06-17 23:33:07','2021-06-17 23:33:07'),
-(51,'2021-06-09','Cost for: Current Bill',0.0000,1700.0000,'2021-06-17 23:33:59','2021-06-17 23:33:59'),
-(52,'2021-06-15','Cost for: Refreshment',0.0000,150.0000,'2021-06-17 23:34:49','2021-06-17 23:34:49'),
-(53,'2021-06-01','Cost for: Charity',0.0000,300.0000,'2021-06-17 23:36:44','2021-06-17 23:36:44'),
-(54,'2021-06-04','Given Bank Loan EMI To Account No 123456 of City Bank',0.0000,5000.0000,'2021-06-18 03:01:27','2021-06-18 03:01:27'),
-(55,'2021-06-06','Given Bank Loan EMI To Account No 123456 of City Bank',0.0000,5000.0000,'2021-06-18 03:01:55','2021-06-18 03:01:55'),
-(56,'2021-06-09','Given Bank Loan EMI To Account No 123456 of City Bank',0.0000,5000.0000,'2021-06-18 03:02:33','2021-06-18 03:02:33'),
-(57,'2021-05-08','Given Bank Loan EMI To Account No 123456 of Dhaka Bank',0.0000,13000.0000,'2021-06-18 03:05:25','2021-06-18 03:05:25'),
-(58,'2021-06-18','Given Advance Salary to Employee: Mark Zukarbarg',0.0000,2000.0000,'2021-06-18 03:46:36','2021-06-18 03:46:36'),
-(59,'2021-06-19','Sold Product of Invoice No INV-202106190001',5000.0000,0.0000,'2021-06-19 02:31:23','2021-06-19 02:31:23'),
-(60,'2021-06-24','Sold Product of Invoice No INV-202106240001',7000.0000,0.0000,'2021-06-24 16:15:25','2021-06-24 16:15:25'),
-(61,'2021-06-24','Taken Due Payment of Invoice No INV-202106240001 From Take Away Customer of Unknown',800.0000,0.0000,'2021-06-24 16:17:43','2021-06-24 16:17:43'),
-(62,'2021-06-24','Given Advance Salary to Employee: Mr. Ashik',0.0000,5000.0000,'2021-06-24 16:23:17','2021-06-24 16:23:17'),
-(63,'2021-06-24','Given Salary for June, 2021 to Employee: Mr. Ashik',0.0000,6000.0000,'2021-06-24 16:23:54','2021-06-24 16:23:54'),
-(64,'2021-06-25','Sold Product of Invoice No INV-202106250001',20500.0000,0.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
-(65,'2021-06-25','Taken Due Payment of Invoice No INV-202106250001 From Take Away Customer of Unknown',500.0000,0.0000,'2021-06-25 00:00:10','2021-06-25 00:00:10'),
-(66,'2021-06-26','Sold Product of Invoice No INV-202106260001',5000.0000,0.0000,'2021-06-26 01:00:03','2021-06-26 01:00:03');
+(1,'2021-01-02','Proprietor Imran Hossain Deposited to Cash',200000.0000,0.0000,'2021-09-07 23:05:27','2021-09-07 23:05:27'),
+(2,'2021-01-03','Proprietor Adib Hossain Deposited to Cash',100000.0000,0.0000,'2021-09-07 23:05:52','2021-09-07 23:05:52'),
+(3,'2021-02-01','Purchased Product of Purchase No P-2021020101',0.0000,52500.0000,'2021-09-08 00:26:41','2021-09-08 00:26:41'),
+(4,'2021-02-17','Purchased Product of Purchase No P-2021021701',0.0000,100000.0000,'2021-09-08 00:32:12','2021-09-08 00:32:12'),
+(5,'2021-04-08','Purchased Product of Purchase No P-2021040801',0.0000,30000.0000,'2021-09-08 00:33:40','2021-09-08 00:33:40'),
+(6,'2021-09-08','Given Payment of Purchase No P-2021040801 to Mr. Ahmed of Hatil',0.0000,4000.0000,'2021-09-08 00:34:52','2021-09-08 00:34:52'),
+(7,'2021-01-17','Sold Product of Invoice No INV-202101170001',5000.0000,0.0000,'2021-09-08 00:39:35','2021-09-08 00:39:35'),
+(8,'2021-03-09','Sold Product of Invoice No INV-202103090001',5500.0000,0.0000,'2021-09-08 00:40:59','2021-09-08 00:40:59'),
+(9,'2021-03-10','Sold Product of Invoice No INV-202103100001',8000.0000,0.0000,'2021-09-08 00:42:09','2021-09-08 00:42:09'),
+(10,'2021-02-14','Sold Product of Invoice No INV-202102140001',4000.0000,0.0000,'2021-09-08 00:43:45','2021-09-08 00:43:45'),
+(11,'2021-04-14','Sold Product of Invoice No INV-202104140001',10000.0000,0.0000,'2021-09-08 00:44:57','2021-09-08 00:44:57'),
+(12,'2021-05-08','Sold Product of Invoice No INV-202105080001',5000.0000,0.0000,'2021-09-08 00:46:50','2021-09-08 00:46:50'),
+(13,'2021-06-15','Sold Product of Invoice No INV-202106150001',13000.0000,0.0000,'2021-09-08 00:48:17','2021-09-08 00:48:17'),
+(14,'2021-07-15','Sold Product of Invoice No INV-202107150001',8000.0000,0.0000,'2021-09-08 00:50:31','2021-09-08 00:50:31'),
+(15,'2021-08-10','Sold Product of Invoice No INV-202108100001',10000.0000,0.0000,'2021-09-08 00:52:16','2021-09-08 00:52:16'),
+(16,'2021-09-08','Taken Due Payment of Invoice No INV-202108100001 From Mr. Ashik of Market',3000.0000,0.0000,'2021-09-08 00:54:06','2021-09-08 00:54:06'),
+(17,'2021-02-10','Purchased Product of Purchase No P-2021021001',0.0000,54000.0000,'2021-09-08 00:55:58','2021-09-08 00:55:58'),
+(18,'2021-01-08','Given Advance Salary to Employee: Tanvir',0.0000,10000.0000,'2021-09-08 00:57:08','2021-09-08 00:57:08'),
+(19,'2021-03-01','Given Salary for February, 2021 to Employee: Tanvir',0.0000,15000.0000,'2021-09-08 00:58:24','2021-09-08 00:58:24'),
+(20,'2021-03-01','Given Salary for February, 2021 to Employee: Tomal',0.0000,10000.0000,'2021-09-08 01:02:54','2021-09-08 01:02:54');
 
 /*Table structure for table `categories` */
 
@@ -289,9 +227,9 @@ CREATE TABLE `categories` (
 /*Data for the table `categories` */
 
 insert  into `categories`(`id`,`name`,`slug`,`created_at`,`updated_at`) values 
-(1,'Vehicle','vehicle','2021-06-03 11:00:27','2021-06-03 11:00:27'),
-(2,'Furniture','furniture','2021-06-03 11:00:39','2021-06-03 11:00:39'),
-(3,'Electronics','electronics','2021-06-03 11:00:48','2021-06-03 11:00:48');
+(1,'Electronics','electronics','2021-09-07 23:00:28','2021-09-07 23:00:28'),
+(2,'Vehicle','vehicle','2021-09-07 23:00:39','2021-09-07 23:00:39'),
+(3,'Furniture','furniture','2021-09-07 23:00:51','2021-09-07 23:00:51');
 
 /*Table structure for table `creditor_payments` */
 
@@ -309,16 +247,12 @@ CREATE TABLE `creditor_payments` (
   PRIMARY KEY (`id`),
   KEY `creditor_payments_creditor_id_foreign` (`creditor_id`),
   CONSTRAINT `creditor_payments_creditor_id_foreign` FOREIGN KEY (`creditor_id`) REFERENCES `creditors` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `creditor_payments` */
 
 insert  into `creditor_payments`(`id`,`creditor_id`,`payment_date`,`payment_type`,`bank_account_id`,`paid`,`created_at`,`updated_at`) values 
-(1,3,'2021-06-05','cash',NULL,500.0000,'2021-06-05 15:10:15','2021-06-05 15:10:15'),
-(2,2,'2021-06-05','cash',NULL,2000.0000,'2021-06-05 15:18:24','2021-06-05 15:18:24'),
-(3,2,'2021-06-05','cheque',1,1000.0000,'2021-06-05 15:20:54','2021-06-05 15:20:54'),
-(4,4,'2021-06-05','cash',NULL,5000.0000,'2021-06-05 15:22:02','2021-06-05 15:22:02'),
-(5,15,'2021-06-19','cheque',1,2000.0000,'2021-06-19 13:11:00','2021-06-19 13:11:00');
+(1,1,'2021-09-08','cash',NULL,4000.0000,'2021-09-08 00:34:52','2021-09-08 00:34:52');
 
 /*Table structure for table `creditors` */
 
@@ -340,16 +274,12 @@ CREATE TABLE `creditors` (
   PRIMARY KEY (`id`),
   KEY `creditors_purchase_id_foreign` (`purchase_id`),
   CONSTRAINT `creditors_purchase_id_foreign` FOREIGN KEY (`purchase_id`) REFERENCES `purchases` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `creditors` */
 
 insert  into `creditors`(`id`,`supplier_id`,`purchase_id`,`description`,`credit_date`,`credit_amount`,`paid`,`consession`,`due`,`is_paid`,`created_at`,`updated_at`) values 
-(2,2,3,'P-2021060501','2021-06-05',3800.0000,3000.0000,0.0000,800.0000,0,'2021-06-05 14:29:39','2021-06-05 15:20:54'),
-(3,1,4,'P-2021060502','2021-06-05',500.0000,500.0000,0.0000,0.0000,1,'2021-06-05 14:47:37','2021-06-05 15:10:15'),
-(4,1,NULL,'took loan','2021-06-05',20000.0000,5000.0000,0.0000,15000.0000,0,'2021-06-05 15:17:52','2021-06-05 15:22:02'),
-(14,1,14,'P-2021060601','2021-06-06',12000.0000,0.0000,0.0000,12000.0000,0,'2021-06-05 23:05:57','2021-06-05 23:05:57'),
-(15,5,NULL,'Bought Medicine','2021-01-16',2000.0000,2000.0000,0.0000,0.0000,1,'2021-06-16 06:01:44','2021-06-19 13:11:00');
+(1,4,3,'P-2021040801','2021-04-08',7500.0000,4000.0000,0.0000,3500.0000,0,'2021-09-08 00:33:40','2021-09-08 00:34:52');
 
 /*Table structure for table `customers` */
 
@@ -370,9 +300,9 @@ CREATE TABLE `customers` (
 /*Data for the table `customers` */
 
 insert  into `customers`(`id`,`name`,`organization`,`phone`,`address`,`created_at`,`updated_at`) values 
-(1,'Mr. John','Market','01911111111','Motijhil, Dhaka','2021-06-03 11:08:07','2021-06-03 11:08:07'),
-(2,'Mr. Ashik','Beximco','01711111111','Dhanmondi, Dhaka','2021-06-03 11:08:52','2021-06-03 11:08:52'),
-(3,'Take Away Customer','Unknown','01911111111','Dhaka','2021-06-03 11:09:44','2021-06-03 11:09:44');
+(1,'Mr. Ashik','Market','01711111111','Dhaka','2021-09-07 23:14:03','2021-09-07 23:14:03'),
+(2,'Mr. John','Save the Children','01711111111','Dhaka','2021-09-07 23:14:47','2021-09-07 23:14:47'),
+(3,'Mr. Hossain','Unknown','01711111111','Dhaka','2021-09-07 23:15:30','2021-09-07 23:15:30');
 
 /*Table structure for table `debtor_payments` */
 
@@ -390,15 +320,12 @@ CREATE TABLE `debtor_payments` (
   PRIMARY KEY (`id`),
   KEY `debtor_payments_debtor_id_foreign` (`debtor_id`),
   CONSTRAINT `debtor_payments_debtor_id_foreign` FOREIGN KEY (`debtor_id`) REFERENCES `debtors` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `debtor_payments` */
 
 insert  into `debtor_payments`(`id`,`debtor_id`,`payment_date`,`payment_type`,`bank_account_id`,`paid`,`created_at`,`updated_at`) values 
-(1,2,'2021-06-05','cash',NULL,1000.0000,'2021-06-05 08:12:15','2021-06-05 08:12:15'),
-(2,2,'2021-06-05','cash',NULL,1000.0000,'2021-06-05 08:47:40','2021-06-05 08:47:40'),
-(3,6,'2021-06-24','cash',NULL,800.0000,'2021-06-24 16:17:43','2021-06-24 16:17:43'),
-(4,7,'2021-06-25','cash',NULL,500.0000,'2021-06-25 00:00:10','2021-06-25 00:00:10');
+(1,1,'2021-09-08','cash',NULL,3000.0000,'2021-09-08 00:54:06','2021-09-08 00:54:06');
 
 /*Table structure for table `debtors` */
 
@@ -420,17 +347,12 @@ CREATE TABLE `debtors` (
   PRIMARY KEY (`id`),
   KEY `debtors_invoice_id_foreign` (`invoice_id`),
   CONSTRAINT `debtors_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `debtors` */
 
 insert  into `debtors`(`id`,`customer_id`,`invoice_id`,`description`,`debit_date`,`debit_amount`,`paid`,`consession`,`due`,`is_paid`,`created_at`,`updated_at`) values 
-(2,2,2,'INV-202106030001','2021-06-03',7000.0000,5000.0000,0.0000,2000.0000,0,'2021-06-03 11:35:30','2021-06-05 08:47:40'),
-(3,1,3,'INV-202106030002','2021-06-03',6000.0000,5500.0000,500.0000,0.0000,1,'2021-06-03 11:37:13','2021-06-03 13:06:48'),
-(4,1,5,'INV-202106060001','2021-06-06',5000.0000,0.0000,0.0000,5000.0000,0,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(5,1,NULL,'House Rent','2021-04-01',30000.0000,0.0000,0.0000,30000.0000,0,'2021-06-16 06:04:04','2021-06-16 06:04:04'),
-(6,3,9,'INV-202106240001','2021-06-24',800.0000,800.0000,0.0000,0.0000,1,'2021-06-24 16:15:24','2021-06-24 16:17:43'),
-(7,3,10,'INV-202106250001','2021-06-25',500.0000,500.0000,0.0000,0.0000,1,'2021-06-24 23:56:52','2021-06-25 00:00:10');
+(1,1,9,'INV-202108100001','2021-08-10',5000.0000,3000.0000,0.0000,2000.0000,0,'2021-09-08 00:52:16','2021-09-08 00:54:06');
 
 /*Table structure for table `employee_payments` */
 
@@ -452,16 +374,13 @@ CREATE TABLE `employee_payments` (
   PRIMARY KEY (`id`),
   KEY `employee_payments_employee_id_foreign` (`employee_id`),
   CONSTRAINT `employee_payments_employee_id_foreign` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `employee_payments` */
 
 insert  into `employee_payments`(`id`,`employee_id`,`year`,`month`,`date`,`payment_type`,`bank_account_id`,`salary`,`advance_deduct`,`bonus`,`created_at`,`updated_at`) values 
-(1,2,2021,6,'2021-06-14','cash',NULL,0.0000,0.0000,1000.0000,'2021-06-13 21:00:40','2021-06-13 21:00:40'),
-(3,2,2021,4,'2021-06-14','cash',NULL,0.0000,0.0000,1000.0000,'2021-06-13 21:29:06','2021-06-13 21:29:06'),
-(13,3,2021,6,'2021-06-14','cash',NULL,6000.0000,0.0000,0.0000,'2021-06-14 03:59:40','2021-06-14 03:59:40'),
-(14,3,2021,6,'2021-06-14','cash',NULL,4000.0000,2000.0000,0.0000,'2021-06-14 04:01:09','2021-06-14 04:01:09'),
-(15,3,2021,6,'2021-06-14','cheque',3,0.0000,3000.0000,0.0000,'2021-06-14 04:01:57','2021-06-14 04:01:57');
+(1,1,2021,2,'2021-03-01','cash',NULL,15000.0000,5000.0000,0.0000,'2021-09-08 00:58:24','2021-09-08 00:58:24'),
+(2,2,2021,2,'2021-03-01','cash',NULL,10000.0000,0.0000,0.0000,'2021-09-08 01:02:54','2021-09-08 01:02:54');
 
 /*Table structure for table `employees` */
 
@@ -480,14 +399,13 @@ CREATE TABLE `employees` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `employees` */
 
 insert  into `employees`(`id`,`name`,`designation`,`address`,`phone`,`image`,`advance`,`advance_date`,`salary`,`created_at`,`updated_at`) values 
-(2,'Mark Zukarbarg','Peon','keranigonj','01911111111','mark-zukarbarg-2021-06-25-60d56d2be6d59.png',5000.0000,'2021-06-18',5000.0000,'2021-06-13 18:54:54','2021-06-25 05:44:12'),
-(3,'Bill Gates','Manager','Dhaka','01712222222','bill-gates-2021-06-25-60d56d1a4d3a1.jpg',0.0000,'2021-06-14',15000.0000,'2021-06-13 21:54:56','2021-06-25 05:43:54'),
-(6,'Zayn','Executive','Dhaka','01711111111','default.png',0.0000,NULL,16000.0000,'2021-06-25 05:17:33','2021-06-25 05:17:33');
+(1,'Tanvir','Manager','Dhaka','01711111111','tanvir-2021-09-07-61379fb62789a.jpg',5000.0000,'2021-01-08',20000.0000,'2021-09-07 23:17:33','2021-09-08 00:58:24'),
+(2,'Tomal','Executive','Dhaka','01711111111','tomal-2021-09-07-61379fa56ef74.jpg',0.0000,NULL,12000.0000,'2021-09-07 23:18:46','2021-09-07 23:21:41');
 
 /*Table structure for table `invoice_details` */
 
@@ -498,43 +416,32 @@ CREATE TABLE `invoice_details` (
   `invoice_id` bigint(20) unsigned NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `cost` decimal(9,4) NOT NULL,
-  `selling_price` decimal(9,4) NOT NULL,
+  `cost` decimal(13,4) NOT NULL,
+  `selling_price` decimal(13,4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `invoice_details_invoice_id_foreign` (`invoice_id`),
   CONSTRAINT `invoice_details_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `invoice_details` */
 
 insert  into `invoice_details`(`id`,`invoice_id`,`product_id`,`quantity`,`cost`,`selling_price`,`created_at`,`updated_at`) values 
-(4,2,1,2,1000.0000,2000.0000,'2021-06-03 11:35:30','2021-06-03 11:35:30'),
-(5,2,2,1,5000.0000,8000.0000,'2021-06-03 11:35:30','2021-06-03 11:35:30'),
-(6,2,4,1,10000.0000,15000.0000,'2021-06-03 11:35:30','2021-06-03 11:35:30'),
-(7,3,6,3,500.0000,1000.0000,'2021-06-03 11:37:13','2021-06-03 11:37:13'),
-(8,3,7,1,1000.0000,2000.0000,'2021-06-03 11:37:13','2021-06-03 11:37:13'),
-(9,3,5,2,5000.0000,8000.0000,'2021-06-03 11:37:13','2021-06-03 11:37:13'),
-(10,4,1,3,1000.0000,5000.0000,'2021-06-05 15:14:34','2021-06-05 15:14:34'),
-(11,5,1,2,1000.0000,2000.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(12,5,2,1,4493.1556,5000.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(13,5,3,1,2000.0000,3000.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(14,5,8,2,1000.0000,1500.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(15,5,6,2,500.0000,1000.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(16,5,4,2,10000.0000,7000.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(17,5,7,1,1000.0000,4000.0000,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(18,6,1,2,1000.0000,1500.0000,'2021-06-16 02:47:05','2021-06-16 02:47:05'),
-(19,6,2,2,4493.1556,5000.0000,'2021-06-16 02:47:05','2021-06-16 02:47:05'),
-(20,7,6,3,500.0000,700.0000,'2021-06-17 17:32:43','2021-06-17 17:32:43'),
-(21,7,4,1,10000.0000,12000.0000,'2021-06-17 17:32:43','2021-06-17 17:32:43'),
-(22,8,3,1,2000.0000,5000.0000,'2021-06-19 02:31:23','2021-06-19 02:31:23'),
-(23,9,1,2,1000.0000,1000.0000,'2021-06-24 16:15:25','2021-06-24 16:15:25'),
-(24,9,7,4,1000.0000,1500.0000,'2021-06-24 16:15:25','2021-06-24 16:15:25'),
-(25,10,6,3,500.0000,1000.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
-(26,10,7,1,1000.0000,2000.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
-(27,10,5,2,5000.0000,8000.0000,'2021-06-24 23:56:52','2021-06-24 23:56:52'),
-(28,11,3,1,2000.0000,5000.0000,'2021-06-26 01:00:03','2021-06-26 01:00:03');
+(1,1,1,1,2000.0000,3000.0000,'2021-09-08 00:39:35','2021-09-08 00:39:35'),
+(2,1,2,2,500.0000,1000.0000,'2021-09-08 00:39:35','2021-09-08 00:39:35'),
+(3,2,7,1,1000.0000,2500.0000,'2021-09-08 00:40:59','2021-09-08 00:40:59'),
+(4,2,8,3,500.0000,1000.0000,'2021-09-08 00:40:59','2021-09-08 00:40:59'),
+(5,3,5,1,5000.0000,8000.0000,'2021-09-08 00:42:09','2021-09-08 00:42:09'),
+(6,4,9,1,1000.0000,2000.0000,'2021-09-08 00:43:45','2021-09-08 00:43:45'),
+(7,4,8,2,500.0000,1000.0000,'2021-09-08 00:43:45','2021-09-08 00:43:45'),
+(8,5,5,1,5000.0000,10000.0000,'2021-09-08 00:44:57','2021-09-08 00:44:57'),
+(9,6,6,1,2000.0000,5000.0000,'2021-09-08 00:46:50','2021-09-08 00:46:50'),
+(10,7,5,1,5000.0000,10000.0000,'2021-09-08 00:48:17','2021-09-08 00:48:17'),
+(11,7,6,1,2000.0000,3000.0000,'2021-09-08 00:48:17','2021-09-08 00:48:17'),
+(12,8,1,2,2000.0000,3000.0000,'2021-09-08 00:50:31','2021-09-08 00:50:31'),
+(13,8,2,2,500.0000,1000.0000,'2021-09-08 00:50:31','2021-09-08 00:50:31'),
+(14,9,6,3,2000.0000,5000.0000,'2021-09-08 00:52:16','2021-09-08 00:52:16');
 
 /*Table structure for table `invoices` */
 
@@ -548,32 +455,31 @@ CREATE TABLE `invoices` (
   `date` date NOT NULL,
   `payment_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bank_account_id` bigint(20) unsigned DEFAULT NULL,
-  `amount` decimal(9,4) NOT NULL,
-  `discount` decimal(9,4) NOT NULL DEFAULT 0.0000,
-  `total_amount` decimal(9,4) NOT NULL,
-  `paid` decimal(9,4) NOT NULL,
-  `due` decimal(9,4) NOT NULL,
-  `profit` decimal(9,4) NOT NULL,
+  `amount` decimal(13,4) NOT NULL,
+  `discount` decimal(13,4) NOT NULL DEFAULT 0.0000,
+  `total_amount` decimal(13,4) NOT NULL,
+  `paid` decimal(13,4) NOT NULL,
+  `due` decimal(13,4) NOT NULL,
+  `profit` decimal(13,4) NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_paid` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Pending,1=Paid',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `invoices` */
 
 insert  into `invoices`(`id`,`user_id`,`customer_id`,`invoice_no`,`date`,`payment_type`,`bank_account_id`,`amount`,`discount`,`total_amount`,`paid`,`due`,`profit`,`description`,`is_paid`,`created_at`,`updated_at`) values 
-(2,1,2,202106030001,'2021-05-03','cash',NULL,27000.0000,0.0000,27000.0000,25000.0000,2000.0000,10000.0000,'cashh',0,'2021-06-03 11:35:30','2021-06-05 08:47:40'),
-(3,1,1,202106030002,'2021-06-03','cheque',2,21000.0000,0.0000,21000.0000,20500.0000,0.0000,8000.0000,'chkkkkk',1,'2021-06-03 11:37:13','2021-06-03 13:06:48'),
-(4,1,3,202106050001,'2021-06-05','cash',NULL,15000.0000,0.0000,15000.0000,15000.0000,0.0000,12000.0000,NULL,1,'2021-06-05 15:14:34','2021-06-05 15:14:34'),
-(5,1,1,202106060001,'2021-03-06','cash',NULL,35000.0000,0.0000,35000.0000,30000.0000,5000.0000,12506.8444,'big data',0,'2021-06-06 01:14:44','2021-06-06 01:14:44'),
-(6,1,3,202106050002,'2021-06-05','cash',NULL,13000.0000,0.0000,13000.0000,13000.0000,0.0000,2013.6888,NULL,1,'2021-06-16 02:47:05','2021-06-16 02:47:05'),
-(7,1,2,202106170001,'2021-04-17','cash',NULL,14100.0000,100.0000,14000.0000,14000.0000,0.0000,2500.0000,'test',1,'2021-06-17 17:32:43','2021-06-17 17:32:43'),
-(8,1,3,202106190001,'2021-02-19','cash',NULL,5000.0000,0.0000,5000.0000,5000.0000,0.0000,3000.0000,NULL,1,'2021-06-19 02:31:23','2021-06-19 02:31:23'),
-(9,1,3,202106240001,'2021-06-24','cash',NULL,8000.0000,200.0000,7800.0000,7800.0000,0.0000,1800.0000,NULL,1,'2021-06-24 16:15:24','2021-06-24 16:17:43'),
-(10,1,3,202106250001,'2021-06-25','cash',NULL,21000.0000,0.0000,21000.0000,21000.0000,0.0000,8500.0000,NULL,1,'2021-06-24 23:56:52','2021-06-25 00:00:10'),
-(11,1,3,202106260001,'2021-06-26','cash',NULL,5000.0000,0.0000,5000.0000,5000.0000,0.0000,3000.0000,NULL,1,'2021-06-26 01:00:02','2021-06-26 01:00:02');
+(1,2,3,202101170001,'2021-01-17','cash',NULL,5000.0000,0.0000,5000.0000,5000.0000,0.0000,2000.0000,NULL,1,'2021-09-08 00:39:35','2021-09-08 00:39:35'),
+(2,2,3,202103090001,'2021-03-09','cash',NULL,5500.0000,0.0000,5500.0000,5500.0000,0.0000,3000.0000,NULL,1,'2021-09-08 00:40:59','2021-09-08 00:40:59'),
+(3,2,2,202103100001,'2021-03-10','cash',NULL,8000.0000,0.0000,8000.0000,8000.0000,0.0000,3000.0000,NULL,1,'2021-09-08 00:42:09','2021-09-08 00:42:09'),
+(4,2,3,202102140001,'2021-02-14','cash',NULL,4000.0000,0.0000,4000.0000,4000.0000,0.0000,2000.0000,NULL,1,'2021-09-08 00:43:45','2021-09-08 00:43:45'),
+(5,2,1,202104140001,'2021-04-14','cash',NULL,10000.0000,0.0000,10000.0000,10000.0000,0.0000,5000.0000,NULL,1,'2021-09-08 00:44:57','2021-09-08 00:44:57'),
+(6,2,1,202105080001,'2021-05-08','cash',NULL,5000.0000,0.0000,5000.0000,5000.0000,0.0000,3000.0000,NULL,1,'2021-09-08 00:46:50','2021-09-08 00:46:50'),
+(7,2,2,202106150001,'2021-06-15','cash',NULL,13000.0000,0.0000,13000.0000,13000.0000,0.0000,6000.0000,NULL,1,'2021-09-08 00:48:17','2021-09-08 00:48:17'),
+(8,2,3,202107150001,'2021-07-15','cash',NULL,8000.0000,0.0000,8000.0000,8000.0000,0.0000,3000.0000,NULL,1,'2021-09-08 00:50:31','2021-09-08 00:50:31'),
+(9,2,1,202108100001,'2021-08-10','cash',NULL,15000.0000,0.0000,15000.0000,13000.0000,2000.0000,9000.0000,NULL,0,'2021-09-08 00:52:16','2021-09-08 00:54:06');
 
 /*Table structure for table `migrations` */
 
@@ -584,11 +490,12 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `migrations` */
 
 insert  into `migrations`(`id`,`migration`,`batch`) values 
+(1,'2014_10_12_000000_create_users_table',1),
 (2,'2014_10_12_100000_create_password_resets_table',1),
 (3,'2021_02_08_223444_create_roles_table',1),
 (4,'2021_02_13_232642_create_categories_table',1),
@@ -602,22 +509,21 @@ insert  into `migrations`(`id`,`migration`,`batch`) values
 (12,'2021_04_02_105055_create_customers_table',1),
 (13,'2021_04_20_230914_create_bank_account_transactions_table',1),
 (14,'2021_04_21_014840_create_cashes_table',1),
-(17,'2021_05_04_203537_create_debtors_table',1),
-(19,'2021_05_09_202601_create_office_expenses_table',1),
-(20,'2021_05_09_232846_create_proprietors_table',1),
-(21,'2021_05_10_010611_create_proprietor_transactions_table',1),
-(22,'2021_05_10_023123_create_bank_loans_table',1),
-(25,'2021_05_04_203752_create_debtor_payments_table',2),
-(26,'2021_05_21_024941_create_bank_loan_transactions_table',2),
-(30,'2021_06_03_145109_create_return_products_table',3),
-(31,'2021_06_03_193114_create_return_product_details_table',3),
-(34,'2021_06_05_090353_create_purchases_table',5),
-(36,'2021_06_05_090636_create_purchase_details_table',6),
-(37,'2021_05_01_200040_create_creditors_table',7),
-(38,'2021_05_03_013829_create_creditor_payments_table',7),
-(40,'2021_06_09_104235_create_employees_table',8),
-(41,'2021_06_13_183640_create_employee_payments_table',8),
-(43,'2014_10_12_000000_create_users_table',9);
+(15,'2021_05_09_202601_create_office_expenses_table',1),
+(16,'2021_05_09_232846_create_proprietors_table',1),
+(17,'2021_05_10_010611_create_proprietor_transactions_table',1),
+(18,'2021_05_10_023123_create_bank_loans_table',1),
+(19,'2021_05_21_024941_create_bank_loan_transactions_table',1),
+(20,'2021_06_03_145109_create_return_products_table',1),
+(21,'2021_06_03_193114_create_return_product_details_table',1),
+(22,'2021_06_05_090353_create_purchases_table',1),
+(23,'2021_06_05_090636_create_purchase_details_table',1),
+(24,'2021_06_09_104235_create_employees_table',1),
+(25,'2021_06_13_183640_create_employee_payments_table',1),
+(26,'2021_05_01_200040_create_creditors_table',2),
+(27,'2021_05_03_013829_create_creditor_payments_table',2),
+(28,'2021_05_04_203537_create_debtors_table',2),
+(29,'2021_05_04_203752_create_debtor_payments_table',2);
 
 /*Table structure for table `office_expenses` */
 
@@ -631,16 +537,9 @@ CREATE TABLE `office_expenses` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `office_expenses` */
-
-insert  into `office_expenses`(`id`,`date`,`description`,`expense`,`created_at`,`updated_at`) values 
-(1,'2021-06-02','Cost for: Paper Bill',200.0000,'2021-06-17 23:32:13','2021-06-17 23:32:13'),
-(2,'2021-06-05','Cost for: Internet Bill',500.0000,'2021-06-17 23:33:07','2021-06-17 23:33:07'),
-(3,'2021-06-09','Cost for: Current Bill',1700.0000,'2021-06-17 23:33:59','2021-06-17 23:33:59'),
-(4,'2021-06-15','Cost for: Refreshment',150.0000,'2021-06-17 23:34:49','2021-06-17 23:34:49'),
-(5,'2021-06-01','Cost for: Charity',300.0000,'2021-06-17 23:36:44','2021-06-17 23:36:44');
 
 /*Table structure for table `password_resets` */
 
@@ -682,14 +581,15 @@ CREATE TABLE `products` (
 /*Data for the table `products` */
 
 insert  into `products`(`id`,`name`,`category_id`,`supplier_id`,`slug`,`quantity`,`low_quantity_alert`,`price`,`image`,`created_at`,`updated_at`) values 
-(1,'Mobile',3,2,'mobile',15,10,1000.0000,'mobile-2021-06-25-60d56f8d4fb2a.jpg','2021-06-03 11:10:42','2021-06-25 05:54:21'),
-(2,'TV',3,4,'tv',0,10,4493.1600,'tv-2021-06-25-60d56f8072afe.png','2021-06-03 11:11:43','2021-06-25 05:54:08'),
-(3,'Laptop',3,2,'laptop',18,10,2000.0000,'laptop-2021-06-25-60d56f74b7349.jpg','2021-06-03 11:12:45','2021-06-26 01:00:03'),
-(4,'Car',1,3,'car',16,5,10000.0000,'car-2021-06-25-60d56f646a85f.jpg','2021-06-03 11:13:33','2021-06-25 05:53:40'),
-(5,'Bike',1,3,'bike',18,10,5000.0000,'bike-2021-06-25-60d56f5704e2c.jpg','2021-06-03 11:14:09','2021-06-25 05:53:27'),
-(6,'Chair',2,1,'chair',17,10,500.0000,'chair-2021-06-25-60d56f4a60659.jpg','2021-06-03 11:14:57','2021-06-25 05:53:14'),
-(7,'Table',2,1,'table',8,5,1000.0000,'table-2021-06-25-60d56f3b135b4.jpg','2021-06-03 11:17:03','2021-06-25 05:52:59'),
-(8,'Speaker',3,2,'speaker',7,5,1000.0000,'speaker-2021-06-25-60d56f22e8b92.jpeg','2021-06-05 11:02:54','2021-06-25 05:52:35');
+(1,'Mobile',1,1,'mobile',17,10,2000.0000,'mobile-2021-09-07-61379c7ad87c5.jpg','2021-09-07 23:08:11','2021-09-08 00:50:31'),
+(2,'Speaker',1,1,'speaker',21,10,500.0000,'speaker-2021-09-07-61379cb459f95.jpeg','2021-09-07 23:09:08','2021-09-08 00:50:31'),
+(3,'TV',1,2,'tv',10,5,3000.0000,'tv-2021-09-07-61379ceb3b9e8.png','2021-09-07 23:10:03','2021-09-08 00:55:58'),
+(4,'Laptop',1,2,'laptop',12,5,2000.0000,'laptop-2021-09-07-61379d0c6cb24.jpg','2021-09-07 23:10:36','2021-09-08 00:55:58'),
+(5,'Car',2,3,'car',9,5,5000.0000,'car-2021-09-07-61379d363d752.jpg','2021-09-07 23:11:18','2021-09-08 00:48:17'),
+(6,'Bike',2,3,'bike',15,10,2000.0000,'bike-2021-09-07-61379d5543dda.jpg','2021-09-07 23:11:49','2021-09-08 00:52:16'),
+(7,'Table',3,4,'table',14,10,1000.0000,'table-2021-09-07-61379d7a282dd.jpg','2021-09-07 23:12:26','2021-09-08 00:40:59'),
+(8,'Chair',3,4,'chair',20,15,500.0000,'chair-2021-09-07-61379d983c95a.jpg','2021-09-07 23:12:56','2021-09-08 00:43:45'),
+(9,'Showcase',3,4,'showcase',9,10,1000.0000,'showcase-2021-09-07-61379db8d760a.jpg','2021-09-07 23:13:29','2021-09-08 00:43:45');
 
 /*Table structure for table `proprietor_transactions` */
 
@@ -707,19 +607,13 @@ CREATE TABLE `proprietor_transactions` (
   PRIMARY KEY (`id`),
   KEY `proprietor_transactions_proprietor_id_foreign` (`proprietor_id`),
   CONSTRAINT `proprietor_transactions_proprietor_id_foreign` FOREIGN KEY (`proprietor_id`) REFERENCES `proprietors` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `proprietor_transactions` */
 
 insert  into `proprietor_transactions`(`id`,`proprietor_id`,`transaction_date`,`description`,`deposite`,`withdraw`,`created_at`,`updated_at`) values 
-(1,1,'2021-06-10','Proprietor Mazhar Deposited to Cash',5000.0000,0.0000,'2021-06-17 22:31:57','2021-06-17 22:31:57'),
-(2,1,'2021-06-02','Proprietor Mazhar Withdrawn from Cash for: Car Oil',0.0000,2000.0000,'2021-06-17 22:32:31','2021-06-17 22:32:31'),
-(3,1,'2021-06-09','Proprietor Mazhar Withdrawn from Cash for: Shopping',0.0000,3000.0000,'2021-06-17 22:33:37','2021-06-17 22:33:37'),
-(4,1,'2021-06-01','Proprietor Mazhar Withdrawn from Cash for: House Rent',0.0000,15000.0000,'2021-06-17 22:34:08','2021-06-17 22:34:08'),
-(5,2,'2021-06-10','Proprietor Imran Hossain Withdrawn from Cash for: Birthday Party',0.0000,5000.0000,'2021-06-17 22:35:06','2021-06-17 22:35:06'),
-(6,2,'2021-06-05','Proprietor Imran Hossain Withdrawn from Cash for: Launch',0.0000,2000.0000,'2021-06-17 22:35:36','2021-06-17 22:35:36'),
-(7,2,'2021-06-12','Proprietor Imran Hossain Withdrawn from Cash for: Paper Bill',0.0000,500.0000,'2021-06-17 22:36:06','2021-06-17 22:36:06'),
-(8,2,'2021-06-14','Proprietor Imran Hossain Withdrawn from Cash for: Mobile Recharge',0.0000,1200.0000,'2021-06-17 22:36:42','2021-06-17 22:36:42');
+(1,1,'2021-01-02','Proprietor Imran Hossain Deposited to Cash',200000.0000,0.0000,'2021-09-07 23:05:27','2021-09-07 23:05:27'),
+(2,2,'2021-01-03','Proprietor Adib Hossain Deposited to Cash',100000.0000,0.0000,'2021-09-07 23:05:52','2021-09-07 23:05:52');
 
 /*Table structure for table `proprietors` */
 
@@ -730,6 +624,7 @@ CREATE TABLE `proprietors` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `designation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.png',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -737,9 +632,9 @@ CREATE TABLE `proprietors` (
 
 /*Data for the table `proprietors` */
 
-insert  into `proprietors`(`id`,`name`,`designation`,`phone`,`created_at`,`updated_at`) values 
-(1,'Mazhar','Managing Director','01711111111','2021-06-03 13:34:55','2021-06-03 13:34:55'),
-(2,'Imran Hossain','Operation Director','01911111111','2021-06-17 22:34:33','2021-06-17 22:34:33');
+insert  into `proprietors`(`id`,`name`,`designation`,`phone`,`image`,`created_at`,`updated_at`) values 
+(1,'Imran Hossain','Chairman','01711111111','imran-hossain-2021-09-07-61379ba682464.jpg','2021-09-07 23:04:39','2021-09-07 23:04:39'),
+(2,'Adib Hossain','Managing Director','01711111111','adib-hossain-2021-09-07-61379bbc6f3f2.jpg','2021-09-07 23:05:00','2021-09-07 23:05:00');
 
 /*Table structure for table `purchase_details` */
 
@@ -750,23 +645,26 @@ CREATE TABLE `purchase_details` (
   `purchase_id` bigint(20) unsigned NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `cost` decimal(9,4) NOT NULL,
+  `cost` decimal(13,4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `purchase_details_purchase_id_foreign` (`purchase_id`),
   CONSTRAINT `purchase_details_purchase_id_foreign` FOREIGN KEY (`purchase_id`) REFERENCES `purchases` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `purchase_details` */
 
 insert  into `purchase_details`(`id`,`purchase_id`,`product_id`,`quantity`,`cost`,`created_at`,`updated_at`) values 
-(2,3,2,1,6000.0000,'2021-06-05 14:29:39','2021-06-05 14:29:39'),
-(3,3,8,5,1000.0000,'2021-06-05 14:29:39','2021-06-05 14:29:39'),
-(4,4,6,2,500.0000,'2021-06-05 14:47:38','2021-06-05 14:47:38'),
-(5,4,8,1,1000.0000,'2021-06-05 14:47:38','2021-06-05 14:47:38'),
-(24,14,2,4,4000.0000,'2021-06-05 23:05:57','2021-06-05 23:05:57'),
-(25,14,8,3,1000.0000,'2021-06-05 23:05:57','2021-06-05 23:05:57');
+(1,1,1,20,2000.0000,'2021-09-08 00:26:41','2021-09-08 00:26:41'),
+(2,1,2,25,500.0000,'2021-09-08 00:26:41','2021-09-08 00:26:41'),
+(3,2,5,12,5000.0000,'2021-09-08 00:32:12','2021-09-08 00:32:12'),
+(4,2,6,20,2000.0000,'2021-09-08 00:32:12','2021-09-08 00:32:12'),
+(5,3,7,15,1000.0000,'2021-09-08 00:33:40','2021-09-08 00:33:40'),
+(6,3,8,25,500.0000,'2021-09-08 00:33:40','2021-09-08 00:33:40'),
+(7,3,9,10,1000.0000,'2021-09-08 00:33:40','2021-09-08 00:33:40'),
+(8,4,3,10,3000.0000,'2021-09-08 00:55:58','2021-09-08 00:55:58'),
+(9,4,4,12,2000.0000,'2021-09-08 00:55:58','2021-09-08 00:55:58');
 
 /*Table structure for table `purchases` */
 
@@ -780,24 +678,25 @@ CREATE TABLE `purchases` (
   `date` date NOT NULL,
   `payment_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bank_account_id` bigint(20) unsigned DEFAULT NULL,
-  `amount` decimal(9,4) NOT NULL,
-  `discount` decimal(9,4) NOT NULL DEFAULT 0.0000,
-  `total_amount` decimal(9,4) NOT NULL,
-  `paid` decimal(9,4) NOT NULL,
-  `due` decimal(9,4) NOT NULL,
+  `amount` decimal(13,4) NOT NULL,
+  `discount` decimal(13,4) NOT NULL DEFAULT 0.0000,
+  `total_amount` decimal(13,4) NOT NULL,
+  `paid` decimal(13,4) NOT NULL,
+  `due` decimal(13,4) NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_paid` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Pending,1=Paid',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `purchases` */
 
 insert  into `purchases`(`id`,`user_id`,`supplier_id`,`purchase_no`,`date`,`payment_type`,`bank_account_id`,`amount`,`discount`,`total_amount`,`paid`,`due`,`description`,`is_paid`,`created_at`,`updated_at`) values 
-(3,1,2,2021060501,'2021-06-05','cash',NULL,11000.0000,200.0000,10800.0000,10000.0000,800.0000,'first',0,'2021-06-05 14:29:39','2021-06-05 15:20:54'),
-(4,1,1,2021060502,'2021-06-05','cheque',1,2000.0000,0.0000,2000.0000,2000.0000,0.0000,'cheque',1,'2021-06-05 14:47:37','2021-06-05 15:10:15'),
-(14,1,1,2021060601,'2021-06-06','cheque',3,19000.0000,0.0000,19000.0000,7000.0000,12000.0000,NULL,0,'2021-06-05 23:05:57','2021-06-05 23:05:57');
+(1,2,1,2021020101,'2021-02-01','cash',NULL,52500.0000,0.0000,52500.0000,52500.0000,0.0000,NULL,1,'2021-09-08 00:26:41','2021-09-08 00:26:41'),
+(2,2,3,2021021701,'2021-02-17','cash',NULL,100000.0000,0.0000,100000.0000,100000.0000,0.0000,NULL,1,'2021-09-08 00:32:12','2021-09-08 00:32:12'),
+(3,2,4,2021040801,'2021-04-08','cash',NULL,37500.0000,0.0000,37500.0000,34000.0000,3500.0000,NULL,0,'2021-09-08 00:33:40','2021-09-08 00:34:52'),
+(4,2,2,2021021001,'2021-02-10','cash',NULL,54000.0000,0.0000,54000.0000,54000.0000,0.0000,NULL,1,'2021-09-08 00:55:58','2021-09-08 00:55:58');
 
 /*Table structure for table `return_product_details` */
 
@@ -808,28 +707,15 @@ CREATE TABLE `return_product_details` (
   `return_product_id` bigint(20) unsigned NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(9,4) NOT NULL,
+  `price` decimal(13,4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `return_product_details_return_product_id_foreign` (`return_product_id`),
   CONSTRAINT `return_product_details_return_product_id_foreign` FOREIGN KEY (`return_product_id`) REFERENCES `return_products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `return_product_details` */
-
-insert  into `return_product_details`(`id`,`return_product_id`,`product_id`,`quantity`,`price`,`created_at`,`updated_at`) values 
-(1,1,6,2,500.0000,'2021-06-04 00:53:00','2021-06-04 00:53:00'),
-(2,1,7,2,1000.0000,'2021-06-04 00:53:00','2021-06-04 00:53:00'),
-(3,2,6,2,500.0000,'2021-06-04 00:54:37','2021-06-04 00:54:37'),
-(4,2,7,2,1000.0000,'2021-06-04 00:54:37','2021-06-04 00:54:37'),
-(5,3,4,2,10000.0000,'2021-06-04 00:58:40','2021-06-04 00:58:40'),
-(6,3,5,1,5000.0000,'2021-06-04 00:58:40','2021-06-04 00:58:40'),
-(7,4,1,1,1000.0000,'2021-06-04 01:11:05','2021-06-04 01:11:05'),
-(8,5,2,1,5000.0000,'2021-06-04 01:13:15','2021-06-04 01:13:15'),
-(9,5,3,1,3000.0000,'2021-06-04 01:13:15','2021-06-04 01:13:15'),
-(12,8,1,3,2000.0000,'2021-06-16 20:26:34','2021-06-16 20:26:34'),
-(13,8,4,2,12000.0000,'2021-06-16 20:26:34','2021-06-16 20:26:34');
 
 /*Table structure for table `return_products` */
 
@@ -843,22 +729,14 @@ CREATE TABLE `return_products` (
   `date` date NOT NULL,
   `payment_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bank_account_id` bigint(20) unsigned DEFAULT NULL,
-  `amount` decimal(9,4) NOT NULL,
+  `amount` decimal(13,4) NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `return_products` */
-
-insert  into `return_products`(`id`,`user_id`,`customer_id`,`invoice_id`,`date`,`payment_type`,`bank_account_id`,`amount`,`description`,`created_at`,`updated_at`) values 
-(1,1,2,NULL,'2021-06-04','cash',NULL,3000.0000,NULL,'2021-06-04 00:53:00','2021-06-04 00:53:00'),
-(2,1,1,3,'2021-06-04','cash',NULL,3000.0000,NULL,'2021-06-04 00:54:37','2021-06-04 00:54:37'),
-(3,1,2,NULL,'2021-06-04','cheque',2,25000.0000,NULL,'2021-06-04 00:58:40','2021-06-04 00:58:40'),
-(4,1,2,NULL,'2021-06-04','cash',NULL,1000.0000,NULL,'2021-06-04 01:11:05','2021-06-04 01:11:05'),
-(5,1,1,2,'2021-06-04','cheque',1,8000.0000,NULL,'2021-06-04 01:13:15','2021-06-04 01:13:15'),
-(8,1,2,NULL,'2021-06-17','cash',NULL,30000.0000,NULL,'2021-06-16 20:26:34','2021-06-16 20:26:34');
 
 /*Table structure for table `roles` */
 
@@ -871,7 +749,7 @@ CREATE TABLE `roles` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `roles` */
 
@@ -894,16 +772,15 @@ CREATE TABLE `suppliers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `suppliers_organization_unique` (`organization`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `suppliers` */
 
 insert  into `suppliers`(`id`,`name`,`organization`,`slug`,`phone`,`address`,`created_at`,`updated_at`) values 
-(1,'Mr. Kamal','Hatil','hatil','01711111111','Dhaka','2021-06-03 11:03:18','2021-06-03 11:03:18'),
-(2,'Mr. Jamal','Gadget & Gear','gadget-gear','01911111111','Dhaka','2021-06-03 11:03:48','2021-06-03 11:03:48'),
-(3,'Mr. Ashik','Car Bazar','car-bazar','01712222222','Dhaka','2021-06-03 11:05:28','2021-06-03 11:05:28'),
-(4,'Mr. Karim','Rangs','rangs','01712222222','Dhaka','2021-06-03 11:06:53','2021-06-03 11:06:53'),
-(5,'Mr. Hossain','Square','square','01712222222','Dhaka','2021-06-04 03:22:14','2021-06-04 03:22:14');
+(1,'Mr. Kamal','Gadget & Gear','gadget-gear','01711111111','Dhaka','2021-09-07 23:02:06','2021-09-07 23:02:06'),
+(2,'Mr. Jamal','Rangs','rangs','01711111111','Dhaka','2021-09-07 23:02:37','2021-09-07 23:02:37'),
+(3,'Mr. Karim','Car Bazar','car-bazar','01711111111','Dhaka','2021-09-07 23:03:02','2021-09-07 23:03:02'),
+(4,'Mr. Ahmed','Hatil','hatil','01711111111','Dhaka','2021-09-07 23:03:30','2021-09-07 23:03:30');
 
 /*Table structure for table `users` */
 
@@ -919,19 +796,20 @@ CREATE TABLE `users` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.png',
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_super_admin` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=No,1=Yes',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`role_id`,`name`,`email`,`email_verified_at`,`password`,`image`,`phone`,`address`,`remember_token`,`created_at`,`updated_at`) values 
-(1,1,'Admin','admin@admin.com',NULL,'$2y$10$qPWNr5FYGHVvzyb6yfsY1OvL48iBmMEuAT1bAIbdA8TyphiCw/7EK','admin-2021-06-25-60d56a743fc13.jpg','01711111111','Noorjahan road Mohammmaddpur dhaka 1207',NULL,NULL,'2021-06-25 05:32:36'),
-(2,2,'User','user@user.com',NULL,'$2y$10$WyYQvm1LsmtzhM7B4NZIZ.E3uugH7GWwsoagZE8nAzihIYP/ZPWdq','default.png','01911111111','Dhaka',NULL,NULL,'2021-06-25 04:01:35'),
-(4,2,'Adib','adib@gmail.com',NULL,'$2y$10$yhubrCaCryv4lHZTA7u9TeDL/wEf2l4Kp1.dRqgDnZlTkOCEoBCcW','adib-2021-06-25-60d56cb742179.jpg','01712222222','Dhaka',NULL,'2021-06-22 08:01:19','2021-06-25 05:42:15');
+insert  into `users`(`id`,`role_id`,`name`,`email`,`email_verified_at`,`password`,`image`,`phone`,`address`,`is_super_admin`,`remember_token`,`created_at`,`updated_at`) values 
+(1,1,'Super Admin','mazhar.rony@gmail.com',NULL,'$2y$10$F8y/W/I0Xo9aHtJUszUyJegdSH6TcgdjW1ICkIg1NO34nNodtY/y2','default.png',NULL,NULL,1,NULL,NULL,NULL),
+(2,1,'Admin','admin@mail.com',NULL,'$2y$10$RHonhttSWmcTDw3.CDd86.SDnEhMLifN0aoTfxCEuUH/AKuoBYwoO','default.png',NULL,NULL,0,NULL,NULL,NULL),
+(3,2,'User','user@mail.com',NULL,'$2y$10$dvPSU4SUjBznT0APY/I/zuOT47jCxmY.e725xkuFWZqBouYZ2.hgW','default.png',NULL,NULL,0,NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
